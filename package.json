@@ -1,0 +1,21 @@
+{
+  "name": "hufsclub",
+  "version": "1.0.0",
+  "description": "The best way to see club information.",
+  "main": "index.js",
+  "scripts": {
+    "build": "cd backend && npm install  && cd ../frontend && npm install && npm run build",
+    "start": "node backend/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lim-JiSeon/HufsClub.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Lim-JiSeon/HufsClub/issues"
+  },
+  "homepage": "https://github.com/Lim-JiSeon/HufsClub#readme"
+}
