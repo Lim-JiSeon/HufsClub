@@ -17,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/Lim-JiSeon/HufsClub/issues"
   },
-  "homepage": "https://github.com/Lim-JiSeon/HufsClub#readme"
+  "homepage": "https://github.com/Lim-JiSeon/HufsClub#readme",
+  "dependencies": {
+    "axios": "^1.4.0"
+  }
 }
