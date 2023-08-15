@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
-import useForm from "../hooks/useForm";
+import useForm from "../../hooks/useForm";
 import Button from "./Button";
-import ErrorText from "./ErrorText";
+import ErrorText from "../errors/ErrorText";
 import Input from "./Input";
 
 const CardForm = styled.form`
