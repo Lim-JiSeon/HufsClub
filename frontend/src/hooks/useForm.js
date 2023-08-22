@@ -1,5 +1,6 @@
 import { useState } from "react";
 import login from "../api/login";
+import signup from "../api/signup";
 
 const useForm = ({ initialValues, onSubmit, validate }) => {
   const [values, setValues] = useState(initialValues);
@@ -7,11 +8,15 @@ const useForm = ({ initialValues, onSubmit, validate }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setValues({ ...values, [name]: value });
+    if (typeof e === "string") {
+      setValues({ ...values }, (values.attendance = e));
+    } else {
+      const { name, value } = e.target;
+      setValues({ ...values, [name]: value });
+    }
   };
 
-  const handleSubmit = async (e) => {
+  const handleLogin = async (e) => {
     setIsLoading(true);
     e.preventDefault();
     const newErrors = validate(values);
@@ -20,12 +25,27 @@ const useForm = ({ initialValues, onSubmit, validate }) => {
     setErrors(newErrors);
     setIsLoading(false);
   };
+
+  const handleSignUp = async (e) => {
+    setIsLoading(true);
+    e.preventDefault();
+    const newErrors = validate(values);
+    console.log(Object.keys(newErrors))
+    if (Object.keys(newErrors).length === 0) {
+      await signup(values);
+      console.log("확인");
+    }
+    setErrors(newErrors);
+    setIsLoading(false);
+  };
+
   return {
     values,
     errors,
     isLoading,
     handleChange,
-    handleSubmit,
+    handleLogin,
+    handleSignUp,
   };
 };
 
