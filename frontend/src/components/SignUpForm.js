@@ -1,19 +1,20 @@
 import useForm from "../hooks/useForm";
 import Button from "./SubmitButton";
-import ErrorText from "./ErrorText";
-import Input from "./Input";
+import ErrorText from "./errors/ErrorText";
+import Input from "./func/Input";
 import CardForm from "./CardForm";
 import Title from "./TopicTitle";
-import Radio from "./Radio";
-import RadioGroup from "./RadioGroup";
+import Radio from "./func/Radio";
+import RadioGroup from "./func/RadioGroup";
 import { useState } from "react";
 
 const SignUpForm = ({ onSubmit }) => {
   const [clubPresidentCheck, setClubPresidentCheck] = useState(false);
-  const { values, errors, isLoading, handleChange, handleSubmit } = useForm({
+  const { values, errors, isLoading, handleChange, handleSignUp } = useForm({
     initialValues: {
       name: "",
       studentNumber: 0,
+      email: "",
       subject: "",
       password: "",
       passwordConfirm: "",
@@ -25,6 +26,7 @@ const SignUpForm = ({ onSubmit }) => {
     validate: ({
       name,
       studentNumber,
+      email,
       subject,
       password,
       passwordConfirm,
@@ -40,6 +42,7 @@ const SignUpForm = ({ onSubmit }) => {
         !checkNum.test(studentNumber)
       )
         newErrors.studentNumber = "올바른 학번을 입력해주세요";
+      if (!email) newErrors.email = "이메일을 입력해주세요";
       if (!subject) newErrors.subject = "학과를 입력해주세요";
       if (!password) newErrors.password = "비밀번호를 입력해주세요";
       if (password !== passwordConfirm)
@@ -55,7 +58,7 @@ const SignUpForm = ({ onSubmit }) => {
   });
 
   return (
-    <CardForm onSubmit={handleSubmit}>
+    <CardForm onSubmit={handleSignUp}>
       <Title>회원가입</Title>
       <Input type="text" name="name" onChange={handleChange} label="이름" />
       {errors.name && <ErrorText>{errors.name}</ErrorText>}
@@ -66,6 +69,8 @@ const SignUpForm = ({ onSubmit }) => {
         label="학번"
       />
       {errors.studentNumber && <ErrorText>{errors.studentNumber}</ErrorText>}
+      <Input type="text" name="email" onChange={handleChange} label="이메일" />
+      {errors.email && <ErrorText>{errors.email}</ErrorText>}
       <Input type="text" name="subject" onChange={handleChange} label="학과" />
       {errors.subject && <ErrorText>{errors.subject}</ErrorText>}
       <Input

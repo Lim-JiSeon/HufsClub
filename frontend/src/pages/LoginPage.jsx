@@ -1,6 +1,6 @@
 import React from "react";
-import LoginForm from "../components/LoginForm";
 import styled from "@emotion/styled";
+import LoginForm from "../components/LoginForm";
 
 const Wrapper = styled.div`
   min-height: 100dvh;
@@ -12,7 +12,7 @@ const Wrapper = styled.div`
 function LoginPage() {
   return (
     <Wrapper>
-      <LoginForm />
+      <LoginForm onSubmit />
     </Wrapper>
   );
 }

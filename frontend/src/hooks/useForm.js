@@ -1,4 +1,6 @@
 import { useState } from "react";
+import login from "../api/login";
+import signup from "../api/signup";
 
 const useForm = ({ initialValues, onSubmit, validate }) => {
   const [values, setValues] = useState(initialValues);
@@ -14,20 +16,33 @@ const useForm = ({ initialValues, onSubmit, validate }) => {
     }
   };
 
-  const handleSubmit = async (e) => {
+  const handleLogin = async (e) => {
     setIsLoading(true);
     e.preventDefault();
     const newErrors = validate(values);
-    if (Object.keys(newErrors).length === 0) await onSubmit();
+    if (Object.keys(newErrors).length === 0)
+      await login(Number(values.id), values.password);
     setErrors(newErrors);
     setIsLoading(false);
   };
+
+  const handleSignUp = async (e) => {
+    setIsLoading(true);
+    e.preventDefault();
+    const newErrors = validate(values);
+    if (Object.keys(newErrors).length === 0)
+      await signup(values);
+    setErrors(newErrors);
+    setIsLoading(false);
+  };
+
   return {
     values,
     errors,
     isLoading,
     handleChange,
-    handleSubmit,
+    handleLogin,
+    handleSignUp,
   };
 };
 
