@@ -6,8 +6,12 @@ const useForm = ({ initialValues, onSubmit, validate }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setValues({ ...values, [name]: value });
+    if (typeof e === "string") {
+      setValues({ ...values }, (values.attendance = e));
+    } else {
+      const { name, value } = e.target;
+      setValues({ ...values, [name]: value });
+    }
   };
 
   const handleSubmit = async (e) => {
