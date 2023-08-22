@@ -1,7 +1,20 @@
 import React from "react";
+import SignUpForm from "../components/SignUpForm";
+import styled from "@emotion/styled";
+
+const Wrapper = styled.div`
+  min-height: 100dvh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 function SignUpPage() {
-  return <>SignUpPage</>;
+  return (
+    <Wrapper>
+      <SignUpForm />
+    </Wrapper>
+  );
 }
 
 export default SignUpPage;

@@ -1,23 +1,9 @@
-import styled from "@emotion/styled";
 import useForm from "../hooks/useForm";
-import Button from "./Button";
+import Button from "./SubmitButton";
 import ErrorText from "./ErrorText";
 import Input from "./Input";
-
-const CardForm = styled.form`
-  display: block;
-  padding: 46px 36px;
-  width: 600px;
-  background-color: white;
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
-  box-sizing: border-box;
-`;
-
-const Title = styled.h1`
-  font-size: 24px;
-  text-align: center;
-  color: #526d82;
-`;
+import CardForm from "./CardForm";
+import Title from "./TopicTitle";
 
 const LoginForm = ({ onSubmit }) => {
   const { errors, isLoading, handleChange, handleSubmit } = useForm({
@@ -28,7 +14,7 @@ const LoginForm = ({ onSubmit }) => {
     onSubmit,
     validate: ({ id, password }) => {
       const newErrors = {};
-      if (!id) newErrors.id = "학번을 입력해주세요";
+      if (!id) newErrors.id = "아이디를 입력해주세요";
       if (!password) newErrors.password = "비밀번호를 입력해주세요";
       return newErrors;
     },
@@ -40,15 +26,15 @@ const LoginForm = ({ onSubmit }) => {
       <Input
         type="text"
         name="id"
-        placeholder="학번을 입력해주세요"
         onChange={handleChange}
+        label="아이디(학번)"
       />
       {errors.id && <ErrorText>{errors.id}</ErrorText>}
       <Input
-        type="text"
+        type="password"
         name="password"
-        placeholder="비밀번호를 입력해주세요"
         onChange={handleChange}
+        label="비밀번호"
       />
       {errors.password && <ErrorText>{errors.password}</ErrorText>}
       <Button type="submit" disabled={isLoading}>
