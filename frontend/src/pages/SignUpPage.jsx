@@ -12,7 +12,7 @@ const Wrapper = styled.div`
 function SignUpPage() {
   return (
     <Wrapper>
-      <SignUpForm />
+      <SignUpForm onSubmit/>
     </Wrapper>
   );
 }

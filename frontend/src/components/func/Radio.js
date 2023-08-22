@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { useContext } from "react";
-import RadioContext from "../contexts/RadioContext";
+import RadioContext from "../../contexts/RadioContext";
 
 const Text = styled.span`
 font-size: 14px;
