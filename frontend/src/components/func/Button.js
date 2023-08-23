@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 
-const SubmitButton = styled.button`
+const Button = styled.button`
   display: block;
   width: 100%;
   height: 40px;
@@ -10,7 +10,7 @@ const SubmitButton = styled.button`
   border-radius: 4px;
   border: none;
   box-sizing: border-box;
-  margin-top: 26px;
+  margin-top: 16px;
   cursor: pointer;
 
   &:hover {
@@ -29,4 +29,4 @@ const SubmitButton = styled.button`
   }
 `;
 
-export default SubmitButton;
+export default Button;
