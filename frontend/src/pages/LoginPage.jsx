@@ -1,19 +1,11 @@
 import React from "react";
-import styled from "@emotion/styled";
-import LoginForm from "../components/LoginForm";
-
-const Wrapper = styled.div`
-  min-height: 100dvh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
+import LoginForm from "../components/func/LoginForm";
 
 function LoginPage() {
   return (
-    <Wrapper>
-      <LoginForm onSubmit />
-    </Wrapper>
+    <div style={{height: "100vh", display: "flex", justifyContent: "center", alignItems: "center"}}>
+      <LoginForm onSubmit/>
+    </div>
   );
 }
 
