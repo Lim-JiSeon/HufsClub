@@ -1,6 +1,7 @@
 import React from "react";
 import SignUpForm from "../components/SignUpForm";
 import styled from "@emotion/styled";
+import Header from "../components/Header";
 
 const Wrapper = styled.div`
   min-height: 100dvh;
@@ -12,6 +13,7 @@ const Wrapper = styled.div`
 function SignUpPage() {
   return (
     <Wrapper>
+      <Header></Header>
       <SignUpForm onSubmit/>
     </Wrapper>
   );
