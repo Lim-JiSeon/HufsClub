@@ -4,8 +4,10 @@ import styled from "@emotion/styled";
 import Header from "../components/Header";
 
 const Wrapper = styled.div`
-  min-height: 100dvh;
   display: flex;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 `;
@@ -14,7 +16,7 @@ function SignUpPage() {
   return (
     <Wrapper>
       <Header></Header>
-      <SignUpForm onSubmit/>
+      <div><SignUpForm onSubmit /></div>
     </Wrapper>
   );
 }

@@ -4,17 +4,25 @@ import LoginForm from "../components/LoginForm";
 import Header from "../components/Header";
 
 const Wrapper = styled.div`
-  min-height: 100dvh;
   display: flex;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 `;
+
+const FormWrapper = styled.div`
+  padding: 50px 0;
+`
 
 function LoginPage() {
   return (
     <Wrapper>
       <Header></Header>
-      <LoginForm onSubmit />
+      <FormWrapper>
+        <LoginForm onSubmit />
+      </FormWrapper>
     </Wrapper>
   );
 }
