@@ -24,23 +24,6 @@ clubRouter.get('/field/:field', async (req, res) => {
   }
 });
 
-<<<<<<< HEAD
-=======
-//동아리명 검색
-clubRouter.get('/search', async (req, res) => {
-  const { keyword } = req.query;
-  let clubs = [];
-  if (keyword) {
-    clubs = await Club.find({
-      name: {
-        $regex: new RegExp(`${keyword}$`, "i"),
-      },
-    });
-  }
-  res.send(clubs);
-});
-
->>>>>>> 225b0b8df2537091b8265ca6e0274d4688150f96
 //특정 동아리 조회
 clubRouter.get('/:id', async (req, res) => {
   const club = await Club.findById(req.params.id);
@@ -50,20 +33,12 @@ clubRouter.get('/:id', async (req, res) => {
     res.status(404).send({ message: 'Club Not Found' });
   }
 });
-<<<<<<< HEAD
 /*
 //동아리 검색
 //동아리 글 작성
 //동아리 글 수정
 //동아리 글 삭제(사용자의 like에서도 삭제되어야 함.)
 
-=======
-
-//동아리 글 작성
-//동아리 글 수정
-//동아리 글 삭제(사용자의 like에서도 삭제되어야 함.)
-/*
->>>>>>> 225b0b8df2537091b8265ca6e0274d4688150f96
 clubRouter.post(
   '/',
   isAuth,
