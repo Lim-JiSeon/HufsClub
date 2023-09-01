@@ -19,6 +19,8 @@
   },
   "homepage": "https://github.com/Lim-JiSeon/HufsClub#readme",
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
     "axios": "^1.4.0"
   }
 }
