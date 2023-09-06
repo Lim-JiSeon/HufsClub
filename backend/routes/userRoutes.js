@@ -58,6 +58,7 @@ userRouter.post(
         email: signinUser.email,
         studentId: signinUser.studentId,
         major: signinUser.major,
+        major2: signinUser.major2,
         isEnroll: signinUser.isEnroll,
         isPresident: signinUser.isPresident,
         isAdmin: signinUser.isAdmin,
@@ -115,6 +116,7 @@ userRouter.get('/info/:id', async (req, res) => {
       email: user.email,
       studentId: user.studentId,
       major: user.major,
+      major2: user.major2,
       isEnroll: user.isEnroll,
       isPresident: user.isPresident,
       like: user.like, //좋아요한 동아리 정보 찾아서 보내기
@@ -133,14 +135,11 @@ userRouter.put(
     const user = await User.findById(req.user._id);
     if (user) {
       user.username = req.body.username || user.username;
-      user.email = req.body.email || user.email;
-      user.studentId = req.body.studentId || user.studentId; 
       user.major = req.body.major || user.major;
+      user.major2 = req.body.major2;
+      user.email = req.body.email || user.email;
       user.isEnroll = req.body.isEnroll || user.isEnroll;
       user.isPresident = req.body.isPresident;
-      if (req.body.password) {
-        user.password = bcrypt.hashSync(req.body.password, 8);
-      }
 
       const updatedUser = await user.save();
       res.send({
@@ -149,6 +148,7 @@ userRouter.put(
         email: updatedUser.email,
         studentId: updatedUser.studentId,
         major: updatedUser.major,
+        major2: updatedUser.major2,
         isEnroll: updatedUser.isEnroll,
         isPresident: updatedUser.isPresident,
         isAdmin: updatedUser.isAdmin,
@@ -180,7 +180,7 @@ userRouter.post(
         .messages()
         .send(
           {
-            from: 'Amazona <me@mg.yourdomain.com>',
+            from: 'HufsClub <me@mg.yourdomain.com>',
             to: `${user.name} <${user.email}>`,
             subject: `Reset Password`,
             html: ` 
@@ -239,6 +239,7 @@ userRouter.put(
         email: updatedUser.email,
         studentId: updatedUser.studentId,
         major: updatedUser.major,
+        major2: updatedUser.major2,
         isEnroll: updatedUser.isEnroll,
         isPresident: updatedUser.isPresident,
         isAdmin: updatedUser.isAdmin,
@@ -263,6 +264,7 @@ userRouter.put(
       user.email = req.body.email || user.email;
       user.studentId = req.body.studentId || user.studentId; //아이디로 사용
       user.major = req.body.major || user.major;
+      user.major2 = req.body.major2 || user.major2;
       user.isEnroll = req.body.isEnroll || user.isEnroll;
       user.isPresident = req.body.isPresident || user.isPresident;
       user.isAdmin = Boolean(req.body.isAdmin);
