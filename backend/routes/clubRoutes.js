@@ -31,7 +31,35 @@ clubRouter.get('/search', async (req, res) => {
   if (keyword) {
     clubs = await Club.find({
       name: {
-        $regex: new RegExp(`${keyword}$`, "i"),
+        $regex: new RegExp(keyword, "i"),
+      },
+    });
+  }
+  res.send(clubs);
+});
+
+//동아리 주제 검색
+clubRouter.get('/search/topic', async (req, res) => {
+  const { keyword } = req.query;
+  let clubs = [];
+  if (keyword) {
+    clubs = await Club.find({
+      topic: {
+        $regex: new RegExp(keyword, "i"),
+      },
+    });
+  }
+  res.send(clubs);
+}); 
+
+//동아리 활동 검색
+clubRouter.get('/search/activity', async (req, res) => {
+  const { keyword } = req.query;
+  let clubs = [];
+  if (keyword) {
+    clubs = await Club.find({
+      activity: {
+        $regex: new RegExp(keyword, "i"),
       },
     });
   }
