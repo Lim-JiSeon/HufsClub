@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
 import Header from "../components/Header";
-import Image from "../components/func/Image";
 
 function MainPage() {
   const MainContainer = styled.div`
