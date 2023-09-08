@@ -22,11 +22,11 @@ function Dropdown() {
       <Link to="/mypage" style={{ textDecoration: "none" }}>
         <DropdownList>마이페이지</DropdownList>
       </Link>
-      <hr style={{heigh: "2px"}}/>
+      <hr style={{ heigh: "2px" }} />
       <Link to="/" style={{ textDecoration: "none" }}>
         <DropdownList
           onClick={() => {
-            sessionStorage.setItem("isLogin", "");
+            sessionStorage.clear();
           }}>
           로그아웃
         </DropdownList>
