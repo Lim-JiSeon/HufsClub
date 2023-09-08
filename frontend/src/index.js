@@ -12,6 +12,7 @@ import AreaPage from "./pages/AreaPage";
 import IntroPage from "./pages/IntroPage";
 import InputPage from "./pages/InputPage";
 import MyPage from "./pages/MyPage";
+import NotPage from "./pages/NotPage";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -25,6 +26,7 @@ root.render(
         <Route path="/intro" element={<IntroPage />} />
         <Route path="/input" element={<InputPage />} />
         <Route path="/mypage" element={<MyPage />} />
+        <Route path="*" element={<NotPage />} />
       </Routes>
     </BrowserRouter>
     <App />
