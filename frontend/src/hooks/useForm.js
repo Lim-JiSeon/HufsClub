@@ -33,7 +33,6 @@ const useForm = ({ initialValues, onSubmit, validate }) => {
     console.log(Object.keys(newErrors))
     if (Object.keys(newErrors).length === 0) {
       await signup(values);
-      console.log("확인");
     }
     setErrors(newErrors);
     setIsLoading(false);
