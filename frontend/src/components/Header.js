@@ -1,7 +1,10 @@
 import styled from "@emotion/styled";
 import Image from "../components/func/Image";
 import logoImg from "../images/logo.png";
-import { Link } from 'react-router-dom';
+import { Link, useRouteLoaderData } from "react-router-dom";
+import Avatar from "./Avatar";
+import { useEffect } from "react";
+import { useState } from "react";
 
 const Header = () => {
   const isLogin = sessionStorage.getItem("isLogin") ?? "";
@@ -38,20 +41,20 @@ const Header = () => {
   return (
     <Header>
       <HomeButton isLogin={isLogin}>
-        <Link to="/"><Image src={logoImg} alt="home" /></Link>
+        <Link to="/">
+          <Image src={logoImg} alt="home" />
+        </Link>
       </HomeButton>
       {isLogin ? (
-        <Image
-          src="https://e7.pngegg.com/pngimages/1000/665/png-clipart-computer-icons-profile-s-free-angle-sphere.png"
-          alt="프로필"
-          width={50}
-          height={50}
-          borderRadius={50}
-        />
+        <Avatar />
       ) : (
         <SignButtonContainer isLogin={isLogin}>
-          <SignButton>로그인</SignButton>
-          <SignButton>회원가입</SignButton>
+          <Link to="/login">
+            <SignButton>로그인</SignButton>
+          </Link>
+          <Link to="/signup">
+            <SignButton>회원가입</SignButton>
+          </Link>
         </SignButtonContainer>
       )}
     </Header>
