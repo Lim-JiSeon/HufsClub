@@ -1,11 +1,21 @@
-const Image = ({ src, width, height, alt, ...props }) => {
+const Image = ({ src, width, height, borderRadius, alt, ...props }) => {
   const imageStyle = {
     display: "block",
     width: width ? width : "120px",
     height: height ? height : "120px",
+    borderRadius: borderRadius ? borderRadius : undefined,
+    margin: "auto",
   };
 
-  return <img {...props} src={src} alt={alt} style={{ ...imageStyle }} />;
+  return (
+    <img
+      {...props}
+      src={src}
+      alt={alt}
+      style={{ ...imageStyle }}
+      border-radius={{ borderRadius }}
+    />
+  );
 };
 
 export default Image;

@@ -8,6 +8,7 @@ import Radio from "./func/Radio";
 import RadioGroup from "./func/RadioGroup";
 import { useState } from "react";
 import styled from "@emotion/styled";
+import { Link } from "react-router-dom";
 
 const AgreementWrap = styled.div`
   text-align: right;
