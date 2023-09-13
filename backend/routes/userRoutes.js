@@ -135,11 +135,20 @@ userRouter.put(
     const user = await User.findById(req.user._id);
     if (user) {
       user.username = req.body.username || user.username;
+      user.studentId = req.body.studentId || user.studentId; 
       user.major = req.body.major || user.major;
       user.major2 = req.body.major2;
       user.email = req.body.email || user.email;
       user.isEnroll = req.body.isEnroll || user.isEnroll;
       user.isPresident = req.body.isPresident;
+      if (req.body.password) { 
+        //기존 비밀번호 일치 여부 확인
+        if (bcrypt.compareSync(req.body.password, user.password)) {
+          user.password = bcrypt.hashSync(req.body.newPassword);
+        } else { //기존 비밀번호 불일치
+          return res.status(404).send({ message: 'Invalid existing password' });
+        }
+      }
 
       const updatedUser = await user.save();
       res.send({
