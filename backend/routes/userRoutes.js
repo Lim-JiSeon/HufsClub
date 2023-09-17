@@ -189,8 +189,8 @@ userRouter.post(
         .messages()
         .send(
           {
-            from: 'HufsClub <me@mg.yourdomain.com>',
-            to: `${user.name} <${user.email}>`,
+            from: 'HufsClub <mailgun@hufsclub.site>',
+            to: `${user.username} <${user.email}>`,
             subject: `Reset Password`,
             html: ` 
              <p>Please Click the following link to reset your password:</p> 
@@ -219,7 +219,7 @@ userRouter.post(
         const user = await User.findOne({ resetToken: req.body.token });
         if (user) {
           if (req.body.password) {
-            user.password = bcrypt.hashSync(req.body.password, 8);
+            user.password = bcrypt.hashSync(req.body.password);
             await user.save();
             res.send({
               message: 'Password reseted successfully',
