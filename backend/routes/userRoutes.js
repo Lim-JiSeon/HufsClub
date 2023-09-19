@@ -4,6 +4,8 @@ import expressAsyncHandler from 'express-async-handler';
 import jwt from 'jsonwebtoken';
 import User from '../models/userModel.js';
 import { isAuth, isAdmin, isPresident, generateToken } from '../utili.js';
+import formData from 'form-data';
+import Mailgun from 'mailgun-js';
 
 const userRouter = express.Router();
 
@@ -170,15 +172,14 @@ userRouter.put(
   })
 );
 
-/* 이메일 전송 테스트용 코드
-const formData = require('form-data');
-const Mailgun = require('mailgun.js');
+//이메일 전송 테스트용 코드
+/*
 const mailgun = new Mailgun(formData);
-const mg = mailgun.client({username: 'api', key: process.env.MAILGUN_API_KEY || 'pubkey-372c004bef6d74e2d3f33ba028326f95'});
-
-mg.messages.create('sandbox-123.mailgun.org', {
-	from: "Excited User <mailgun@sandbox-123.mailgun.org>",
-	to: ["test@example.com"],
+const mg = mailgun.client({username: 'api', apiKey: process.env.MAILGUN_API_KEY});
+  
+mg.messages.create('sandbox58819a03172749dfa3bef50cd67c8cbe.mailgun.org', {
+	from: "Excited User <sdfdfe@naver.com>",
+	to: ["dfeefeg@naver.com"],
 	subject: "Hello",
 	text: "Testing some Mailgun awesomeness!",
 	html: "<h1>Testing some Mailgun awesomeness!</h1>"
