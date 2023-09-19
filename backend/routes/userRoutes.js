@@ -3,9 +3,7 @@ import bcrypt from 'bcryptjs';
 import expressAsyncHandler from 'express-async-handler';
 import jwt from 'jsonwebtoken';
 import User from '../models/userModel.js';
-import { isAuth, isAdmin, isPresident, generateToken } from '../utili.js';
-import formData from 'form-data';
-import Mailgun from 'mailgun-js';
+import { isAuth, isAdmin, isPresident, generateToken, baseUrl, mailgun } from '../utili.js';
 
 const userRouter = express.Router();
 
@@ -174,20 +172,50 @@ userRouter.put(
 
 //이메일 전송 테스트용 코드
 /*
-const mailgun = new Mailgun(formData);
-const mg = mailgun.client({username: 'api', apiKey: process.env.MAILGUN_API_KEY});
-  
-mg.messages.create('sandbox58819a03172749dfa3bef50cd67c8cbe.mailgun.org', {
-	from: "Excited User <sdfdfe@naver.com>",
-	to: ["dfeefeg@naver.com"],
-	subject: "Hello",
-	text: "Testing some Mailgun awesomeness!",
-	html: "<h1>Testing some Mailgun awesomeness!</h1>"
-})
-.then(msg => console.log(msg)) // logs response data
-.catch(err => console.log(err)); // logs any error
+dotenv.config();
+ 
+// Mailgun API 엔드포인트 및 인증 설정
+const API_KEY = process.env.MAILGUN_API_KEY;
+const DOMAIN = process.env.MAILGUN_DOMAIN;  
+const mailgunBaseURL = `https://api.mailgun.net/v3/${DOMAIN}`;
+const axiosInstance = axios.create({
+  baseURL: mailgunBaseURL,
+  auth: {
+    username: 'api',
+    password: API_KEY,
+  },
+});
+
+// 이메일 보내기 함수
+async function sendEmail() {
+  try {
+    const response = await axiosInstance.post('/messages', {
+      from: 'Excited User <softbear15@gamil.com>',
+      to: 'rac8793@naver.com',
+      subject: '메일 제목',
+      text: '메일 내용',
+    });
+
+    console.log('이메일 전송 결과:', response.data);
+  } catch (error) {
+    console.error('이메일 전송 중 오류 발생:', error);
+  }
+}
+
+// 이메일 보내기 함수 호출
+sendEmail();
+axiosInstance.interceptors.request.use(request => {
+  console.log('요청:', request);
+  return request;
+});
+
+axiosInstance.interceptors.response.use(response => {
+  console.log('응답:', response);
+  return response;
+});
 */
 
+//비밀번호 찾기
 /*
 userRouter.post(
   '/forget-password',
@@ -208,7 +236,7 @@ userRouter.post(
         .messages()
         .send(
           {
-            from: 'HufsClub <mailgun@hufsclub.site>',
+            from: 'HufsClub <mailgun@sandbox58819a03172749dfa3bef50cd67c8cbe.mailgun.org>',
             to: `${user.username} <${user.email}>`,
             subject: `Reset Password`,
             html: ` 
@@ -252,6 +280,7 @@ userRouter.post(
   })
 );
 */
+
 //좋아요 추가
 userRouter.put(
   '/like',
