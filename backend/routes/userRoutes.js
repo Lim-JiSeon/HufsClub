@@ -4,6 +4,7 @@ import expressAsyncHandler from 'express-async-handler';
 import jwt from 'jsonwebtoken';
 import User from '../models/userModel.js';
 import { isAuth, isAdmin, isPresident, generateToken, baseUrl, mailgun } from '../utili.js';
+import nodemailer from 'nodemailer';
 
 const userRouter = express.Router();
 
@@ -216,6 +217,38 @@ axiosInstance.interceptors.response.use(response => {
 */
 
 //비밀번호 찾기
+userRouter.post(
+  '/forget-password',
+  expressAsyncHandler(async (req, res) => {
+    const transport = nodemailer.createTransport({
+      service: "Gmail",
+      auth: {
+        user: process.env.GOOGLE_ACCOUNT,
+        pass: process.env.APP_PASSWORD,
+      },
+    });
+
+    const user = await User.findOne({ email: req.body.email });
+    const message = {
+      from: 'HufsClub <process.env.GOOGLE_ACCOUNT>',
+      to: `${user.username} <${user.email}>`,
+      subject: `Reset Password`,
+      html: ` 
+        <p>Please Click the following link to reset your password:</p> 
+        <a href="${baseUrl()}/reset-password/${token}"}>Reset Password</a>
+      `,
+    };
+     
+    transport.sendMail(message, (err, info) => {
+      if (err) {
+        console.error("err", err);
+        return;
+      }
+     
+      console.log("ok", info);
+    });
+  })
+);
 /*
 userRouter.post(
   '/forget-password',
