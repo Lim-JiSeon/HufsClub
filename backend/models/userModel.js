@@ -12,6 +12,7 @@ const userSchema = new mongoose.Schema(
     isPresident: { type: String, trim: true },
     isAdmin: { type: Boolean, required: true, default: false },
     like: [{ type: String, trim: true }],
+    resetToken: { type: String },
   },
   {
     timestamps: true,

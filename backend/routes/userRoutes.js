@@ -171,90 +171,11 @@ userRouter.put(
   })
 );
 
-//이메일 전송 테스트용 코드
-/*
-dotenv.config();
- 
-// Mailgun API 엔드포인트 및 인증 설정
-const API_KEY = process.env.MAILGUN_API_KEY;
-const DOMAIN = process.env.MAILGUN_DOMAIN;  
-const mailgunBaseURL = `https://api.mailgun.net/v3/${DOMAIN}`;
-const axiosInstance = axios.create({
-  baseURL: mailgunBaseURL,
-  auth: {
-    username: 'api',
-    password: API_KEY,
-  },
-});
-
-// 이메일 보내기 함수
-async function sendEmail() {
-  try {
-    const response = await axiosInstance.post('/messages', {
-      from: 'Excited User <softbear15@gamil.com>',
-      to: 'rac8793@naver.com',
-      subject: '메일 제목',
-      text: '메일 내용',
-    });
-
-    console.log('이메일 전송 결과:', response.data);
-  } catch (error) {
-    console.error('이메일 전송 중 오류 발생:', error);
-  }
-}
-
-// 이메일 보내기 함수 호출
-sendEmail();
-axiosInstance.interceptors.request.use(request => {
-  console.log('요청:', request);
-  return request;
-});
-
-axiosInstance.interceptors.response.use(response => {
-  console.log('응답:', response);
-  return response;
-});
-*/
-
 //비밀번호 찾기
 userRouter.post(
   '/forget-password',
   expressAsyncHandler(async (req, res) => {
-    const transport = nodemailer.createTransport({
-      service: "Gmail",
-      auth: {
-        user: process.env.GOOGLE_ACCOUNT,
-        pass: process.env.APP_PASSWORD,
-      },
-    });
-
     const user = await User.findOne({ email: req.body.email });
-    const message = {
-      from: 'HufsClub <process.env.GOOGLE_ACCOUNT>',
-      to: `${user.username} <${user.email}>`,
-      subject: `Reset Password`,
-      html: ` 
-        <p>Please Click the following link to reset your password:</p> 
-        <a href="${baseUrl()}/reset-password/${token}"}>Reset Password</a>
-      `,
-    };
-     
-    transport.sendMail(message, (err, info) => {
-      if (err) {
-        console.error("err", err);
-        return;
-      }
-     
-      console.log("ok", info);
-    });
-  })
-);
-/*
-userRouter.post(
-  '/forget-password',
-  expressAsyncHandler(async (req, res) => {
-    const user = await User.findOne({ email: req.body.email });
-
     if (user) {
       const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
         expiresIn: '3h',
@@ -265,23 +186,31 @@ userRouter.post(
       //reset link
       console.log(`${baseUrl()}/reset-password/${token}`);
 
-      mailgun()
-        .messages()
-        .send(
-          {
-            from: 'HufsClub <mailgun@sandbox58819a03172749dfa3bef50cd67c8cbe.mailgun.org>',
-            to: `${user.username} <${user.email}>`,
-            subject: `Reset Password`,
-            html: ` 
-             <p>Please Click the following link to reset your password:</p> 
-             <a href="${baseUrl()}/reset-password/${token}"}>Reset Password</a>
-             `,
-          },
-          (error, body) => {
-            console.log(error);
-            console.log(body);
-          }
-        );
+      const transport = nodemailer.createTransport({
+        service: "Gmail",
+        auth: {
+          user: process.env.GOOGLE_ACCOUNT,
+          pass: process.env.APP_PASSWORD,
+        },
+      });
+      
+      const message = {
+        from: 'HufsClub <process.env.GOOGLE_ACCOUNT>',
+        to: `${user.username} <${user.email}>`,
+        subject: `Reset Password`,
+        html: ` 
+          <p>Please Click the following link to reset your password:</p> 
+          <a href="${baseUrl()}/reset-password/${token}"}>Reset Password</a>
+        `,
+      };
+       
+      transport.sendMail(message, (err, info) => {
+        if (err) {
+          console.error("err", err);
+          return;
+        }
+        console.log("ok", info);
+      });
       res.send({ message: 'We sent reset password link to your email.' });
     } else {
       res.status(404).send({ message: 'User not found' });
@@ -312,7 +241,7 @@ userRouter.post(
     });
   })
 );
-*/
+
 
 //좋아요 추가
 userRouter.put(
