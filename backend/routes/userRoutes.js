@@ -3,7 +3,7 @@ import bcrypt from 'bcryptjs';
 import expressAsyncHandler from 'express-async-handler';
 import jwt from 'jsonwebtoken';
 import User from '../models/userModel.js';
-import { isAuth, isAdmin, isPresident, generateToken, baseUrl, mailgun } from '../utili.js';
+import { isAuth, isAdmin, isPresident, generateToken, baseUrl } from '../utili.js';
 import nodemailer from 'nodemailer';
 
 const userRouter = express.Router();
