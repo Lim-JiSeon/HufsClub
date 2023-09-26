@@ -5,6 +5,7 @@ import jwt from 'jsonwebtoken';
 import User from '../models/userModel.js';
 import { isAuth, isAdmin, isPresident, generateToken, baseUrl } from '../utili.js';
 import nodemailer from 'nodemailer';
+import Randomstring from 'randomstring';
 
 const userRouter = express.Router();
 
@@ -171,7 +172,69 @@ userRouter.put(
   })
 );
 
-//비밀번호 찾기
+//아이디 찾기(메일 전송)
+userRouter.post(
+  '/forget-id',
+  expressAsyncHandler(async (req, res) => {
+    const user = await User.findOne({ username: req.body.username, email: req.body.email });
+    if (user) {
+      // 무작위 인증번호 생성
+      const verificationCode = Randomstring.generate(6); // 6자리 무작위 문자열 생성
+
+      user.verificationCode = verificationCode;
+      await user.save();
+
+      const transport = nodemailer.createTransport({
+        service: "Gmail",
+        auth: {
+          user: process.env.GOOGLE_ACCOUNT,
+          pass: process.env.APP_PASSWORD,
+        },
+      });
+      
+      const message = {
+        from: 'HufsClub <process.env.GOOGLE_ACCOUNT>', // 보내는 이메일 주소
+        to: `${user.username} <${user.email}>`,        // 받는 이메일 주소
+        subject: `ID Finding Verification Code`,       // 이메일 제목
+        text: `인증번호: ${verificationCode}`,         // 이메일 내용
+      };
+       
+      transport.sendMail(message, (err, info) => {
+        if (err) {
+          console.error("err", err);
+          return;
+        }
+        console.log("ok", info);
+      });
+      res.send({ message: 'We sent verification code to your email.' });
+    } else {
+      res.status(404).send({ message: 'User not found' });
+    }
+  })
+);
+
+//아이디 확인(인증번호 확인)
+userRouter.post(
+  '/verify-verification-code',
+  expressAsyncHandler(async (req, res) => {
+    // 이메일을 기반으로 사용자를 찾습니다.
+    const user = await User.findOne({ email: req.body.email });
+
+    if (!user) {
+      return res.status(404).send({ message: '사용자를 찾을 수 없습니다.' });
+    }
+
+    // 인증번호를 확인합니다.
+    if (req.body.verificationCode !== user.verificationCode) {
+      return res.status(400).send({ message: '인증번호가 올바르지 않습니다.' });
+    }
+
+    // 올바른 인증번호인 경우 아이디 반환
+    res.status(200).send({ message: '아이디 찾기 성공', studentId: user.studentId });
+  })
+);
+
+//비밀번호 찾기(메일 전송)
 userRouter.post(
   '/forget-password',
   expressAsyncHandler(async (req, res) => {
@@ -218,6 +281,7 @@ userRouter.post(
   })
 );
 
+//비밀번호 찾기(새 비밀번호 입력)
 userRouter.post(
   '/reset-password',
   expressAsyncHandler(async (req, res) => {

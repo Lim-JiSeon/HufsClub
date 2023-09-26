@@ -13,6 +13,7 @@ const userSchema = new mongoose.Schema(
     isAdmin: { type: Boolean, required: true, default: false },
     like: [{ type: String, trim: true }],
     resetToken: { type: String },
+    verificationCode: { type: String },
   },
   {
     timestamps: true,
