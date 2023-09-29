@@ -3,7 +3,9 @@ import bcrypt from 'bcryptjs';
 import expressAsyncHandler from 'express-async-handler';
 import jwt from 'jsonwebtoken';
 import User from '../models/userModel.js';
-import { isAuth, isAdmin, isPresident, generateToken, baseUrl, mailgun } from '../utili.js';
+import { isAuth, isAdmin, isPresident, generateToken, baseUrl } from '../utili.js';
+import nodemailer from 'nodemailer';
+import Randomstring from 'randomstring';
 
 const userRouter = express.Router();
 
@@ -170,58 +172,73 @@ userRouter.put(
   })
 );
 
-//이메일 전송 테스트용 코드
-/*
-dotenv.config();
- 
-// Mailgun API 엔드포인트 및 인증 설정
-const API_KEY = process.env.MAILGUN_API_KEY;
-const DOMAIN = process.env.MAILGUN_DOMAIN;  
-const mailgunBaseURL = `https://api.mailgun.net/v3/${DOMAIN}`;
-const axiosInstance = axios.create({
-  baseURL: mailgunBaseURL,
-  auth: {
-    username: 'api',
-    password: API_KEY,
-  },
-});
+//아이디 찾기(메일 전송)
+userRouter.post(
+  '/forget-id',
+  expressAsyncHandler(async (req, res) => {
+    const user = await User.findOne({ username: req.body.username, email: req.body.email });
+    if (user) {
+      // 무작위 인증번호 생성
+      const verificationCode = Randomstring.generate(6); // 6자리 무작위 문자열 생성
 
-// 이메일 보내기 함수
-async function sendEmail() {
-  try {
-    const response = await axiosInstance.post('/messages', {
-      from: 'Excited User <softbear15@gamil.com>',
-      to: 'rac8793@naver.com',
-      subject: '메일 제목',
-      text: '메일 내용',
-    });
+      user.verificationCode = verificationCode;
+      await user.save();
 
-    console.log('이메일 전송 결과:', response.data);
-  } catch (error) {
-    console.error('이메일 전송 중 오류 발생:', error);
-  }
-}
+      const transport = nodemailer.createTransport({
+        service: "Gmail",
+        auth: {
+          user: process.env.GOOGLE_ACCOUNT,
+          pass: process.env.APP_PASSWORD,
+        },
+      });
+      
+      const message = {
+        from: 'HufsClub <process.env.GOOGLE_ACCOUNT>', // 보내는 이메일 주소
+        to: `${user.username} <${user.email}>`,        // 받는 이메일 주소
+        subject: `ID Finding Verification Code`,       // 이메일 제목
+        text: `인증번호: ${verificationCode}`,         // 이메일 내용
+      };
+       
+      transport.sendMail(message, (err, info) => {
+        if (err) {
+          console.error("err", err);
+          return;
+        }
+        console.log("ok", info);
+      });
+      res.send({ message: 'We sent verification code to your email.' });
+    } else {
+      res.status(404).send({ message: 'User not found' });
+    }
+  })
+);
 
-// 이메일 보내기 함수 호출
-sendEmail();
-axiosInstance.interceptors.request.use(request => {
-  console.log('요청:', request);
-  return request;
-});
+//아이디 확인(인증번호 확인)
+userRouter.post(
+  '/verify-verification-code',
+  expressAsyncHandler(async (req, res) => {
+    // 이메일을 기반으로 사용자를 찾습니다.
+    const user = await User.findOne({ email: req.body.email });
 
-axiosInstance.interceptors.response.use(response => {
-  console.log('응답:', response);
-  return response;
-});
-*/
+    if (!user) {
+      return res.status(404).send({ message: '사용자를 찾을 수 없습니다.' });
+    }
 
-//비밀번호 찾기
-/*
+    // 인증번호를 확인합니다.
+    if (req.body.verificationCode !== user.verificationCode) {
+      return res.status(400).send({ message: '인증번호가 올바르지 않습니다.' });
+    }
+
+    // 올바른 인증번호인 경우 아이디 반환
+    res.status(200).send({ message: '아이디 찾기 성공', studentId: user.studentId });
+  })
+);
+
+//비밀번호 찾기(메일 전송)
 userRouter.post(
   '/forget-password',
   expressAsyncHandler(async (req, res) => {
     const user = await User.findOne({ email: req.body.email });
-
     if (user) {
       const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
         expiresIn: '3h',
@@ -232,23 +249,31 @@ userRouter.post(
       //reset link
       console.log(`${baseUrl()}/reset-password/${token}`);
 
-      mailgun()
-        .messages()
-        .send(
-          {
-            from: 'HufsClub <mailgun@sandbox58819a03172749dfa3bef50cd67c8cbe.mailgun.org>',
-            to: `${user.username} <${user.email}>`,
-            subject: `Reset Password`,
-            html: ` 
-             <p>Please Click the following link to reset your password:</p> 
-             <a href="${baseUrl()}/reset-password/${token}"}>Reset Password</a>
-             `,
-          },
-          (error, body) => {
-            console.log(error);
-            console.log(body);
-          }
-        );
+      const transport = nodemailer.createTransport({
+        service: "Gmail",
+        auth: {
+          user: process.env.GOOGLE_ACCOUNT,
+          pass: process.env.APP_PASSWORD,
+        },
+      });
+      
+      const message = {
+        from: 'HufsClub <process.env.GOOGLE_ACCOUNT>',
+        to: `${user.username} <${user.email}>`,
+        subject: `Reset Password`,
+        html: ` 
+          <p>Please Click the following link to reset your password:</p> 
+          <a href="${baseUrl()}/reset-password/${token}"}>Reset Password</a>
+        `,
+      };
+       
+      transport.sendMail(message, (err, info) => {
+        if (err) {
+          console.error("err", err);
+          return;
+        }
+        console.log("ok", info);
+      });
       res.send({ message: 'We sent reset password link to your email.' });
     } else {
       res.status(404).send({ message: 'User not found' });
@@ -256,6 +281,7 @@ userRouter.post(
   })
 );
 
+//비밀번호 찾기(새 비밀번호 입력)
 userRouter.post(
   '/reset-password',
   expressAsyncHandler(async (req, res) => {
@@ -279,7 +305,7 @@ userRouter.post(
     });
   })
 );
-*/
+
 
 //좋아요 추가
 userRouter.put(

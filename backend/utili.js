@@ -1,5 +1,4 @@
 import jwt from 'jsonwebtoken';
-import mg from 'mailgun-js';
 
 const baseUrl = () =>
   process.env.BASE_URL
@@ -56,10 +55,4 @@ const isPresident = (req, res, next) => {
   }
 };
 
-const mailgun = () =>
-  mg({
-    apiKey: process.env.MAILGUN_API_KEY,
-    domain: process.env.MAILGUN_DOMIAN,
-  });
-
-export { generateToken, isAuth, isAdmin, isPresident, baseUrl, mailgun };
+export { generateToken, isAuth, isAdmin, isPresident, baseUrl };
