@@ -5,7 +5,8 @@ const search = (keyword) => {
   axios
     .get(`${API_END_POINT}clubs/search?keyword=${keyword}`)
     .then((res) => {
-      console.log(res);
+      console.log(res.data)
+      return res.data;
     })
     .catch((err) => {
       console.log(err);
