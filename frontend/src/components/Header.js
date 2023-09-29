@@ -1,10 +1,8 @@
 import styled from "@emotion/styled";
 import Image from "../components/func/Image";
 import logoImg from "../images/logo.png";
-import { Link, useRouteLoaderData } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Avatar from "./Avatar";
-import { useEffect } from "react";
-import { useState } from "react";
 
 const Header = () => {
   const isLogin = sessionStorage.getItem("isLogin") ?? "";
