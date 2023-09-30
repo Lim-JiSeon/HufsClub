@@ -21,7 +21,7 @@ const data = {
         password: bcrypt.hashSync('123456'),
         isEnroll: '졸업',
         isPresident: '오징어심리연구',
-        like: ['PnP'],
+        like: ['PnP', '피버스'],
     },
   ],
   clubs: [

@@ -3,6 +3,7 @@ import bcrypt from 'bcryptjs';
 import expressAsyncHandler from 'express-async-handler';
 import jwt from 'jsonwebtoken';
 import User from '../models/userModel.js';
+import Club from '../models/clubModel.js';
 import { isAuth, isAdmin, isPresident, generateToken, baseUrl } from '../utili.js';
 import nodemailer from 'nodemailer';
 import Randomstring from 'randomstring';
@@ -10,7 +11,6 @@ import Randomstring from 'randomstring';
 const userRouter = express.Router();
 
 //좋아요 삭제
-//좋아요 정보조회
 
 //회원가입
 userRouter.post(
@@ -106,12 +106,21 @@ userRouter.get(
     }
   })
 );
-/*
+
 //정보수정-사용자 정보 조회
 userRouter.get('/info/:id', async (req, res) => {
   const userId = req.params.id; //데이터베이스 아이디
   try {
     const user = await User.findById(userId);
+    //좋아요한 동아리 정보 찾아서 보내기(name, logoUrl, topic)
+    let likes = [];
+    var i = 0;
+    for (i = 0; i < user.like.length; i++) {
+      const club = await Club.find({ name: user.like[i] });
+      if (club) {
+        likes.push(club);
+      } 
+    }
     res.send({
       _id: user.id,
       username: user.username,
@@ -120,15 +129,14 @@ userRouter.get('/info/:id', async (req, res) => {
       major: user.major,
       major2: user.major2,
       isEnroll: user.isEnroll,
-      isPresident: user.isPresident,
-      like: user.like, //좋아요한 동아리 정보 찾아서 보내기
+      likes,
       token: generateToken(user),
     });
   } catch (error) {
     res.status(400).send({ message: error.message });
   }
 });
-*/
+
 //정보수정-새로운 정보 업데이트(좋아요 제외, 좋아요는 동아리 글 상세페이지에서 수정)
 userRouter.put(
   '/profile',
