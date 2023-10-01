@@ -79,6 +79,7 @@ clubRouter.get('/:id', async (req, res) => {
 //동아리 글 작성
 //동아리 글 수정
 //동아리 글 삭제(사용자의 like에서도 삭제되어야 함.)
+//좋아요 기능
 /*
 clubRouter.post(
   '/',

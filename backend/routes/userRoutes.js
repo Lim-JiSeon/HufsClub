@@ -10,8 +10,6 @@ import Randomstring from 'randomstring';
 
 const userRouter = express.Router();
 
-//좋아요 삭제
-
 //회원가입
 userRouter.post(
   '/signup',
