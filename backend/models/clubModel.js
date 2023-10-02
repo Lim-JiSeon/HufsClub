@@ -23,7 +23,7 @@ const clubSchema = new mongoose.Schema(
     recruit: recruitSchema,
     room: { type: String, trim: true },
     logoUrl: String,
-    imageUrl: String,
+    imageUrl: [{type: String}],
     meta: {
       views: { type: Number, default: 0, required: true },
     },
