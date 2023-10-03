@@ -4,7 +4,7 @@ import expressAsyncHandler from 'express-async-handler';
 import jwt from 'jsonwebtoken';
 import User from '../models/userModel.js';
 import Club from '../models/clubModel.js';
-import { isAuth, isAdmin, isPresident, generateToken, baseUrl } from '../utili.js';
+import { isAuth, isAdmin, generateToken, baseUrl } from '../utili.js';
 import nodemailer from 'nodemailer';
 import Randomstring from 'randomstring';
 
@@ -320,7 +320,7 @@ userRouter.put(
   expressAsyncHandler(async (req, res) => {
     const user = await User.findById(req.user._id);
     if (user) {
-      user.like.push(req.body.like);
+      user.like.push(req.body.clubname);
       const updatedUser = await user.save();
       res.send({
         _id: updatedUser._id,

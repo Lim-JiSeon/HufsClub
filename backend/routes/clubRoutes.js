@@ -1,7 +1,7 @@
 import express from 'express';
 import expressAsyncHandler from 'express-async-handler';
 import Club from '../models/clubModel.js';
-import { isAuth, isAdmin } from '../utili.js';
+import { isAuth, isAdmin, isPresidentOrAdmin } from '../utili.js';
 
 const clubRouter = express.Router();
 
@@ -75,16 +75,12 @@ clubRouter.get('/:id', async (req, res) => {
     res.status(404).send({ message: 'Club Not Found' });
   }
 });
-
-//동아리 글 작성
-//동아리 글 수정
-//동아리 글 삭제(사용자의 like에서도 삭제되어야 함.)
-//좋아요 기능
 /*
+//동아리 글 작성
 clubRouter.post(
   '/',
   isAuth,
-  isAdmin,
+  isPresidentOrAdmin,
   expressAsyncHandler(async (req, res) => {
     const newClub = new Club({
       name: 'sample name ' + Date.now(),
@@ -103,6 +99,8 @@ clubRouter.post(
   })
 );
 
+//동아리 글 수정
+//동아리 글 삭제(사용자의 like에서도 삭제되어야 함.)
 clubRouter.put(
   '/:id',
   isAuth,
