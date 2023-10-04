@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
-import LoginForm from "../components/LoginForm";
+import FindIdForm from "../components/FindIdForm";
 import Header from "../components/Header";
 
 const Wrapper = styled.div`
@@ -21,7 +21,7 @@ function FindIdPage() {
     <Wrapper>
       <Header></Header>
       <FormWrapper>
-        <LoginForm onSubmit />
+        <FindIdForm onSubmit />
       </FormWrapper>
     </Wrapper>
   );

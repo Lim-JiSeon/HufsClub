@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
-import LoginForm from "../components/LoginForm";
+import FindPwForm from "../components/FindPwForm";
 import Header from "../components/Header";
 
 const Wrapper = styled.div`
@@ -21,7 +21,7 @@ function FindPwPage() {
     <Wrapper>
       <Header></Header>
       <FormWrapper>
-        <LoginForm onSubmit />
+        <FindPwForm onSubmit />
       </FormWrapper>
     </Wrapper>
   );
