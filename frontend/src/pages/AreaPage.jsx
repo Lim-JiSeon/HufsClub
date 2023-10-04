@@ -46,16 +46,16 @@ const Input = styled.input`
 const Icon = styled.img`
   width: 30px;
   height: 30px;
-`
+`;
 
 function AreaPage() {
   const area = useParams().field;
   const [keyword, setKeyword] = useState("");
-
+  
   const handleEnter = async (e) => {
     if (e.key === "Enter") {
-      const result = await search(keyword);
-      console.log(result);
+      const searchResult = await search(keyword);
+      console.log(searchResult.data);
     }
   };
 
@@ -70,7 +70,7 @@ function AreaPage() {
           onChange={(e) => setKeyword(e.target.value)}
           onKeyDown={handleEnter}
         />
-        <Icon src={searchIcon} alt="검색 아이콘"/>
+        <Icon src={searchIcon} alt="검색 아이콘" />
       </SearchBar>
     </AreaContainer>
   );
