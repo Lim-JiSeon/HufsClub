@@ -4,6 +4,26 @@ import ErrorText from "./errors/ErrorText";
 import Input from "./func/Input";
 import CardForm from "./CardForm";
 import Title from "./TopicTitle";
+import { Link } from "react-router-dom";
+import styled from "@emotion/styled";
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  cursor: pointer;
+  padding: 20px 25px 0 25px;
+  color: #526d82;
+  font-size: 16px;
+  font-weight: bold;
+  &:hover {
+    color: #9fb5c7;
+  }
+`;
+
+const LinkContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 const LoginForm = ({ onSubmit }) => {
   const checkNum = /^[0-9]+$/;
@@ -42,6 +62,10 @@ const LoginForm = ({ onSubmit }) => {
       <Button type="submit" disabled={isLoading}>
         로그인
       </Button>
+      <LinkContainer>
+        <StyledLink to="/find/id">아이디 찾기</StyledLink>
+        <StyledLink to="/find/password">비밀번호 찾기</StyledLink>
+      </LinkContainer>
     </CardForm>
   );
 };
