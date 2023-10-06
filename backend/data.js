@@ -21,7 +21,7 @@ const data = {
         password: bcrypt.hashSync('123456'),
         isEnroll: '졸업',
         isPresident: '오징어심리연구',
-        like: ['PnP'],
+        like: ['PnP', '피버스'],
     },
   ],
   clubs: [
@@ -36,9 +36,12 @@ const data = {
         recruit: {
             period: '2월말에서 3월초, 8월 말에서 9월초',
             way: '구글폼으로 지원서 제출 후 면접', 
+            applyUrl: 'https://docs.google.com/forms/d/e/1FAIpQLSdiX396mdgUn6la6y8mJKevGjkxMaxzi7xSu8-CGNQdeSVbyw/closedform',
             num: '변동', //모집인원
         },
+        room: '공학관 316호',
         logoUrl: '/images/pnp.png', // 250px x 250px
+        imageUrl: ['/images/pnp_people.jpg'],
     },
     {
         name: '별하',
