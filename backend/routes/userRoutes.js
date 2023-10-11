@@ -105,6 +105,45 @@ userRouter.get(
   })
 );
 
+//정보수정(마이페이지) - 기존 비밀번호 확인
+userRouter.get(
+  '/check/:id',
+  isAuth,
+  expressAsyncHandler(async (req, res) => {
+    const userId = req.params.id; //데이터베이스 아이디
+    const user = await User.findById(userId);
+    if (!user) {
+      res.status(400).send({ errorMessage: 'Invalid database Id' }); 
+    }
+    const ok = bcrypt.compareSync(req.body.password, user.password);
+    if (!ok) {
+      res.status(400).send({ errorMessage: 'Wrong password' }); 
+    } else {
+      //기존 비밀번호가 맞을 경우
+      const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
+        expiresIn: '3h',
+      });
+      user.checkToken = token;
+      await user.save(); 
+      res.send({
+        _id: user.id,
+        username: user.username,
+        email: user.email,
+        studentId: user.studentId,
+        major: user.major,
+        major2: user.major2,
+        isEnroll: user.isEnroll,
+        isPresident: user.isPresident,
+        isAdmin: user.isAdmin,
+        like: user.like,
+        token: generateToken(user),
+        checkToken: user.checkToken,
+      });
+      return;
+    }
+  })
+);
+
 //정보수정-사용자 정보 조회
 userRouter.get('/info/:id', async (req, res) => {
   const userId = req.params.id; //데이터베이스 아이디
@@ -127,6 +166,7 @@ userRouter.get('/info/:id', async (req, res) => {
       major: user.major,
       major2: user.major2,
       isEnroll: user.isEnroll,
+      isPresident: user.isPresident,
       likes,
       token: generateToken(user),
     });
