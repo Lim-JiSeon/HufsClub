@@ -6,6 +6,8 @@ import CardForm from "./CardForm";
 import Title from "./TopicTitle";
 import styled from "@emotion/styled";
 import findId from "../api/findId";
+import { useState } from "react";
+import getId from "../api/getId";
 
 const EmailWrap = styled.div`
   display: flex;
@@ -22,23 +24,22 @@ const SendEmail = styled.button`
   cursor: pointer;
 `;
 
-const FindIdForm = ({ onSubmit }) => {
-  const checkNum = /^[0-9]+$/;
-  const { values, errors, isLoading, handleChange, handleLogin } = useForm({
+const FindIdForm = () => {
+  const [notificationEmail, setNotificationEmail] = useState("");
+  const { values, errors, isLoading, handleChange } = useForm({
     initialValues: {
       name: "",
       email: "",
-      codeNumber: "",
-    },
-    onSubmit,
-    validate: ({ id, password }) => {
-      const newErrors = {};
-      if (!id || id.length !== 9 || !checkNum.test(id))
-        newErrors.id = "올바른 아이디를 입력해주세요";
-      if (!password) newErrors.password = "비밀번호를 입력해주세요";
-      return newErrors;
+      verificationCode: "",
     },
   });
+
+  const submitId = async () => {
+    const { message, studentId } = await getId(
+      values.email,
+      values.verificationCode
+    );
+  };
 
   return (
     <CardForm>
@@ -55,18 +56,20 @@ const FindIdForm = ({ onSubmit }) => {
         {errors.id && <ErrorText>{errors.id}</ErrorText>}
         <SendEmail
           type="button"
-          onClick={() => findId(values.name, values.email)}>
+          onClick={() =>
+            setNotificationEmail(findId(values.name, values.email))
+          }>
           인증번호 받기
         </SendEmail>
       </EmailWrap>
       <Input
-        type="number"
-        name="codeNumber"
+        type="text"
+        name="verificationCode"
         onChange={handleChange}
         label="인증번호"
       />
       {errors.id && <ErrorText>{errors.id}</ErrorText>}
-      <Button type="button" disabled={isLoading}>
+      <Button type="button" disabled={isLoading} onClick={submitId}>
         아이디 찾기
       </Button>
     </CardForm>

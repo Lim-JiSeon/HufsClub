@@ -1,18 +1,17 @@
 import axios from "axios";
 
-const findPw = (email) => {
+const findPw =async (email) => {
   const API_END_POINT = "http://localhost:5000/api/";
 
-  console.log(email);
-  axios
+  return axios
     .post(`${API_END_POINT}users/forget-password`, {
-      email: email, //"rac8793@naver.com",
+      email: email,
     })
     .then((res) => {
-      console.log(res);
+      return res.data;
     })
     .catch((err) => {
-      console.log(err);
+      return err;
     });
 };
 
