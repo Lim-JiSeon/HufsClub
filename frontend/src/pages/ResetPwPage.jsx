@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
-import FindPwForm from "../components/FindPwForm";
+import ResetPwForm from "../components/ResetPwForm";
 import Header from "../components/Header";
 
 const Wrapper = styled.div`
@@ -16,15 +16,15 @@ const FormWrapper = styled.div`
   padding: 50px 0;
 `;
 
-function FindPwPage() {
+function ResetPwPage() {
   return (
     <Wrapper>
       <Header></Header>
       <FormWrapper>
-        <FindPwForm />
+        <ResetPwForm />
       </FormWrapper>
     </Wrapper>
   );
 }
 
-export default FindPwPage;
+export default ResetPwPage;
