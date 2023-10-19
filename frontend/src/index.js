@@ -15,6 +15,7 @@ import MyPage from "./pages/MyPage";
 import NotPage from "./pages/NotPage";
 import FindIdPage from "./pages/FindIdPage";
 import FindPwPage from "./pages/FindPwPage";
+import ResetPwPage from "./pages/ResetPwPage";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -30,6 +31,7 @@ root.render(
         <Route path="/intro" element={<IntroPage />} />
         <Route path="/input" element={<InputPage />} />
         <Route path="/mypage" element={<MyPage />} />
+        <Route path="/reset-password/:codeNumber" element={<ResetPwPage />} />
         <Route path="*" element={<NotPage />} />
       </Routes>
     </BrowserRouter>

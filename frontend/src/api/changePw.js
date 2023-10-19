@@ -1,11 +1,12 @@
 import axios from "axios";
 
-const findPw =async (email) => {
+const changePw = async (token, password) => {
   const API_END_POINT = "http://localhost:5000/api/";
 
   return axios
-    .post(`${API_END_POINT}users/forget-password`, {
-      email: email,
+    .post(`${API_END_POINT}users/reset-password`, {
+      token: token,
+      password: password,
     })
     .then((res) => {
       return res.data;
@@ -15,4 +16,4 @@ const findPw =async (email) => {
     });
 };
 
-export default findPw;
+export default changePw;

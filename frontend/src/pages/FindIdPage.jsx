@@ -21,7 +21,7 @@ function FindIdPage() {
     <Wrapper>
       <Header></Header>
       <FormWrapper>
-        <FindIdForm onSubmit />
+        <FindIdForm />
       </FormWrapper>
     </Wrapper>
   );
