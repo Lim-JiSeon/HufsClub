@@ -59,11 +59,9 @@ const LoginForm = ({ onSubmit }) => {
         label="비밀번호"
       />
       {errors.password && <ErrorText>{errors.password}</ErrorText>}
-      <Link to="/">
-        <Button type="submit" disabled={isLoading}>
-          로그인
-        </Button>
-      </Link>
+      <Button type="submit" disabled={isLoading}>
+        로그인
+      </Button>
       <LinkContainer>
         <StyledLink to="/find/id">아이디 찾기</StyledLink>
         <StyledLink to="/find/password">비밀번호 찾기</StyledLink>
