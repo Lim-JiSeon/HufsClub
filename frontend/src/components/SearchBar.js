@@ -1,8 +1,10 @@
 import styled from "@emotion/styled";
 import searchIcon from "../images/searchIcon.png";
-import search from "../api/search";
+import searchName from "../api/search/search";
+import searchTopic from "../api/search/topic";
 import { useState } from "react";
 import Select from "./func/Select";
+import searchContent from "../api/search/content";
 
 const Wrapper = styled.div`
   outline: none;
@@ -42,25 +44,28 @@ const Icon = styled.img`
 `;
 
 const OPTIONS = [
-  { value: "clubName", name: "동아리 이름" },
-  { value: "content", name: "활동 내용" },
-  { value: "topic", name: "동아리 주제" },
+  { value: "동아리 이름", name: "동아리 이름" },
+  { value: "활동 내용", name: "활동 내용" },
+  { value: "동아리 주제", name: "동아리 주제" },
 ];
 
 const SearchBar = () => {
   const [keyword, setKeyword] = useState("");
-  const [field, setField] = useState("동아리 이름")
+  const [field, setField] = useState("동아리 이름");
+  const [club, setClub] = useState([]);
 
   const handleEnter = async (e) => {
     if (e.key === "Enter") {
-      const searchResult = await search(keyword);
-      console.log(searchResult.data);
+      if (field === "동아리 이름") setClub(await searchName(keyword));
+      if (field === "활동 내용") setClub(await searchContent(keyword));
+      if (field === "동아리 주제") setClub(await searchTopic(keyword));
     }
+    console.log(club);
   };
 
   return (
     <Wrapper>
-      <Select setField={setField} options={OPTIONS} defaultValue="clubName"/>
+      <Select setField={setField} options={OPTIONS} defaultValue="clubName" />
       <Input
         type="text"
         name="keyword"
