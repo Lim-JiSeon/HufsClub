@@ -49,18 +49,16 @@ const OPTIONS = [
   { value: "동아리 주제", name: "동아리 주제" },
 ];
 
-const SearchBar = () => {
+const SearchBar = (props) => {
   const [keyword, setKeyword] = useState("");
   const [field, setField] = useState("동아리 이름");
-  const [club, setClub] = useState([]);
 
   const handleEnter = async (e) => {
     if (e.key === "Enter") {
-      if (field === "동아리 이름") setClub(await searchName(keyword));
-      if (field === "활동 내용") setClub(await searchContent(keyword));
-      if (field === "동아리 주제") setClub(await searchTopic(keyword));
+      if (field === "동아리 이름") props.setClub(await searchName(keyword));
+      if (field === "활동 내용") props.setClub(await searchContent(keyword));
+      if (field === "동아리 주제") props.setClub(await searchTopic(keyword));
     }
-    console.log(club);
   };
 
   return (
