@@ -22,11 +22,18 @@ const useForm = ({ initialValues, onSubmit, validate }) => {
     setIsLoading(true);
     e.preventDefault();
     const newErrors = validate(values);
-    if (Object.keys(newErrors).length === 0)
-      await login(Number(values.id), values.password);
+    if (Object.keys(newErrors).length === 0) {
+      try {
+        const response = await login(Number(values.id), values.password);
+        sessionStorage.setItem("hufs-club_isLogin", response.data.token);
+        sessionStorage.setItem("hufs-club_id", response.data._id);
+        navigate("/");
+      } catch (error) {
+        alert("올바른 아이디와 비밀번호를 입력해주세요.");
+      }
+    }
     setErrors(newErrors);
     setIsLoading(false);
-    window.location.replace("/");
   };
 
   const handleSignUp = async (e) => {
