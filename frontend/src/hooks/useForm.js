@@ -40,13 +40,17 @@ const useForm = ({ initialValues, onSubmit, validate }) => {
     setIsLoading(true);
     e.preventDefault();
     const newErrors = validate(values);
-    console.log(Object.keys(newErrors));
     if (Object.keys(newErrors).length === 0) {
-      await signup(values);
+      try {
+        const response = await signup(values);
+        alert(`${response.data.username}님 회원가입에 성공하셨습니다.`);
+        navigate("/login");
+      } catch (error) {
+        alert("회원가입에 실패하셨습니다.");
+      }
     }
     setErrors(newErrors);
     setIsLoading(false);
-    window.location.replace("/login");
   };
 
   return {
