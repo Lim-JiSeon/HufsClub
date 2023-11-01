@@ -1,11 +1,10 @@
 import styled from "@emotion/styled";
-import React from "react";
-import { useParams } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import Header from "../components/Header";
 import Image from "../constants/Image";
-import search from "../api/search";
-import { useState } from "react";
-import searchIcon from "../images/searchIcon.png";
+import SearchBar from "../components/SearchBar";
+import ClubGrid from "../components/ClubGrid";
 
 const AreaContainer = styled.div`
   display: flex;
@@ -23,55 +22,39 @@ const Banner = styled.img`
   border: none;
 `;
 
-const SearchBar = styled.div`
-  outline: none;
-  border-radius: 10px;
-  border: solid 2px #526d82;
-  width: 500px;
-  height: 50px;
-  margin: 30px 0 10px 0;
+const ButtonWrap = styled.div`
+  width: 90vw;
+  height: 40px;
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
+  margin-bottom: 20px;
 `;
 
-const Input = styled.input`
-  outline: none;
-  border: none;
-  width: 400px;
-  font-size: 14px;
-  text-align: center;
-`;
-
-const Icon = styled.img`
-  width: 30px;
+const Button = styled.button`
+  width: 120px;
   height: 30px;
+  background-color: #536582;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
 `;
 
 function AreaPage() {
   const area = useParams().field;
-  const [keyword, setKeyword] = useState("");
-  
-  const handleEnter = async (e) => {
-    if (e.key === "Enter") {
-      const searchResult = await search(keyword);
-      console.log(searchResult.data);
-    }
-  };
+  const [club, setClub] = useState([]);
 
   return (
     <AreaContainer>
       <Header></Header>
       <Banner src={getImgURL(area)} />
-      <SearchBar>
-        <Input
-          type="text"
-          name="keyword"
-          onChange={(e) => setKeyword(e.target.value)}
-          onKeyDown={handleEnter}
-        />
-        <Icon src={searchIcon} alt="검색 아이콘" />
-      </SearchBar>
+      <SearchBar setClub={setClub} />
+      <ButtonWrap>
+        <Link to="/">
+          <Button>동아리 등록하기</Button>
+        </Link>
+      </ButtonWrap>
+      <ClubGrid data={club} />
     </AreaContainer>
   );
 }
