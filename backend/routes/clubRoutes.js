@@ -58,8 +58,7 @@ clubRouter.get('/search/activity', async (req, res) => {
   let clubs = [];
   if (keyword) {
     clubs = await Club.find({
-      activity: {
-        $regex: new RegExp(keyword, "i"),
+        'activity.text': { $regex: new RegExp(keyword, "i"),
       },
     });
   }
