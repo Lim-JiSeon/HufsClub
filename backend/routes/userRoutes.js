@@ -381,6 +381,36 @@ userRouter.put(
   })
 );
 
+//좋아요 삭제
+userRouter.put(
+  '/dislike',
+  isAuth,
+  expressAsyncHandler(async (req, res) => {
+    const user = await User.findById(req.user._id);
+    if (user) {
+      let filtered = user.like.filter((element) => element != req.body.clubname);
+      user.like = filtered;
+
+      const updatedUser = await user.save();
+      res.send({
+        _id: updatedUser._id,
+        username: updatedUser.username,
+        email: updatedUser.email,
+        studentId: updatedUser.studentId,
+        major: updatedUser.major,
+        major2: updatedUser.major2,
+        isEnroll: updatedUser.isEnroll,
+        isPresident: updatedUser.isPresident,
+        isAdmin: updatedUser.isAdmin,
+        like: updatedUser.like,
+        token: generateToken(updatedUser),
+      });
+    } else {
+      return res.status(404).send({ message: 'User not found' });
+    }
+  })
+);
+
 //사용자 정보 수정(관리자용)
 userRouter.put(
   '/:id',
