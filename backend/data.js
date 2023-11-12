@@ -22,7 +22,7 @@ const data = {
         major2: '통계학부',
         password: bcrypt.hashSync('123456'),
         isEnroll: '졸업',
-        isPresident: '별하',
+        isPresident: 'PnP',
         like: ['PnP', '피버스'],
     },
   ],

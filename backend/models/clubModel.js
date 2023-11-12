@@ -40,7 +40,7 @@ const clubSchema = new mongoose.Schema(
 clubSchema.static("formatHashtags", function (hashtags) {
   return hashtags
     .split(',')
-    .map((word) => (word.startsWith("#")) ? word : `#${word}`);
+    .map((word) => (word.trim().startsWith("#")) ? word.trim() : `#${word.trim()}`);
 });
 
 const Club = mongoose.model('Club', clubSchema);
