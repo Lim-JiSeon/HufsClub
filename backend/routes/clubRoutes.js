@@ -1,5 +1,6 @@
 import express from 'express';
 import expressAsyncHandler from 'express-async-handler';
+import User from '../models/userModel.js';
 import Club from '../models/clubModel.js';
 import { isAuth, isAdmin, isPresidentOrAdmin } from '../utili.js';
 
@@ -74,24 +75,41 @@ clubRouter.get('/:id', async (req, res) => {
     res.status(404).send({ message: 'Club Not Found' });
   }
 });
-/*
+
+//동아리 글 중복 검사
+clubRouter.get(
+  '/write/check', 
+  isAuth,
+  expressAsyncHandler(async (req, res) => {
+    const user = await User.findById(req.user._id);
+    if (user.isAdmin && !user.isPresident) { //관리자이면서 동아리 회장이 아닌 경우
+      res.send({ message: 'Admin User' });
+    } else {
+      const club = await Club.find({ name: user.isPresident });
+      if(club.length !== 0){
+        res.status(404).send({ message: 'Club Already Exists' });
+      } else {
+        res.send({ message: 'New Writing Available' });
+      }
+    }
+  })
+);
+
 //동아리 글 작성
 clubRouter.post(
   '/',
   isAuth,
-  isPresidentOrAdmin,
   expressAsyncHandler(async (req, res) => {
+    const user = await User.findById(req.user._id);
     const newClub = new Club({
-      name: 'sample name ' + Date.now(),
-      slug: 'sample-name-' + Date.now(),
-      image: '/images/p1.jpg',
-      price: 0,
-      category: 'sample category',
-      brand: 'sample brand',
-      countInStock: 0,
-      rating: 0,
-      numReviews: 0,
-      description: 'sample description',
+      name: (user.isAdmin)? req.body.name : user.isPresident, 
+      field: req.body.field,
+      topic: (req.body.topic)? Club.formatHashtags(req.body.topic) : req.body.topic,
+      executive: req.body.executive,
+      activity: req.body.activity,
+      recruit: req.body.recruit,
+      room: req.body.room,
+      logoUrl: req.body.logoUrl,
     });
     const club = await newClub.save();
     res.send({ message: 'Club Created', club });
@@ -99,35 +117,37 @@ clubRouter.post(
 );
 
 //동아리 글 수정
-//동아리 글 삭제(사용자의 like에서도 삭제되어야 함.)
 clubRouter.put(
   '/:id',
   isAuth,
-  isAdmin,
   expressAsyncHandler(async (req, res) => {
+    const user = await User.findById(req.user._id);
     const clubId = req.params.id;
     const club = await Club.findById(clubId);
     if (club) {
-      club.name = req.body.name;
-      club.slug = req.body.slug;
-      club.price = req.body.price;
-      club.image = req.body.image;
-      club.images = req.body.images;
-      club.category = req.body.category;
-      club.brand = req.body.brand;
-      club.countInStock = req.body.countInStock;
-      club.description = req.body.description;
-      await club.save();
-      res.send({ message: 'Club Updated' });
+      if (user.isAdmin || user.isPresident === club.name) {
+        club.name = ((user.isAdmin)? req.body.name : user.isPresident) || club.name, 
+        club.field = req.body.field || club.field,
+        club.topic = (req.body.topic)? Club.formatHashtags(req.body.topic) : req.body.topic,
+        club.executive = req.body.executive,
+        club.activity = req.body.activity,
+        club.recruit = req.body.recruit,
+        club.room = req.body.room,
+        club.logoUrl = req.body.logoUrl,
+        await club.save();
+        res.send({ message: 'Club Updated', club });
+      } else {
+        res.status(404).send( { message: 'Neither President of this club nor Admin' });
+      }
     } else {
       res.status(404).send({ message: 'Club Not Found' });
     }
   })
 );
-
+/*
+//동아리 글 삭제(사용자의 like에서도 삭제되어야 함.)
 clubRouter.delete(
   '/:id',
-  isAuth,
   isAdmin,
   expressAsyncHandler(async (req, res) => {
     const club = await Club.findById(req.params.id);

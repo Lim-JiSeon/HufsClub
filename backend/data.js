@@ -10,7 +10,9 @@ const data = {
         major2: '통계학부',
         password: bcrypt.hashSync('123456'),
         isEnroll: '재학',
+        isPresident: 'PnP',
         isAdmin: true,
+        like: ['PnP', '그누빌'],
         },
     {
         username: '홍길동',
@@ -20,7 +22,7 @@ const data = {
         major2: '통계학부',
         password: bcrypt.hashSync('123456'),
         isEnroll: '졸업',
-        isPresident: '오징어심리연구',
+        isPresident: 'PnP',
         like: ['PnP', '피버스'],
     },
   ],
