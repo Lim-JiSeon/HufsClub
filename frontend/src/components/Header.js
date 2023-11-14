@@ -5,10 +5,16 @@ import { Link } from "react-router-dom";
 import Avatar from "./Avatar";
 
 const Header = () => {
-  const isLogin = sessionStorage.getItem("isLogin") ?? "";
+  const isLogin = sessionStorage.getItem("hufs-club_isLogin") ?? "";
 
   const Header = styled.div`
     display: flex;
+    align-items: center;
+  `;
+
+  const AvatarWrap = styled.div`
+    display: flex;
+    justify-content: space-around;
     align-items: center;
   `;
 
@@ -39,6 +45,11 @@ const Header = () => {
     }
   `;
 
+  const logout = () => {
+    sessionStorage.setItem("hufs-club_isLogin", "");
+    window.location.reload();
+  };
+
   return (
     <Header>
       <HomeButton isLogin={isLogin}>
@@ -47,7 +58,14 @@ const Header = () => {
         </Link>
       </HomeButton>
       {isLogin ? (
-        <Avatar />
+        <AvatarWrap>
+          <Link to="/mypage">
+            <Avatar />
+          </Link>
+          <Link to="/">
+            <SignButton onClick={logout}>로그아웃</SignButton>
+          </Link>
+        </AvatarWrap>
       ) : (
         <SignButtonContainer isLogin={isLogin}>
           <Link to="/login">
