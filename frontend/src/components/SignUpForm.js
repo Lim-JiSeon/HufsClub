@@ -48,8 +48,6 @@ const SignUpForm = ({ onSubmit }) => {
     }) => {
       const newErrors = {};
       const checkNum = /^[0-9]+$/;
-      const checkEmail =
-        /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
       if (!name) newErrors.name = "이름을 입력해주세요";
       if (
         !studentNumber ||
@@ -57,8 +55,7 @@ const SignUpForm = ({ onSubmit }) => {
         !checkNum.test(studentNumber)
       )
         newErrors.studentNumber = "올바른 학번을 입력해주세요";
-      if (!email || !checkEmail.test(email))
-        newErrors.email = "올바른 이메일을 입력해주세요";
+      if (!email) newErrors.email = "올바른 이메일을 입력해주세요";
       if (!subject) newErrors.subject = "학과를 입력해주세요";
       if (!password) newErrors.password = "비밀번호를 입력해주세요";
       if (password !== passwordConfirm)
@@ -85,7 +82,7 @@ const SignUpForm = ({ onSubmit }) => {
         label="학번"
       />
       {errors.studentNumber && <ErrorText>{errors.studentNumber}</ErrorText>}
-      <Input type="text" name="email" onChange={handleChange} label="이메일" />
+      <Input type="email" name="email" onChange={handleChange} label="이메일" />
       {errors.email && <ErrorText>{errors.email}</ErrorText>}
       <Input type="text" name="subject" onChange={handleChange} label="학과" />
       {errors.subject && <ErrorText>{errors.subject}</ErrorText>}
