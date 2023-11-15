@@ -2,6 +2,9 @@ import { useState } from "react";
 import login from "../api/login";
 import signup from "../api/signup";
 import { useNavigate } from "react-router-dom";
+import findPw from "../api/findPw";
+import changePw from "../api/changePw";
+import { useLocation } from "react-router-dom";
 import getId from "../api/getId";
 
 const useForm = ({ initialValues, onSubmit, validate }) => {
@@ -9,6 +12,7 @@ const useForm = ({ initialValues, onSubmit, validate }) => {
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const token = useLocation().pathname.split("/")[2];
 
   const handleChange = (e) => {
     if (typeof e === "string") {
@@ -54,6 +58,17 @@ const useForm = ({ initialValues, onSubmit, validate }) => {
     setIsLoading(false);
   };
 
+  const handleFindPw = async (e) => {
+    setIsLoading(true);
+    e.preventDefault();
+    const newErrors = validate(values);
+    if (Object.keys(newErrors).length === 0) {
+      await findPw(values.email);
+    }
+    setErrors(newErrors);
+    setIsLoading(false);
+  };
+
   const handleFindId = async (e) => {
     setIsLoading(true);
     e.preventDefault();
@@ -71,6 +86,18 @@ const useForm = ({ initialValues, onSubmit, validate }) => {
     setIsLoading(false);
   };
 
+  const handleChangePw = async (e) => {
+    setIsLoading(true);
+    e.preventDefault();
+    const newErrors = validate(values);
+    if (Object.keys(newErrors).length === 0) {
+      await changePw(token, values.password);
+      navigate("/login");
+    }
+    setErrors(newErrors);
+    setIsLoading(false);
+  };
+
   return {
     values,
     errors,
@@ -78,6 +105,8 @@ const useForm = ({ initialValues, onSubmit, validate }) => {
     handleChange,
     handleLogin,
     handleSignUp,
+    handleFindPw,
+    handleChangePw,
     handleFindId,
   };
 };

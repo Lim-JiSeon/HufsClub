@@ -4,22 +4,27 @@ import ErrorText from "./errors/ErrorText";
 import Input from "./func/Input";
 import CardForm from "./CardForm";
 import Title from "./TopicTitle";
-import findPw from "../api/findPw";
-import { useState } from "react";
-import changePw from "../api/changePw";
-import { useLocation } from "react-router-dom";
 
-const ResetPwForm = () => {
-  const [notification, setNotification] = useState("");
-  const token = useLocation().pathname.split("/")[2];
-  const { values, errors, isLoading, handleChange } = useForm({
+const ResetPwForm = ({ onSubmit }) => {
+  const { values, errors, isLoading, handleChange, handleChangePw } = useForm({
     initialValues: {
       password: "",
+      passwordConfirm: "",
+    },
+    onSubmit,
+    validate: ({ password, passwordConfirm }) => {
+      const newErrors = {};
+      if (!password) newErrors.password = "필수 입력란입니다.";
+      if (!passwordConfirm) newErrors.passwordConfirm = "필수 입력란입니다.";
+      if (password !== passwordConfirm)
+        newErrors.passwordConfirm = "입력한 비밀번호와 일치하지 않습니다.";
+
+      return newErrors;
     },
   });
 
   return (
-    <CardForm>
+    <CardForm onSubmit={handleChangePw}>
       <Title>비밀번호 재설정</Title>
       <Input
         type="text"
@@ -27,20 +32,17 @@ const ResetPwForm = () => {
         onChange={handleChange}
         label="비밀번호"
       />
-      {errors.id && <ErrorText>{errors.id}</ErrorText>}
+      {errors.password && <ErrorText>{errors.password}</ErrorText>}
       <Input
         type="password"
         name="passwordConfirm"
         onChange={handleChange}
         label="비밀번호 확인"
       />
-      {errors.id && <ErrorText>{errors.id}</ErrorText>}
-      <Button
-        type="button"
-        disabled={isLoading}
-        onClick={async () =>
-          setNotification(await changePw(token, values.password))
-        }>
+      {errors.passwordConfirm && (
+        <ErrorText>{errors.passwordConfirm}</ErrorText>
+      )}
+      <Button type="submit" disabled={isLoading}>
         비밀번호 변경하기
       </Button>
     </CardForm>
