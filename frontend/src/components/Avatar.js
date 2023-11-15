@@ -1,11 +1,7 @@
 import Image from "./func/Image";
-import { useState } from "react";
-import Dropdown from "./Dropdown";
 import styled from "@emotion/styled";
 
 function Avatar() {
-  const [dropdownView, setDropdownView] = useState(false);
-
   const ProfileButton = styled.div`
     position: relative;
   `
@@ -19,11 +15,7 @@ function Avatar() {
         height={50}
         borderRadius={50}
         style={{position: "absolute"}}
-        onClick={() => {
-          setDropdownView(!dropdownView);
-        }}
       />
-      {dropdownView && <Dropdown />}
     </ProfileButton>
   );
 }
