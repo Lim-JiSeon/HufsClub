@@ -15,6 +15,7 @@ import NotPage from "./pages/NotPage";
 import FindIdPage from "./pages/FindIdPage";
 import FindPwPage from "./pages/FindPwPage";
 import ResetPwPage from "./pages/ResetPwPage";
+import ClubPage from "./pages/ClubPage";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -27,6 +28,7 @@ root.render(
         <Route path="/find/id" element={<FindIdPage />} />
         <Route path="/find/password" element={<FindPwPage />} />
         <Route path="/area/:field" element={<AreaPage />} />
+        <Route path="/area/:field/:id" element={<ClubPage />} />
         <Route path="/intro" element={<IntroPage />} />
         <Route path="/input" element={<InputPage />} />
         <Route path="/mypage" element={<MyPage />} />

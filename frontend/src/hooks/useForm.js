@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import findPw from "../api/findPw";
 import changePw from "../api/changePw";
 import { useLocation } from "react-router-dom";
+import getId from "../api/getId";
 
 const useForm = ({ initialValues, onSubmit, validate }) => {
   const [values, setValues] = useState(initialValues);
@@ -68,6 +69,23 @@ const useForm = ({ initialValues, onSubmit, validate }) => {
     setIsLoading(false);
   };
 
+  const handleFindId = async (e) => {
+    setIsLoading(true);
+    e.preventDefault();
+    const newErrors = validate(values);
+    if (Object.keys(newErrors).length === 0) {
+      try {
+        const response = await getId(values.email, values.verificationCode);
+        alert(`아이디는 ${response.studentId} 입니다.`);
+        navigate("/login");
+      } catch (error) {
+        alert("회원을 찾을 수 없습니다.");
+      }
+    }
+    setErrors(newErrors);
+    setIsLoading(false);
+  };
+
   const handleChangePw = async (e) => {
     setIsLoading(true);
     e.preventDefault();
@@ -89,6 +107,7 @@ const useForm = ({ initialValues, onSubmit, validate }) => {
     handleSignUp,
     handleFindPw,
     handleChangePw,
+    handleFindId,
   };
 };
 
