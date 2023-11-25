@@ -47,12 +47,4 @@ const isAdmin = (req, res, next) => {
   }
 };
 
-const isPresidentOrAdmin = (req, res, next) => {
-  if (req.user && (req.user.isPresident || req.user.isAdmin)) {
-    next();
-  } else {
-    res.status(401).send({ message: 'Invalid Manager Token' });
-  }
-};
-
-export { generateToken, isAuth, isAdmin, isPresidentOrAdmin, baseUrl };
+export { generateToken, isAuth, isAdmin, baseUrl };

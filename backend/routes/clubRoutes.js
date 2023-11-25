@@ -2,7 +2,7 @@ import express from 'express';
 import expressAsyncHandler from 'express-async-handler';
 import User from '../models/userModel.js';
 import Club from '../models/clubModel.js';
-import { isAuth, isAdmin, isPresidentOrAdmin } from '../utili.js';
+import { isAuth } from '../utili.js';
 
 const clubRouter = express.Router();
 
@@ -144,21 +144,30 @@ clubRouter.put(
     }
   })
 );
-/*
-//동아리 글 삭제(사용자의 like에서도 삭제되어야 함.)
+
+//동아리 글 삭제(사용자의 좋아요 목록에서도 삭제)
 clubRouter.delete(
   '/:id',
-  isAdmin,
   expressAsyncHandler(async (req, res) => {
     const club = await Club.findById(req.params.id);
     if (club) {
-      await club.remove();
-      res.send({ message: 'Club Deleted' });
+      try {
+        // 모든 사용자의 like 배열에서 해당 동아리를 삭제합니다.
+        await User.updateMany(
+          { like: club.name },
+          { $pull: { like: club.name } }
+        );
+        //동아리 삭제
+        await Club.findByIdAndDelete(req.params.id);
+        res.send({ message: 'Club Deleted' });
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Server error' });
+      }
     } else {
       res.status(404).send({ message: 'Club Not Found' });
     }
   })
 );
-*/
 
 export default clubRouter;
