@@ -32,6 +32,8 @@ const useForm = ({ initialValues, onSubmit, validate }) => {
         const response = await login(Number(values.id), values.password);
         sessionStorage.setItem("hufs-club_isLogin", response.data.token);
         sessionStorage.setItem("hufs-club_id", response.data._id);
+        // 추후 삭제 (패스워드 삭제)
+        sessionStorage.setItem("hufs-password", values.password);
         navigate("/");
       } catch (error) {
         alert("올바른 아이디와 비밀번호를 입력해주세요.");
