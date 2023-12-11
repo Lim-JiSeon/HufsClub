@@ -9,6 +9,7 @@ import ClubJoin from "./ClubJoin";
 import getUserInfo from "../../api/getUserInfo";
 import Popup from "../func/Popup";
 import { useNavigate } from "react-router-dom";
+import deleteClub from "../../api/deleteClub";
 
 const ContentWrap = styled.div`
   width: 90vw;
@@ -76,7 +77,7 @@ const ClubContents = () => {
 
   const [data, setData] = useState();
   const [isPresident, setIsPresident] = useState("");
-  const [deletePopup, setDeletePopup] = useState(true);
+  const [deletePopup, setDeletePopup] = useState(false);
 
   const PopupProps = {
     title: "글을 삭제하시겠습니까?",
@@ -84,7 +85,8 @@ const ClubContents = () => {
     rightBtnText: "예",
     leftBtn: () => setDeletePopup(false),
     rightBtn: () => {
-      deletePopup(data._id).then(navigate("/"));
+      deleteClub(data._id);
+      navigate("/");
     },
   };
 

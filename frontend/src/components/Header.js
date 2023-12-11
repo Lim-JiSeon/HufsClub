@@ -3,6 +3,7 @@ import Image from "../components/func/Image";
 import logoImg from "../images/logo.png";
 import { Link } from "react-router-dom";
 import Avatar from "./Avatar";
+import registerClub from "../images/register-club.png";
 
 const Header = () => {
   const isLogin = sessionStorage.getItem("hufs-club_isLogin") ?? "";
@@ -56,6 +57,9 @@ const Header = () => {
         <AvatarWrap>
           <Link to="/mypage">
             <Avatar />
+          </Link>
+          <Link to="/register-club" style={{ paddingLeft: "20px" }}>
+            <Image src={registerClub} width={50} height={50} />
           </Link>
         </AvatarWrap>
       ) : (
