@@ -34,9 +34,10 @@ const DetailWrap = styled.div`
 
 const ButtonWrap = styled.div`
   display: flex;
-  width: 100%;
+  width: 90vw;
   justify-content: flex-end;
   align-items: center;
+  padding: 10px 0;
 `;
 
 const Button = styled.button`
@@ -44,12 +45,28 @@ const Button = styled.button`
   border: none;
   background-color: #eaeaea;
   color: #a4a4a4;
+  font-size: 16px;
+  padding: 5px 10px;
+  cursor: pointer;
+  &:hover {
+    background-color: #a4a4a4;
+    color: #000000;
+  }
 `;
 
 const StyledLink = styled(Link)`
   text-decoration: none;
+  border-radius: 5px;
+  border: none;
+  background-color: #eaeaea;
+  color: #a4a4a4;
+  font-size: 16px;
+  padding: 5px 10px;
+  margin-right: 20px;
   cursor: pointer;
   &:hover {
+    background-color: #a4a4a4;
+    color: #000000;
   }
 `;
 
