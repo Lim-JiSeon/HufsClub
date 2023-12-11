@@ -1,31 +1,66 @@
 import styled from "@emotion/styled";
 import React from "react";
+import Image from "../func/Image";
 
 const ContentWrap = styled.div`
   border-radius: 20px;
-  border: 5px solid #526d82;
+  border: 3px solid #526d82;
   background-color: #ffffff;
   width: 100%;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
+  padding: 30px 40px;
+`;
+
+const ClubContent = styled.div`
+  color: #27374d;
+  font-size: 14px;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 20px;
+  padding-left: 40px;
+`;
+
+const ClubName = styled.div`
+  font-size: 26px;
+  font-weight: bold;
+`;
+
+const ClubRoom = styled.div`
+  padding-right: 40px;
+  font-size: 18px;
+  font-weight: bold;
+`;
+
+const TopicWrap = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+`;
+
+const TopicText = styled.div`
+  font-weight: bold;
+  font-size: 14px;
+  padding-right: 20px;
 `;
 
 const ClubIntro = (data) => {
-  const { logoUrl, name, recruit, topic } = data.data;
+  const { logoUrl, name, topic } = data.data;
 
   return (
     <ContentWrap>
-      <img src={logoUrl} alt="" />
-      <div>
-        <div>{name}</div>
-        <div>
-          <div>{recruit.period}</div>
-          <div>{tempData.room}</div>
-        </div>
+      <Image src={logoUrl} alt="" width="25vw" height="25vh" />
+      <ClubContent>
+        <ClubName>{name}</ClubName>
+        <ClubRoom>{tempData.room}</ClubRoom>
         <div>{tempData.intro}</div>
-        <div>{topic}</div>
-      </div>
+        <TopicWrap>
+          {topic.map((title) => (
+            <TopicText key={title}>{title}</TopicText>
+          ))}
+        </TopicWrap>
+      </ClubContent>
     </ContentWrap>
   );
 };

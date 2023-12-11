@@ -1,20 +1,21 @@
 import Image from "./func/Image";
+import profileImage from "../images/profile.png";
 import styled from "@emotion/styled";
 
 function Avatar() {
   const ProfileButton = styled.div`
     position: relative;
-  `
+  `;
 
   return (
     <ProfileButton>
       <Image
-        src="https://e7.pngegg.com/pngimages/1000/665/png-clipart-computer-icons-profile-s-free-angle-sphere.png"
+        src={profileImage}
         alt="프로필"
         width={50}
         height={50}
         borderRadius={50}
-        style={{position: "absolute"}}
+        style={{ position: "absolute" }}
       />
     </ProfileButton>
   );
