@@ -72,7 +72,7 @@ const StyledLink = styled(Link)`
 
 const ClubContents = () => {
   const clubId = useParams().id;
-  const router = useNavigate();
+  const navigate = useNavigate();
 
   const [data, setData] = useState();
   const [isPresident, setIsPresident] = useState("");
@@ -84,7 +84,7 @@ const ClubContents = () => {
     rightBtnText: "예",
     leftBtn: () => setDeletePopup(false),
     rightBtn: () => {
-      deletePopup(data._id).then(router.push("/"));
+      deletePopup(data._id).then(navigate("/"));
     },
   };
 

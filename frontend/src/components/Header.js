@@ -45,11 +45,6 @@ const Header = () => {
     }
   `;
 
-  const logout = () => {
-    sessionStorage.setItem("hufs-club_isLogin", "");
-    window.location.reload();
-  };
-
   return (
     <Header>
       <HomeButton isLogin={isLogin}>
@@ -61,9 +56,6 @@ const Header = () => {
         <AvatarWrap>
           <Link to="/mypage">
             <Avatar />
-          </Link>
-          <Link to="/">
-            <SignButton onClick={logout}>로그아웃</SignButton>
           </Link>
         </AvatarWrap>
       ) : (
