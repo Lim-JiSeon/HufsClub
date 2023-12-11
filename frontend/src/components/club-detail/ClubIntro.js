@@ -3,14 +3,14 @@ import React from "react";
 import Image from "../func/Image";
 
 const ContentWrap = styled.div`
-  border-radius: 20px;
-  border: 3px solid #526d82;
-  background-color: #ffffff;
   width: 100%;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 30px 40px;
+  padding-top: 20px;
+`;
+
+const ImageWrap = styled.div`
+  padding-right: 40px;
 `;
 
 const ClubContent = styled.div`
@@ -18,28 +18,34 @@ const ClubContent = styled.div`
   font-size: 14px;
   display: grid;
   grid-template-columns: repeat(1, 1fr);
-  gap: 20px;
-  padding-left: 40px;
+  gap: 30px;
+  overflow: hidden;
 `;
 
 const ClubName = styled.div`
+  width: fit-content;
   font-size: 26px;
   font-weight: bold;
 `;
 
 const ClubRoom = styled.div`
+  width: fit-content;
   padding-right: 40px;
   font-size: 18px;
   font-weight: bold;
+  box-sizing: border-box;
 `;
 
 const TopicWrap = styled.div`
+  width: fit-content;
+  width: 90vw;
   display: flex;
   align-items: center;
   justify-content: flex-start;
 `;
 
 const TopicText = styled.div`
+  width: fit-content;
   font-weight: bold;
   font-size: 14px;
   padding-right: 20px;
@@ -50,7 +56,9 @@ const ClubIntro = (data) => {
 
   return (
     <ContentWrap>
-      <Image src={logoUrl} alt="" width="25vw" height="25vh" />
+      <ImageWrap>
+        <Image src={logoUrl} alt="" width="250px" height="auto" />
+      </ImageWrap>
       <ClubContent>
         <ClubName>{name}</ClubName>
         <ClubRoom>{tempData.room}</ClubRoom>
