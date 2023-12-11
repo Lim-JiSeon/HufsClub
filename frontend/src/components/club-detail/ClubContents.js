@@ -76,7 +76,7 @@ const ClubContents = () => {
 
   const [data, setData] = useState();
   const [isPresident, setIsPresident] = useState("");
-  const [deletePopup, setDeletePopup] = useState(true);
+  const [deletePopup, setDeletePopup] = useState(false);
 
   const PopupProps = {
     title: "글을 삭제하시겠습니까?",
