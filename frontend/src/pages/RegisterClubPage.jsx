@@ -1,9 +1,9 @@
 import React from "react";
 import Header from "../components/Header";
 import styled from "@emotion/styled";
-import EditClubContents from "../components/club-edit/EditClubContents";
+import RegisterClubContents from "../components/RegisterClubContents";
 
-const EditClubContainer = styled.div`
+const RegisterClubContainer = styled.div`
   display: flex;
   width: 100%;
   height: 100%;
@@ -12,13 +12,13 @@ const EditClubContainer = styled.div`
   align-items: center;
 `;
 
-function EditClubPage() {
+const RegisterClubPage = () => {
   return (
-    <EditClubContainer>
+    <RegisterClubContainer>
       <Header />
-      <EditClubContents />
-    </EditClubContainer>
+      <RegisterClubContents />
+    </RegisterClubContainer>
   );
-}
+};
 
-export default EditClubPage;
+export default RegisterClubPage;
