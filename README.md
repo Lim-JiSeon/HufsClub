@@ -2,7 +2,9 @@
 
 한국외대 동아리 소개 웹 서비스
 
-## Run Locally
+## 배포링크
+프론트 : https://hufs-club.vercel.app/
+백엔드 : 
 
 ### 1. Run Backend
 
