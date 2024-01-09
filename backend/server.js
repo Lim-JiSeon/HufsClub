@@ -2,7 +2,6 @@ import express from 'express';
 import path from 'path';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-import seedRouter from './routes/seedRoutes.js';
 import clubRouter from './routes/clubRoutes.js';
 import userRouter from './routes/userRoutes.js';
 import cors from 'cors';
@@ -23,8 +22,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(cors({ origin: ['http://localhost:5000', 'http://localhost:3000'] }));
-app.use('/api/seed', seedRouter);
+app.use(cors({ origin: ['http://localhost:5000', 'http://localhost:3000', 'https://hufs-club.vercel.app'] }));
 app.use('/api/users', userRouter);
 app.use('/api/clubs', clubRouter);
 app.get('/test', (req, res) => {
