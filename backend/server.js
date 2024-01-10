@@ -22,7 +22,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(cors({ origin: ['http://localhost:5000', 'http://localhost:3000', 'https://hufs-club.vercel.app'] }));
+app.use(cors({ origin: ['http://localhost:5000', 'https://port-0-hufsclub-3wh3o2blr6k0p1x.sel5.cloudtype.app/', 'http://localhost:3000', 'https://hufs-club.vercel.app'] }));
 app.use('/api/users', userRouter);
 app.use('/api/clubs', clubRouter);
 app.get('/test', (req, res) => {
