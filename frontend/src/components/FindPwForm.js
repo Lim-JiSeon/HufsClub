@@ -14,7 +14,7 @@ const FindPwForm = ({ onSubmit }) => {
     validate: ({ email }) => {
       const newErrors = {};
       if (!email)
-        newErrors.email = "필수 입력란입니다. 올바른 이메일을 입력해주세요.";
+        newErrors.email = "올바른 이메일을 입력해주세요.";
       return newErrors;
     },
   });
