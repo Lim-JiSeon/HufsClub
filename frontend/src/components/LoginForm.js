@@ -36,7 +36,7 @@ const LoginForm = ({ onSubmit }) => {
     validate: ({ id, password }) => {
       const newErrors = {};
       if (!id || id.length !== 9 || !checkNum.test(id))
-        newErrors.id = "올바른 아이디를 입력해주세요";
+        newErrors.id = "숫자 9자리를 입력해주세요";
       if (!password) newErrors.password = "비밀번호를 입력해주세요";
       return newErrors;
     },

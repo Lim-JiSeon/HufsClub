@@ -36,7 +36,9 @@ const useForm = ({ initialValues, onSubmit, validate }) => {
         sessionStorage.setItem("hufs-password", values.password);
         navigate("/");
       } catch (error) {
-        alert("올바른 아이디와 비밀번호를 입력해주세요.");
+        alert(
+          "사용자를 찾을 수 없습니다.\n올바른 아이디와 비밀번호를 입력해주세요."
+        );
       }
     }
     setErrors(newErrors);

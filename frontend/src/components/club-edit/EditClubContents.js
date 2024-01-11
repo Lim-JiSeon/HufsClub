@@ -9,7 +9,7 @@ import ClubJoin from "./ClubJoin";
 import { useNavigate } from "react-router-dom";
 
 const ContentWrap = styled.div`
-  width: 90vw;
+  width: 70vw;
   display: flex;
   flex-direction: column;
   align-items: center;

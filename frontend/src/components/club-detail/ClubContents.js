@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 import deleteClub from "../../api/deleteClub";
 
 const ContentWrap = styled.div`
-  width: 90vw;
+  width: 70vw;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -35,7 +35,7 @@ const DetailWrap = styled.div`
 
 const ButtonWrap = styled.div`
   display: flex;
-  width: 90vw;
+  width: 70vw;
   justify-content: flex-end;
   align-items: center;
   padding: 10px 0;

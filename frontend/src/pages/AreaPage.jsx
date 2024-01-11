@@ -16,14 +16,14 @@ const AreaContainer = styled.div`
 `;
 
 const Banner = styled.img`
-  width: 90vw;
+  width: 75vw;
   height: 300px;
   border-radius: 10px;
   border: none;
 `;
 
 const ButtonWrap = styled.div`
-  width: 90vw;
+  width: 70vw;
   height: 40px;
   display: flex;
   justify-content: flex-end;

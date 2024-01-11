@@ -33,13 +33,13 @@ const BoxDiv = styled.div`
 
 const ContentsDiv = styled.div`
   color: #27374d;
-  font-weight: bold;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 60px;
 `;
 
 const SubTitleText = styled.div`
+  font-weight: bold;
   font-size: 22px;
   padding: 15px 0 50px 0;
 `;
