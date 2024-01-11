@@ -3,34 +3,36 @@ import Image from "../components/func/Image";
 import logoImg from "../images/logo.png";
 import { Link } from "react-router-dom";
 import Avatar from "./Avatar";
-import registerClub from "../images/register-club.png";
+import likeImage from "../images/like.png";
 
 const Header = () => {
   const isLogin = sessionStorage.getItem("hufs-club_isLogin") ?? "";
 
   const Header = styled.div`
+    width: 100vw;
     display: flex;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
+    margin-top: 20px;
   `;
 
   const AvatarWrap = styled.div`
+    width: 70vw;
     display: flex;
-    justify-content: space-around;
+    justify-content: flex-end;
     align-items: center;
   `;
 
-  const HomeButton = styled.button`
-    width: 70vw;
-    height: 120px;
-    border: none;
-    background-color: transparent;
-    padding-left: ${({ isLogin }) => (isLogin ? "60px" : "310px")};
-    cursor: pointer;
+  const HomeButton = styled.div`
+    width: 100px;
+    height: 100px;
   `;
 
   const SignButtonContainer = styled.div`
     display: flex;
-    padding-right: ${({ isLogin }) => (isLogin ? undefined : "100px")};
+    width: 70vw;
+    justify-content: flex-end;
   `;
 
   const SignButton = styled.button`
@@ -48,9 +50,9 @@ const Header = () => {
 
   return (
     <Header>
-      <HomeButton isLogin={isLogin}>
+      <HomeButton>
         <Link to="/">
-          <Image src={logoImg} alt="home" />
+          <Image src={logoImg} alt="home" width={100} height={100} />
         </Link>
       </HomeButton>
       {isLogin ? (
@@ -59,11 +61,11 @@ const Header = () => {
             <Avatar />
           </Link>
           <Link to="/register-club" style={{ paddingLeft: "20px" }}>
-            <Image src={registerClub} width={50} height={50} />
+            <Image src={likeImage} width={55} height={55} />
           </Link>
         </AvatarWrap>
       ) : (
-        <SignButtonContainer isLogin={isLogin}>
+        <SignButtonContainer>
           <Link to="/login">
             <SignButton>로그인</SignButton>
           </Link>
