@@ -38,7 +38,7 @@ const ClubRoom = styled.div`
 
 const TopicWrap = styled.div`
   width: fit-content;
-  width: 90vw;
+  width: 70vw;
   display: flex;
   align-items: center;
   justify-content: flex-start;

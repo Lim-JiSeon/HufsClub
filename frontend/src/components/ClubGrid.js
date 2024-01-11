@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import ClubItem from "./func/ClubItem";
 
 const GridWrap = styled.div`
-  width: 90vw;
+  width: 70vw;
   height: 50vh;
   background-color: #ffffff;
   border-radius: 20px;
@@ -17,7 +17,7 @@ const GridWrap = styled.div`
 
 const ClubGrid = (data) => {
   const clubs = data.data.data;
- 
+
   return (
     <GridWrap>
       {clubs

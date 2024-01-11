@@ -14,12 +14,12 @@ const ImageWrap = styled.div`
 `;
 
 const ClubContent = styled.div`
+  width: 100%;
   color: #27374d;
   font-size: 14px;
   display: grid;
   grid-template-columns: repeat(1, 1fr);
   gap: 30px;
-  overflow: hidden;
 `;
 
 const ClubName = styled.div`
@@ -38,7 +38,6 @@ const ClubRoom = styled.div`
 
 const TopicWrap = styled.div`
   width: fit-content;
-  width: 90vw;
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -51,9 +50,14 @@ const TopicText = styled.div`
   padding-right: 20px;
 `;
 
+const ClubIntroContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+`;
+
 const ClubIntro = (data) => {
   const { logoUrl, name, topic } = data.data;
-
+  
   return (
     <ContentWrap>
       <ImageWrap>
@@ -62,7 +66,7 @@ const ClubIntro = (data) => {
       <ClubContent>
         <ClubName>{name}</ClubName>
         <ClubRoom>{tempData.room}</ClubRoom>
-        <div>{tempData.intro}</div>
+        <ClubIntroContainer>{tempData.intro}</ClubIntroContainer>
         <TopicWrap>
           {topic.map((title) => (
             <TopicText key={title}>{title}</TopicText>
