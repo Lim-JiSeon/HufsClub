@@ -78,12 +78,12 @@ const useForm = ({ initialValues, onSubmit, validate }) => {
     e.preventDefault();
     const newErrors = validate(values);
     if (Object.keys(newErrors).length === 0) {
-      try {
-        const response = await getId(values.email, values.verificationCode);
+      const response = await getId(values.email, values.verificationCode);
+      if (response.studentId) {
         alert(`아이디는 ${response.studentId} 입니다.`);
         navigate("/login");
-      } catch (error) {
-        alert("회원을 찾을 수 없습니다.");
+      } else {
+        alert("인증번호가 올바르지 않습니다.");
       }
     }
     setErrors(newErrors);
