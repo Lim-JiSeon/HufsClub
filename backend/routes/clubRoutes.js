@@ -27,10 +27,11 @@ clubRouter.get('/field/:field', async (req, res) => {
 
 //동아리명 검색
 clubRouter.get('/search', async (req, res) => {
-  const { keyword } = req.query;
+  const { field, keyword } = req.query;
   let clubs = [];
   if (keyword) {
     clubs = await Club.find({
+      field: field,
       name: {
         $regex: new RegExp(keyword, "i"),
       },
@@ -41,10 +42,11 @@ clubRouter.get('/search', async (req, res) => {
 
 //동아리 주제 검색
 clubRouter.get('/search/topic', async (req, res) => {
-  const { keyword } = req.query;
+  const { field, keyword } = req.query;
   let clubs = [];
   if (keyword) {
     clubs = await Club.find({
+      field: field,
       topic: {
         $regex: new RegExp(keyword, "i"),
       },
@@ -55,11 +57,12 @@ clubRouter.get('/search/topic', async (req, res) => {
 
 //동아리 활동 검색
 clubRouter.get('/search/activity', async (req, res) => {
-  const { keyword } = req.query;
+  const { field, keyword } = req.query;
   let clubs = [];
   if (keyword) {
     clubs = await Club.find({
-        'activity.text': { $regex: new RegExp(keyword, "i"),
+      field: field,
+      'activity.text': { $regex: new RegExp(keyword, "i"),
       },
     });
   }
