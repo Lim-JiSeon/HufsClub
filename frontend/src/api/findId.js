@@ -1,7 +1,7 @@
 import axios from "axios";
+import { API_END_POINT } from "../constants/api";
 
 const findId = (name, email) => {
-  const API_END_POINT = "http://localhost:5000/api/";
   if (name && email) {
     axios
       .post(`${API_END_POINT}users/forget-id`, {

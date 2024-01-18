@@ -1,7 +1,7 @@
 import axios from "axios";
+import { API_END_POINT } from "../constants/api";
 
 const postClub = async (values) => {
-  const API_END_POINT = "http://localhost:5000/api/";
   const token = sessionStorage.getItem("hufs-club_isLogin");
 
   const data = axios
@@ -21,7 +21,7 @@ const postClub = async (values) => {
             name: values.executive2Name,
             email: values.executive2Email,
             role: values.executive2Role,
-          }
+          },
         ],
         activity: [
           {
