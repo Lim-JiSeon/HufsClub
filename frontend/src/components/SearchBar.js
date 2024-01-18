@@ -28,7 +28,7 @@ const Input = styled.input`
   text-align: center;
 `;
 
-const IconWrap = styled.div`
+const IconWrap = styled.button`
   width: 50px;
   height: 50px;
   border-radius: 0 50px 50px 0;
@@ -36,6 +36,8 @@ const IconWrap = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  border: none;
+  cursor: pointer;
 `;
 
 const Icon = styled.img`
@@ -53,12 +55,16 @@ const SearchBar = (props) => {
   const [keyword, setKeyword] = useState("");
   const [field, setField] = useState("동아리 이름");
 
-  const handleEnter = async (e) => {
+  const handleEnter = (e) => {
     if (e.key === "Enter") {
-      if (field === "동아리 이름") props.setClub(await searchName(keyword));
-      if (field === "활동 내용") props.setClub(await searchContent(keyword));
-      if (field === "동아리 주제") props.setClub(await searchTopic(keyword));
+      searchClub();
     }
+  };
+
+  const searchClub = async () => {
+    if (field === "동아리 이름") props.setClub(await searchName(keyword));
+    if (field === "활동 내용") props.setClub(await searchContent(keyword));
+    if (field === "동아리 주제") props.setClub(await searchTopic(keyword));
   };
 
   return (
@@ -70,7 +76,7 @@ const SearchBar = (props) => {
         onChange={(e) => setKeyword(e.target.value)}
         onKeyDown={handleEnter}
       />
-      <IconWrap>
+      <IconWrap onClick={searchClub}>
         <Icon src={searchIcon} alt="검색 아이콘" />
       </IconWrap>
     </Wrapper>

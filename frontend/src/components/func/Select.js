@@ -6,9 +6,10 @@ export const StyledSelect = styled.select`
   font-size: 14px;
   font-weight: bold;
   border: none;
-  padding: 5px;
+  width: 120px;
   outline: none;
-  margin-right: 10px;
+  margin: 0px 5px;
+  cursor: pointer;
 `;
 
 const Select = (props) => {
