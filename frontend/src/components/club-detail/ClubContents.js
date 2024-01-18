@@ -12,13 +12,14 @@ import { useNavigate } from "react-router-dom";
 import deleteClub from "../../api/deleteClub";
 
 const ContentWrap = styled.div`
-  width: 70vw;
+  width: 65vw;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 10px;
   margin-bottom: 20px;
+  margin-top: 10px;
 `;
 
 const DetailWrap = styled.div`
@@ -31,6 +32,7 @@ const DetailWrap = styled.div`
   border: 3px solid #526d82;
   background-color: #ffffff;
   padding: 10px 40px 40px 40px;
+  margin-top: 10px;
 `;
 
 const ButtonWrap = styled.div`
@@ -120,7 +122,6 @@ const ClubContents = () => {
           <DetailWrap>
             <ClubMember data={data} />
             <ClubActivity data={data} />
-            <ClubJoin data={data} />
           </DetailWrap>
         </ContentWrap>
       )}

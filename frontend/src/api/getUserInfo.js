@@ -1,7 +1,7 @@
 import axios from "axios";
+import { API_END_POINT } from "../constants/api";
 
 const getUserInfo = async () => {
-  const API_END_POINT = "http://localhost:5000/api/";
   const _id = sessionStorage.getItem("hufs-club_id");
 
   const data = axios

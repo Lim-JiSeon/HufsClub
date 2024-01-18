@@ -59,14 +59,6 @@ const ClubJoin = (data) => {
       <TitleWrap>동아리 지원 방법</TitleWrap>
       <ContentsDiv>
         <BoxDiv>
-          <SubTitleText>모집 인원</SubTitleText>
-          <div>{recruit.num}</div>
-        </BoxDiv>
-        <BoxDiv>
-          <SubTitleText>모집 시기</SubTitleText>
-          <div>{recruit.period}</div>
-        </BoxDiv>
-        <BoxDiv>
           <SubTitleText>모집 방법</SubTitleText>
           <div>{recruit.way}</div>
         </BoxDiv>

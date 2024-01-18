@@ -1,7 +1,7 @@
 import axios from "axios";
+import { API_END_POINT } from "../constants/api";
 
 const putUserInfo = async (values) => {
-  const API_END_POINT = "http://localhost:5000/api/";
   const token = sessionStorage.getItem("hufs-club_isLogin");
 
   try {
