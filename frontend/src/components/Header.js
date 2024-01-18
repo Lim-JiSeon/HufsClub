@@ -9,7 +9,7 @@ const Header = () => {
   const isLogin = sessionStorage.getItem("hufs-club_isLogin") ?? "";
 
   const Header = styled.div`
-    width: 100vw;
+    width: 70vw;
     display: flex;
     flex-direction: column;
     justify-content: center;

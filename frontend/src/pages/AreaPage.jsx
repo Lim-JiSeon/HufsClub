@@ -1,10 +1,17 @@
 import styled from "@emotion/styled";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import Header from "../components/Header";
-import Image from "../constants/Image";
 import SearchBar from "../components/SearchBar";
 import ClubGrid from "../components/ClubGrid";
+import Image1 from "../images/학술.png";
+import Image2 from "../images/종교.png";
+import Image3 from "../images/스포츠.png";
+import Image4 from "../images/친목.png";
+import Image5 from "../images/문화.png";
+import Image6 from "../images/봉사.png";
+import Image from "../components/func/Image";
+import getField from "../api/getField";
 
 const AreaContainer = styled.div`
   display: flex;
@@ -15,11 +22,13 @@ const AreaContainer = styled.div`
   align-items: center;
 `;
 
-const Banner = styled.img`
-  width: 75vw;
+const Banner = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 60vw;
   height: 300px;
-  border-radius: 10px;
-  border: none;
+  margin-top: 20px;
 `;
 
 const ButtonWrap = styled.div`
@@ -38,16 +47,37 @@ const Button = styled.button`
   color: #ffffff;
   border: none;
   border-radius: 5px;
+  cursor: pointer;
+`;
+
+const TitleText = styled.div`
+  font-size: 48px;
+  color: #526d82;
+  font-weight: bold;
 `;
 
 function AreaPage() {
   const area = useParams().field;
   const [club, setClub] = useState([]);
 
+  const getClub = async () => {
+    console.log("getClub");
+    setClub(await getField(area));
+    console.log("result");
+  };
+
+  useEffect(() => {
+    getClub();
+  }, []);
+
   return (
     <AreaContainer>
       <Header></Header>
-      <Banner src={getImgURL(area)} />
+      <Banner>
+        <Image src={getImgURL(area)} width={200} height={200} />
+        <TitleText>{area}</TitleText>
+        <Image src={getImgURL(area)} width={200} height={200} />
+      </Banner>
       <SearchBar setClub={setClub} />
       <ButtonWrap>
         <Link to="/">
@@ -62,10 +92,10 @@ function AreaPage() {
 export default AreaPage;
 
 export const getImgURL = (area) => {
-  if (area === "학술") return Image.ACADEMIC;
-  if (area === "종교") return Image.RELIGION;
-  if (area === "스포츠") return Image.SPORTS;
-  if (area === "친목") return Image.AMITY;
-  if (area === "문화") return Image.CULTURE;
-  if (area === "봉사") return Image.VOLUNTEER;
+  if (area === "학술") return Image1;
+  if (area === "종교") return Image2;
+  if (area === "스포츠") return Image3;
+  if (area === "친목") return Image4;
+  if (area === "문화") return Image5;
+  if (area === "봉사") return Image6;
 };
