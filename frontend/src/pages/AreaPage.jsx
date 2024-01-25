@@ -64,9 +64,7 @@ function AreaPage() {
     sessionStorage.getItem("hufs-isAdmin") || sessionStorage.getItem("hufs-");
 
   const getClub = async () => {
-    console.log("getClub");
     setClub(await getField(area));
-    console.log("result");
   };
 
   useEffect(() => {
@@ -84,7 +82,7 @@ function AreaPage() {
       <SearchBar setClub={setClub} />
       <ButtonWrap>
         {registerButton && (
-          <Link to="/register-club">
+          <Link to={`/${area}/register-club`}>
             <Button>동아리 등록하기</Button>
           </Link>
         )}
