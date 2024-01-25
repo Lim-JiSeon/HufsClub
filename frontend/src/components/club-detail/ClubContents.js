@@ -40,7 +40,7 @@ const ButtonWrap = styled.div`
   width: 70vw;
   justify-content: flex-end;
   align-items: center;
-  padding: 10px 0;
+  padding-top: 30px;
 `;
 
 const Button = styled.button`

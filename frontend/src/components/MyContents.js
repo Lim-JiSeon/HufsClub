@@ -25,9 +25,7 @@ const MyContents = () => {
   const navigate = useNavigate();
 
   const logout = () => {
-    sessionStorage.setItem("hufs-club_isLogin", "");
-    sessionStorage.setItem("hufs-club_id", "");
-    sessionStorage.setItem("hufs-password", "");
+    sessionStorage.clear();
     navigate("/");
   };
 

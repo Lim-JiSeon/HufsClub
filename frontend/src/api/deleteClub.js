@@ -5,6 +5,7 @@ const deleteClub = (_id) => {
   try {
     axios.delete(`${API_END_POINT}clubs/${_id}`);
     alert("해당 글이 삭제되었습니다.");
+    sessionStorage.setItem("hufs-isPresident", "");
   } catch (error) {
     alert("오류가 발생했습니다.");
   }
