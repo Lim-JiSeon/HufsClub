@@ -80,7 +80,7 @@ function AreaPage() {
       </Banner>
       <SearchBar setClub={setClub} />
       <ButtonWrap>
-        <Link to="/">
+        <Link to="/register-club">
           <Button>동아리 등록하기</Button>
         </Link>
       </ButtonWrap>

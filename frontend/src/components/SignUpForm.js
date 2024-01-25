@@ -62,7 +62,7 @@ const SignUpForm = ({ onSubmit }) => {
         newErrors.passwordConfirm = "비밀번호가 일치하지 않습니다";
       if (clubPresidentCheck && !clubPresident)
         newErrors.clubPresident =
-          "동아리 회장으로 활동 중인 동아리 이름을 입력해주세요";
+          "동아리 운영진으로 활동 중인 동아리 이름을 입력해주세요";
       if (!agreement)
         newErrors.agreement =
           "개인 정보 활용에 동의하지 않을 경우 회원가입을 할 수 없습니다";
@@ -120,14 +120,14 @@ const SignUpForm = ({ onSubmit }) => {
         </Radio>
       </RadioGroup>
       <RadioGroup
-        label="동아리 회장"
+        label="동아리 운영진"
         value={clubPresidentCheck}
         onChange={() => setClubPresidentCheck(!clubPresidentCheck)}>
         <Radio name="clubPresidentCheck" value={false} defaultChecked>
           일반 회원
         </Radio>
         <Radio name="clubPresidentCheck" value={true}>
-          동아리 회장
+          동아리 운영진
         </Radio>
       </RadioGroup>
       {clubPresidentCheck && (

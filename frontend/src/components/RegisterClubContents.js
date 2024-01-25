@@ -180,7 +180,7 @@ const RegisterClubContents = () => {
       activity3Text: "",
       activity4Text: "",
       period: "상시 모집",
-      way: "동아리 회장을 통해 문의해주세요.",
+      way: "동아리 운영진을 통해 문의해주세요.",
       applyUrl: "",
       num: "변동",
       logoUrl: mainImg,

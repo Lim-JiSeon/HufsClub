@@ -85,7 +85,7 @@ clubRouter.get(
   isAuth,
   expressAsyncHandler(async (req, res) => {
     const user = await User.findById(req.user._id);
-    if (user.isAdmin && !user.isPresident) { //관리자이면서 동아리 회장이 아닌 경우
+    if (user.isAdmin && !user.isPresident) { //관리자이면서 동아리 운영진이 아닌 경우
       res.send({ message: 'Admin User' });
     } else {
       const club = await Club.find({ name: user.isPresident });
