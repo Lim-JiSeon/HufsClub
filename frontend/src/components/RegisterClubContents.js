@@ -7,12 +7,6 @@ import ImageUploader from "../images/image-upload.png";
 import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import getUserInfo from "../api/getUserInfo";
-import Image1 from "../images/학술.png";
-import Image2 from "../images/종교.png";
-import Image3 from "../images/스포츠.png";
-import Image4 from "../images/친목.png";
-import Image5 from "../images/문화.png";
-import Image6 from "../images/봉사.png";
 
 const ContentWrap = styled.form`
   width: 70vw;
@@ -199,7 +193,7 @@ const RegisterClubContents = () => {
         num: "미정",
       },
     },
-    logoUrl: getImgURL(area),
+    logoUrl: "",
   });
 
   const logoImg = watch("logoUrl");
@@ -498,12 +492,3 @@ const RegisterClubContents = () => {
 };
 
 export default RegisterClubContents;
-
-export const getImgURL = (area) => {
-  if (area === "학술") return Image1;
-  if (area === "종교") return Image2;
-  if (area === "스포츠") return Image3;
-  if (area === "친목") return Image4;
-  if (area === "문화") return Image5;
-  if (area === "봉사") return Image6;
-};
