@@ -52,13 +52,17 @@ export const ClubMember = (data) => {
     <ContentWrap>
       <TitleWrap>동아리 운영진 소개</TitleWrap>
       <MemberWrap>
-        {executive.map((member) => (
-          <MemberDiv key={member._id}>
-            <Image src={profileImage} />
-            <TextName>{member.name}</TextName>
-            <TextRole>{member.role}</TextRole>
-          </MemberDiv>
-        ))}
+        {executive.map(
+          (member) =>
+            member && (
+              <MemberDiv key={member._id}>
+                <Image src={profileImage} />
+                <TextName>{member.name}</TextName>
+                <TextRole>{member.email}</TextRole>
+                <TextRole>{member.role}</TextRole>
+              </MemberDiv>
+            )
+        )}
       </MemberWrap>
     </ContentWrap>
   );

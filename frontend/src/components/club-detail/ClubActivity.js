@@ -39,16 +39,19 @@ const ClubActivity = (data) => {
     <ContentWrap>
       <TitleWrap>동아리 활동 소개</TitleWrap>
       <ActivityWrap>
-        {activity.map(({ imageUrl, text }, index) => (
-          <ActivityDiv key={index}>
-            {imageUrl && (
-              <div style={{ paddingRight: "40px" }}>
-                <Image src={imageUrl} width="30vw" height="27vh" />
-              </div>
-            )}
-            {text && <div>{text}</div>}
-          </ActivityDiv>
-        ))}
+        {activity.map(
+          (value, index) =>
+            value && (
+              <ActivityDiv key={index}>
+                {value.imageUrl && (
+                  <div style={{ paddingRight: "40px" }}>
+                    <Image src={value.imageUrl} width="30vw" height="27vh" />
+                  </div>
+                )}
+                <div>{value.text}</div>
+              </ActivityDiv>
+            )
+        )}
       </ActivityWrap>
     </ContentWrap>
   );

@@ -156,45 +156,33 @@ const RegisterClubContents = () => {
 
   const area = useParams().field;
 
-  const [user, setUser] = useState();
+  const { register, watch, reset } = useForm();
 
   useEffect(() => {
     getUserInfo()
       .then((res) => {
-        setUser(res);
+        reset({
+          field: area,
+          name: res.isPresident,
+          room: "",
+          topic: "",
+          executive1Name: res.username,
+          executive1Email: res.email,
+          executive1Role: "운영진",
+          period: "미정",
+          way: "미정",
+          applyUrl: "",
+          num: "미정",
+        });
       })
       .catch((error) => console.log(error));
-  }, []);
+  }, [reset, area]);
 
   const [logoUrl, setLogoUrl] = useState(ImageUploader);
   const [activityImg1, setActivityImg1] = useState(ImageUploader);
   const [activityImg2, setActivityImg2] = useState(ImageUploader);
   const [activityImg3, setActivityImg3] = useState(ImageUploader);
   const [activityImg4, setActivityImg4] = useState(ImageUploader);
-
-  const { register, watch } = useForm({
-    defaultValues: {
-      field: area,
-      name: user?.isPresident,
-      room: "미정",
-      topic: "",
-      executive: [
-        {
-          name: user?.username,
-          email: user?.email,
-          role: "운영진",
-        },
-      ],
-      activity: [],
-      recruit: {
-        period: "미정",
-        way: "",
-        applyUrl: "",
-        num: "미정",
-      },
-    },
-    logoUrl: "",
-  });
 
   const logoImg = watch("logoUrl");
   const activity1 = watch("activityImg1");
@@ -225,268 +213,265 @@ const RegisterClubContents = () => {
 
   return (
     <>
-      {user && (
-        <ContentWrap>
-          <ClubIntroContent>
-            <ImageWrap style={{ paddingTop: "40px" }}>
-              <input
-                type="file"
-                style={{ display: "none" }}
-                accept="image/jpg, image/png, image/jpeg"
-                {...register("logoUrl")}
-                id="logoUrl"
-              />
-              <img
-                alt=""
-                src={logoUrl}
-                width={300}
-                height={200}
-                style={{ cursor: "pointer" }}
-                onClick={() => logoUrl.current?.click()}
-              />
-              <ImgUploader for="logoUrl">파일 선택</ImgUploader>
-            </ImageWrap>
-            <ClubContentWrap>
-              <ClubJoinContent>
-                <Input
-                  type="text"
-                  name="name"
-                  defaultValue={user.isPresident}
-                  {...register("name")}
-                  label="동아리 이름"
-                  readonly
-                />
-                <Input
-                  type="text"
-                  name="field"
-                  value={area}
-                  {...register("field")}
-                  label="동아리 분야"
-                  readonly
-                />
-              </ClubJoinContent>
+      <ContentWrap>
+        <ClubIntroContent>
+          <ImageWrap style={{ paddingTop: "40px" }}>
+            <input
+              type="file"
+              style={{ display: "none" }}
+              accept="image/jpg, image/png, image/jpeg"
+              {...register("logoUrl")}
+              id="logoUrl"
+            />
+            <img
+              alt=""
+              src={logoUrl}
+              width={300}
+              height={200}
+              style={{ cursor: "pointer" }}
+            />
+            <ImgUploader htmlFor="logoUrl">파일 선택</ImgUploader>
+          </ImageWrap>
+          <ClubContentWrap>
+            <ClubJoinContent>
               <Input
                 type="text"
-                name="room"
-                {...register("room")}
-                label="동아리 방"
+                name="name"
+                value={watch().name}
+                {...register("name")}
+                label="동아리 이름"
+                readonly
               />
               <Input
                 type="text"
-                name="topic"
-                {...register("topic")}
-                label="동아리 주제"
+                name="field"
+                {...register("field")}
+                value={area}
+                label="동아리 분야"
+                readonly
               />
-            </ClubContentWrap>
-          </ClubIntroContent>
-          <div style={{ width: "100%" }}>
-            <TitleWrap>동아리 운영진 소개</TitleWrap>
-            <MemberWrap>
-              <MemberContainer>
-                <Input
-                  type="text"
-                  label="이름"
-                  name="executive1Name"
-                  {...register("executive1Name")}
-                  defaultValue={user.username}
-                  readonly
-                />
-                <Input
-                  type="text"
-                  label="이메일"
-                  name="executive1Email"
-                  {...register("executive1Email")}
-                  defaultValue={user.email}
-                  readonly
-                />
-                <Input
-                  type="text"
-                  label="역할"
-                  name="executive1Role"
-                  {...register("executive1Role")}
-                  value="운영진"
-                  readonly
-                />
-              </MemberContainer>
-              <MemberContainer>
-                <Input
-                  type="text"
-                  label="이름"
-                  name="executive2Name"
-                  {...register("executive2Name")}
-                />
-                <Input
-                  type="text"
-                  label="이메일"
-                  name="executive2Email"
-                  {...register("executive2Email")}
-                />
-                <Input
-                  type="text"
-                  label="역할"
-                  name="executive2Role"
-                  {...register("executive2Role")}
-                />
-              </MemberContainer>
-              <MemberContainer>
-                <Input
-                  type="text"
-                  label="이름"
-                  name="executive3Name"
-                  {...register("executive3Name")}
-                />
-                <Input
-                  type="text"
-                  label="이메일"
-                  name="executive3Email"
-                  {...register("executive3Email")}
-                />
-                <Input
-                  type="text"
-                  label="역할"
-                  name="executive3Role"
-                  {...register("executive3Role")}
-                />
-              </MemberContainer>
-              <MemberContainer>
-                <Input
-                  type="text"
-                  label="이름"
-                  name="executive4Name"
-                  {...register("executive4Name")}
-                />
-                <Input
-                  type="text"
-                  label="이메일"
-                  name="executive4Email"
-                  {...register("executive4Email")}
-                />
-                <Input
-                  type="text"
-                  label="역할"
-                  name="executive4Role"
-                  {...register("executive4Role")}
-                />
-              </MemberContainer>
-            </MemberWrap>
-          </div>
-          <div style={{ width: "100%" }}>
-            <TitleWrap>동아리 활동 소개</TitleWrap>
-            <ActivityWrap>
-              <ClubActivity>
-                <ImageWrap>
-                  <input
-                    type="file"
-                    style={{ display: "none" }}
-                    accept="image/jpg, image/png, image/jpeg"
-                    id="activityImg1"
-                    {...register("activityImg1")}
-                  />
-                  <img alt="" src={activityImg1} width={300} height={200} />
-                  <ImgUploader for="activityImg1">파일 선택</ImgUploader>
-                </ImageWrap>
-                <TextareaWrap
-                  type="text"
-                  {...register("activityText1")}
-                  name="activityText1"
-                />
-              </ClubActivity>
-              <ClubActivity>
-                <ImageWrap>
-                  <input
-                    type="file"
-                    style={{ display: "none" }}
-                    accept="image/jpg, image/png, image/jpeg"
-                    id="activityImg2"
-                    {...register("activityImg2")}
-                  />
-                  <img alt="" src={activityImg2} width={300} height={200} />
-                  <ImgUploader for="activityImg2">파일 선택</ImgUploader>
-                </ImageWrap>
-                <TextareaWrap
-                  type="text"
-                  {...register("activityText2")}
-                  name="activityText2"
-                />
-              </ClubActivity>
-              <ClubActivity>
-                <ImageWrap>
-                  <input
-                    type="file"
-                    style={{ display: "none" }}
-                    accept="image/jpg, image/png, image/jpeg"
-                    id="activityImg3"
-                    {...register("activityImg3")}
-                  />
-                  <img alt="" src={activityImg3} width={300} height={200} />
-                  <ImgUploader for="activityImg3">파일 선택</ImgUploader>
-                </ImageWrap>
-                <TextareaWrap
-                  type="text"
-                  {...register("activityText3")}
-                  name="activityText3"
-                />
-              </ClubActivity>
-              <ClubActivity>
-                <ImageWrap>
-                  <input
-                    type="file"
-                    style={{ display: "none" }}
-                    accept="image/jpg, image/png, image/jpeg"
-                    id="activityImg4"
-                    {...register("activityImg4")}
-                  />
-                  <img alt="" src={activityImg4} width={300} height={200} />
-                  <ImgUploader for="activityImg4">파일 선택</ImgUploader>
-                </ImageWrap>
-                <TextareaWrap
-                  type="text"
-                  {...register("activityText4")}
-                  name="activityText4"
-                />
-              </ClubActivity>
-            </ActivityWrap>
-          </div>
-          <ClubJoin>
-            <TitleWrap>동아리 지원 방법</TitleWrap>
-            <MemberWrap>
+            </ClubJoinContent>
+            <Input
+              type="text"
+              name="room"
+              {...register("room")}
+              label="동아리 방"
+            />
+            <Input
+              type="text"
+              name="topic"
+              {...register("topic")}
+              label="동아리 주제"
+            />
+          </ClubContentWrap>
+        </ClubIntroContent>
+        <div style={{ width: "100%" }}>
+          <TitleWrap>동아리 운영진 소개</TitleWrap>
+          <MemberWrap>
+            <MemberContainer>
               <Input
                 type="text"
-                name="num"
-                {...register("num", { required: true })}
-                label="모집 인원"
+                label="이름"
+                name="executive1Name"
+                {...register("executive1Name")}
+                value={watch().executive1Name}
+                readonly
               />
               <Input
                 type="text"
-                name="period"
-                {...register("period", { required: true })}
-                label="모집 시기"
+                label="이메일"
+                name="executive1Email"
+                {...register("executive1Email")}
+                value={watch().executive1Email}
+                readonly
               />
               <Input
                 type="text"
-                name="way"
-                {...register("way", { required: true })}
-                label="모집 방법"
+                label="역할"
+                name="executive1Role"
+                {...register("executive1Role")}
+                value="운영진"
+                readonly
+              />
+            </MemberContainer>
+            <MemberContainer>
+              <Input
+                type="text"
+                label="이름"
+                name="executive2Name"
+                {...register("executive2Name")}
               />
               <Input
                 type="text"
-                name="applyUrl"
-                {...register("applyUrl")}
-                label="지원서 작성"
+                label="이메일"
+                name="executive2Email"
+                {...register("executive2Email")}
               />
-            </MemberWrap>
-          </ClubJoin>
-          <SubmitButton
-            type="button"
-            onClick={() => {
-              postClub(values).then(() => {
-                /*navigator("/")*/
-              });
-            }}>
-            동아리 등록하기
-          </SubmitButton>
-        </ContentWrap>
-      )}
+              <Input
+                type="text"
+                label="역할"
+                name="executive2Role"
+                {...register("executive2Role")}
+              />
+            </MemberContainer>
+            <MemberContainer>
+              <Input
+                type="text"
+                label="이름"
+                name="executive3Name"
+                {...register("executive3Name")}
+              />
+              <Input
+                type="text"
+                label="이메일"
+                name="executive3Email"
+                {...register("executive3Email")}
+              />
+              <Input
+                type="text"
+                label="역할"
+                name="executive3Role"
+                {...register("executive3Role")}
+              />
+            </MemberContainer>
+            <MemberContainer>
+              <Input
+                type="text"
+                label="이름"
+                name="executive4Name"
+                {...register("executive4Name")}
+              />
+              <Input
+                type="text"
+                label="이메일"
+                name="executive4Email"
+                {...register("executive4Email")}
+              />
+              <Input
+                type="text"
+                label="역할"
+                name="executive4Role"
+                {...register("executive4Role")}
+              />
+            </MemberContainer>
+          </MemberWrap>
+        </div>
+        <div style={{ width: "100%" }}>
+          <TitleWrap>동아리 활동 소개</TitleWrap>
+          <ActivityWrap>
+            <ClubActivity>
+              <ImageWrap>
+                <input
+                  type="file"
+                  style={{ display: "none" }}
+                  accept="image/jpg, image/png, image/jpeg"
+                  id="activityImg1"
+                  {...register("activityImg1")}
+                />
+                <img alt="" src={activityImg1} width={300} height={200} />
+                <ImgUploader htmlFor="activityImg1">파일 선택</ImgUploader>
+              </ImageWrap>
+              <TextareaWrap
+                type="text"
+                {...register("activityText1")}
+                name="activityText1"
+              />
+            </ClubActivity>
+            <ClubActivity>
+              <ImageWrap>
+                <input
+                  type="file"
+                  style={{ display: "none" }}
+                  accept="image/jpg, image/png, image/jpeg"
+                  id="activityImg2"
+                  {...register("activityImg2")}
+                />
+                <img alt="" src={activityImg2} width={300} height={200} />
+                <ImgUploader htmlFor="activityImg2">파일 선택</ImgUploader>
+              </ImageWrap>
+              <TextareaWrap
+                type="text"
+                {...register("activityText2")}
+                name="activityText2"
+              />
+            </ClubActivity>
+            <ClubActivity>
+              <ImageWrap>
+                <input
+                  type="file"
+                  style={{ display: "none" }}
+                  accept="image/jpg, image/png, image/jpeg"
+                  id="activityImg3"
+                  {...register("activityImg3")}
+                />
+                <img alt="" src={activityImg3} width={300} height={200} />
+                <ImgUploader htmlFor="activityImg3">파일 선택</ImgUploader>
+              </ImageWrap>
+              <TextareaWrap
+                type="text"
+                {...register("activityText3")}
+                name="activityText3"
+              />
+            </ClubActivity>
+            <ClubActivity>
+              <ImageWrap>
+                <input
+                  type="file"
+                  style={{ display: "none" }}
+                  accept="image/jpg, image/png, image/jpeg"
+                  id="activityImg4"
+                  {...register("activityImg4")}
+                />
+                <img alt="" src={activityImg4} width={300} height={200} />
+                <ImgUploader htmlFor="activityImg4">파일 선택</ImgUploader>
+              </ImageWrap>
+              <TextareaWrap
+                type="text"
+                {...register("activityText4")}
+                name="activityText4"
+              />
+            </ClubActivity>
+          </ActivityWrap>
+        </div>
+        <ClubJoin>
+          <TitleWrap>동아리 지원 방법</TitleWrap>
+          <MemberWrap>
+            <Input
+              type="text"
+              name="num"
+              {...register("num", { required: true })}
+              label="모집 인원"
+            />
+            <Input
+              type="text"
+              name="period"
+              {...register("period", { required: true })}
+              label="모집 시기"
+            />
+            <Input
+              type="text"
+              name="way"
+              {...register("way", { required: true })}
+              label="모집 방법"
+            />
+            <Input
+              type="text"
+              name="applyUrl"
+              {...register("applyUrl")}
+              label="지원서 작성"
+            />
+          </MemberWrap>
+        </ClubJoin>
+        <SubmitButton
+          type="button"
+          onClick={() => {
+            postClub(values).then(() => {
+              navigator("/");
+            });
+          }}>
+          동아리 등록하기
+        </SubmitButton>
+      </ContentWrap>
     </>
   );
 };

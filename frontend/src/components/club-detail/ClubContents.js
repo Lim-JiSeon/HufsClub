@@ -77,7 +77,7 @@ const ClubContents = () => {
   const clubId = useParams().id;
   const navigate = useNavigate();
 
-  const admin = sessionStorage.getItem("hufs-isAdmin");
+  const admin = sessionStorage.getItem("hufs-isAdmin") || false;
 
   const [data, setData] = useState();
   const [isPresident, setIsPresident] = useState("");
@@ -111,7 +111,7 @@ const ClubContents = () => {
     <>
       {(admin || isPresident === data?.name) && (
         <ButtonWrap>
-          <StyledLink to={`/edit-club/${data._id}`}>수정</StyledLink>
+          <StyledLink to={`/edit-club/${data?._id}`}>수정</StyledLink>
           <Button onClick={() => setDeletePopup(true)}>삭제</Button>
         </ButtonWrap>
       )}
