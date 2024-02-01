@@ -18,6 +18,7 @@ import ResetPwPage from "./pages/ResetPwPage";
 import EditClubPage from "./pages/EditClubPage";
 import ClubPage from "./pages/ClubPage";
 import RegisterClubPage from "./pages/RegisterClubPage";
+import LikePage from "./pages/LikePage";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -36,6 +37,7 @@ root.render(
         <Route path="/input" element={<InputPage />} />
         <Route path="/edit-club/:id" element={<EditClubPage />} />
         <Route path="/mypage" element={<MyPage />} />
+        <Route path="/like/:id" element={<LikePage />} />
         <Route path="/reset-password/:codeNumber" element={<ResetPwPage />} />
         <Route path="*" element={<NotPage />} />
       </Routes>
