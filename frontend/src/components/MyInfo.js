@@ -110,7 +110,7 @@ const MyInfo = (data) => {
             name="isPresident"
             onChange={handleChange}
             defaultValue={isPresident}
-            label="동아리 회장"
+            label="동아리 운영진"
           />
         </Content>
       </ContentWrap>

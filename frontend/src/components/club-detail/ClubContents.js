@@ -40,7 +40,7 @@ const ButtonWrap = styled.div`
   width: 70vw;
   justify-content: flex-end;
   align-items: center;
-  padding: 10px 0;
+  padding-top: 30px;
 `;
 
 const Button = styled.button`
@@ -77,6 +77,8 @@ const ClubContents = () => {
   const clubId = useParams().id;
   const navigate = useNavigate();
 
+  const admin = sessionStorage.getItem("hufs-isAdmin") || false;
+
   const [data, setData] = useState();
   const [isPresident, setIsPresident] = useState("");
   const [deletePopup, setDeletePopup] = useState(false);
@@ -107,12 +109,12 @@ const ClubContents = () => {
 
   return (
     <>
-      {data && isPresident === data.name ? (
+      {(admin || isPresident === data?.name) && (
         <ButtonWrap>
-          <StyledLink to={`edit-club/${data._id}`}>수정</StyledLink>
+          <StyledLink to={`/edit-club/${data?._id}`}>수정</StyledLink>
           <Button onClick={() => setDeletePopup(true)}>삭제</Button>
         </ButtonWrap>
-      ) : null}
+      )}
       {data && (
         <ContentWrap>
           <DetailWrap>

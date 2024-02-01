@@ -7,6 +7,7 @@ import likeImage from "../images/like.png";
 
 const Header = () => {
   const isLogin = sessionStorage.getItem("hufs-club_isLogin") ?? "";
+  const _id = sessionStorage.getItem("hufs-club_id");
 
   const Header = styled.div`
     width: 70vw;
@@ -60,7 +61,7 @@ const Header = () => {
           <Link to="/mypage">
             <Avatar />
           </Link>
-          <Link to="/register-club" style={{ paddingLeft: "20px" }}>
+          <Link to={`/like/${_id}`} style={{ paddingLeft: "20px" }}>
             <Image src={likeImage} width={55} height={55} />
           </Link>
         </AvatarWrap>

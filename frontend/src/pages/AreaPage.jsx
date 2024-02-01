@@ -60,10 +60,11 @@ function AreaPage() {
   const area = useParams().field;
   const [club, setClub] = useState([]);
 
+  const registerButton =
+    sessionStorage.getItem("hufs-isAdmin") || sessionStorage.getItem("hufs-");
+
   const getClub = async () => {
-    console.log("getClub");
     setClub(await getField(area));
-    console.log("result");
   };
 
   useEffect(() => {
@@ -80,9 +81,11 @@ function AreaPage() {
       </Banner>
       <SearchBar setClub={setClub} />
       <ButtonWrap>
-        <Link to="/">
-          <Button>동아리 등록하기</Button>
-        </Link>
+        {registerButton && (
+          <Link to={`/${area}/register-club`}>
+            <Button>동아리 등록하기</Button>
+          </Link>
+        )}
       </ButtonWrap>
       <ClubGrid data={club} />
     </AreaContainer>

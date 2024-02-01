@@ -18,6 +18,7 @@ import ResetPwPage from "./pages/ResetPwPage";
 import EditClubPage from "./pages/EditClubPage";
 import ClubPage from "./pages/ClubPage";
 import RegisterClubPage from "./pages/RegisterClubPage";
+import LikePage from "./pages/LikePage";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -29,13 +30,14 @@ root.render(
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/find/id" element={<FindIdPage />} />
         <Route path="/find/password" element={<FindPwPage />} />
-        <Route path="/register-club" element={<RegisterClubPage />} />
+        <Route path="/:field/register-club" element={<RegisterClubPage />} />
         <Route path="/area/:field" element={<AreaPage />} />
         <Route path="/area/:field/:id" element={<ClubPage />} />
         <Route path="/intro" element={<IntroPage />} />
         <Route path="/input" element={<InputPage />} />
         <Route path="/edit-club/:id" element={<EditClubPage />} />
         <Route path="/mypage" element={<MyPage />} />
+        <Route path="/like/:id" element={<LikePage />} />
         <Route path="/reset-password/:codeNumber" element={<ResetPwPage />} />
         <Route path="*" element={<NotPage />} />
       </Routes>

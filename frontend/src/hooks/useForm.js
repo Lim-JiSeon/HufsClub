@@ -32,8 +32,11 @@ const useForm = ({ initialValues, onSubmit, validate }) => {
         const response = await login(Number(values.id), values.password);
         sessionStorage.setItem("hufs-club_isLogin", response.data.token);
         sessionStorage.setItem("hufs-club_id", response.data._id);
-        // 추후 삭제 (패스워드 삭제)
-        sessionStorage.setItem("hufs-password", values.password);
+        sessionStorage.setItem("hufs-isAdmin", response.data.isAdmin);
+        sessionStorage.setItem(
+          "hufs-isPresident",
+          response.data.isPresident ?? ""
+        );
         navigate("/");
       } catch (error) {
         alert(
