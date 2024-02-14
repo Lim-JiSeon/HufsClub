@@ -18,9 +18,7 @@ userRouter.post(
       username: req.body.username,
       email: req.body.email,
       studentId: req.body.studentId,
-      major: req.body.major,
       password: bcrypt.hashSync(req.body.password),
-      isEnroll: req.body.isEnroll,
       isPresident: req.body.isPresident,
     });
     const user = await newUser.save();
@@ -29,8 +27,6 @@ userRouter.post(
       username: user.username,
       email: user.email,
       studentId: user.studentId,
-      major: user.major,
-      isEnroll: user.isEnroll,
       isPresident: user.isPresident,
       isAdmin: user.isAdmin,
       token: generateToken(user),
@@ -57,9 +53,6 @@ userRouter.post(
         username: signinUser.username,
         email: signinUser.email,
         studentId: signinUser.studentId,
-        major: signinUser.major,
-        major2: signinUser.major2,
-        isEnroll: signinUser.isEnroll,
         isPresident: signinUser.isPresident,
         isAdmin: signinUser.isAdmin,
         token: generateToken(signinUser),
@@ -130,9 +123,6 @@ userRouter.get(
         username: user.username,
         email: user.email,
         studentId: user.studentId,
-        major: user.major,
-        major2: user.major2,
-        isEnroll: user.isEnroll,
         isPresident: user.isPresident,
         isAdmin: user.isAdmin,
         like: user.like,
@@ -163,9 +153,6 @@ userRouter.get('/info/:id', async (req, res) => {
       username: user.username,
       email: user.email,
       studentId: user.studentId,
-      major: user.major,
-      major2: user.major2,
-      isEnroll: user.isEnroll,
       isPresident: user.isPresident,
       likes,
       token: generateToken(user),
@@ -184,10 +171,7 @@ userRouter.put(
     if (user) {
       user.username = req.body.username || user.username;
       user.studentId = req.body.studentId || user.studentId; 
-      user.major = req.body.major || user.major;
-      user.major2 = req.body.major2;
       user.email = req.body.email || user.email;
-      user.isEnroll = req.body.isEnroll || user.isEnroll;
       user.isPresident = req.body.isPresident;
       if (req.body.password) { 
         //기존 비밀번호 일치 여부 확인
@@ -204,9 +188,6 @@ userRouter.put(
         username: updatedUser.username,
         email: updatedUser.email,
         studentId: updatedUser.studentId,
-        major: updatedUser.major,
-        major2: updatedUser.major2,
-        isEnroll: updatedUser.isEnroll,
         isPresident: updatedUser.isPresident,
         isAdmin: updatedUser.isAdmin,
         like: updatedUser.like,
@@ -367,9 +348,6 @@ userRouter.put(
         username: updatedUser.username,
         email: updatedUser.email,
         studentId: updatedUser.studentId,
-        major: updatedUser.major,
-        major2: updatedUser.major2,
-        isEnroll: updatedUser.isEnroll,
         isPresident: updatedUser.isPresident,
         isAdmin: updatedUser.isAdmin,
         like: updatedUser.like,
@@ -397,9 +375,6 @@ userRouter.put(
         username: updatedUser.username,
         email: updatedUser.email,
         studentId: updatedUser.studentId,
-        major: updatedUser.major,
-        major2: updatedUser.major2,
-        isEnroll: updatedUser.isEnroll,
         isPresident: updatedUser.isPresident,
         isAdmin: updatedUser.isAdmin,
         like: updatedUser.like,
@@ -422,9 +397,6 @@ userRouter.put(
       user.username = req.body.username || user.username;
       user.email = req.body.email || user.email;
       user.studentId = req.body.studentId || user.studentId; //아이디로 사용
-      user.major = req.body.major || user.major;
-      user.major2 = req.body.major2 || user.major2;
-      user.isEnroll = req.body.isEnroll || user.isEnroll;
       user.isPresident = req.body.isPresident || user.isPresident;
       user.isAdmin = Boolean(req.body.isAdmin);
       const updatedUser = await user.save();
