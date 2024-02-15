@@ -10,10 +10,7 @@ const putUserInfo = async (values) => {
       {
         username: values.username,
         studentId: values.studentId,
-        major: values.major,
-        major2: values.major2,
         email: values.email,
-        isEnroll: values.isEnroll,
         isPresident: values.isPresident,
         password: values.password,
         newPassword: values.password,

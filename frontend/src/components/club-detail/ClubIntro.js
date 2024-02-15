@@ -7,6 +7,7 @@ import CalenderImage from "../../images/calender.png";
 import JoinImage from "../../images/join.png";
 import LinkImage from "../../images/link.png";
 import LikeImage from "../../images/like_icon.png";
+import putLike from "../../api/putLike";
 
 const ContentWrap = styled.div`
   width: 100%;
@@ -95,8 +96,8 @@ const ClubDetail = styled.div`
 const ClubIntro = (data) => {
   const { logoUrl, name, topic, recruit } = data.data;
 
-  const handleButton = () => {
-    alert("해당 동아리를 좋아요 했습니다.");
+  const handleButton = async () => {
+    await putLike(name);
   };
 
   return (

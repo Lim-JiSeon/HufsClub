@@ -13,6 +13,14 @@ const AreaContainer = styled.div`
   align-items: center;
 `;
 
+const Title = styled.div`
+  padding: 20px 0 30px 0;
+  color: #27374d;
+  font-size: 24px;
+  text-align: center;
+  font-weight: bold;
+`;
+
 export default function LikePage() {
   const [club, setClub] = useState([]);
 
@@ -27,6 +35,7 @@ export default function LikePage() {
   return (
     <AreaContainer>
       <Header></Header>
+      <Title>좋아요 관리</Title>
       <ClubGrid data={club} />
     </AreaContainer>
   );

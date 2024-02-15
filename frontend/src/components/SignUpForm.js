@@ -23,15 +23,13 @@ const AgreementText = styled.span`
 
 const SignUpForm = ({ onSubmit }) => {
   const [clubPresidentCheck, setClubPresidentCheck] = useState(false);
-  const { values, errors, isLoading, handleChange, handleSignUp } = useForm({
+  const { errors, isLoading, handleChange, handleSignUp } = useForm({
     initialValues: {
       name: "",
       studentNumber: 0,
       email: "",
-      subject: "",
       password: "",
       passwordConfirm: "",
-      attendance: "재학",
       clubPresident: "",
       agreement: false,
     },
@@ -40,7 +38,6 @@ const SignUpForm = ({ onSubmit }) => {
       name,
       studentNumber,
       email,
-      subject,
       password,
       passwordConfirm,
       clubPresident,
@@ -56,7 +53,6 @@ const SignUpForm = ({ onSubmit }) => {
       )
         newErrors.studentNumber = "올바른 학번을 입력해주세요";
       if (!email) newErrors.email = "올바른 이메일을 입력해주세요";
-      if (!subject) newErrors.subject = "학과를 입력해주세요";
       if (!password) newErrors.password = "비밀번호를 입력해주세요";
       if (password !== passwordConfirm)
         newErrors.passwordConfirm = "비밀번호가 일치하지 않습니다";
@@ -84,8 +80,6 @@ const SignUpForm = ({ onSubmit }) => {
       {errors.studentNumber && <ErrorText>{errors.studentNumber}</ErrorText>}
       <Input type="email" name="email" onChange={handleChange} label="이메일" />
       {errors.email && <ErrorText>{errors.email}</ErrorText>}
-      <Input type="text" name="subject" onChange={handleChange} label="학과" />
-      {errors.subject && <ErrorText>{errors.subject}</ErrorText>}
       <Input
         type="password"
         name="password"
@@ -102,23 +96,6 @@ const SignUpForm = ({ onSubmit }) => {
       {errors.passwordConfirm && (
         <ErrorText>{errors.passwordConfirm}</ErrorText>
       )}
-      <RadioGroup
-        label="재학 여부"
-        value={values.attendance}
-        onChange={handleChange}>
-        <Radio name="attendance" value="재학" defaultChecked>
-          재학
-        </Radio>
-        <Radio name="attendance" value="휴학">
-          휴학
-        </Radio>
-        <Radio name="attendance" value="졸업">
-          졸업
-        </Radio>
-        <Radio name="attendance" value="기타">
-          기타
-        </Radio>
-      </RadioGroup>
       <RadioGroup
         label="동아리 운영진"
         value={clubPresidentCheck}

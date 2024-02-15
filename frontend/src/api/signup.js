@@ -6,9 +6,7 @@ const signup = (values) => {
     username: values.name,
     email: values.email,
     studentId: values.studentNumber,
-    major: values.subject,
     password: values.password,
-    isEnroll: values.attendance,
     isPresident: values.clubPresident,
   });
 };
