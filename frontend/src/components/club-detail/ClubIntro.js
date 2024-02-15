@@ -94,7 +94,7 @@ const ClubDetail = styled.div`
 `;
 
 const ClubIntro = (data) => {
-  const { logoUrl, name, topic, recruit } = data.data;
+  const { logoUrl, room, name, topic, recruit } = data.data;
 
   const handleButton = async () => {
     await putLike(name);
@@ -111,7 +111,7 @@ const ClubIntro = (data) => {
           <ClubDetail>
             <ClubRoomWrap>
               <img src={HomeImage} width={20} height={20} alt="" />
-              <ClubRoom>{tempData.room}</ClubRoom>
+              <ClubRoom>{room}</ClubRoom>
             </ClubRoomWrap>
             <ClubRoomWrap>
               <img src={PeopleImage} width={20} height={20} alt="" />
