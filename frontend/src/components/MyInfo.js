@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "@emotion/styled";
-import profileImage from "../images/profile.png";
-import Image from "./func/Image";
+// import profileImage from "../images/profile.png";
+// import Image from "./func/Image";
 import Input from "./func/Input";
 import useForm from "../hooks/useForm";
 import SubmitButton from "./SubmitButton";
 import { useNavigate } from "react-router-dom";
 import putUserInfo from "../api/putUserInfo";
+import Radio from "./func/Radio";
+import RadioGroup from "./func/RadioGroup";
 
 const ContentWrap = styled.div`
   width: 100%;
@@ -15,10 +17,6 @@ const ContentWrap = styled.div`
   align-items: center;
   justify-content: space-evenly;
   padding-top: 40px;
-`;
-
-const ImageWrap = styled.div`
-  padding-right: 40px;
 `;
 
 const Content = styled.div`
@@ -32,8 +30,8 @@ const ButtonWrap = styled.div`
 `;
 
 const MyInfo = (data) => {
-  const { username, studentId, major, major2, email, isEnroll, isPresident } =
-    data.data;
+  const [clubPresidentCheck, setClubPresidentCheck] = useState(false);
+  const { username, studentId, email, isPresident } = data.data;
 
   const password = sessionStorage.getItem("hufs-password");
 
@@ -43,11 +41,8 @@ const MyInfo = (data) => {
     initialValues: {
       username,
       studentId,
-      major,
-      major2,
       password,
       email,
-      isEnroll,
       isPresident,
     },
   });
@@ -59,9 +54,9 @@ const MyInfo = (data) => {
   return (
     <>
       <ContentWrap>
-        <ImageWrap>
+        {/* <ImageWrap>
           <Image src={profileImage} alt="" width="200px" height="auto" />
-        </ImageWrap>
+        </ImageWrap> */}
         <Content>
           <Input
             type="text"
@@ -78,40 +73,38 @@ const MyInfo = (data) => {
             label="학번"
           />
           <Input
-            type="text"
-            name="major"
-            onChange={handleChange}
-            defaultValue={major}
-            label="학과1"
-          />
-          <Input
-            type="text"
-            name="major2"
-            onChange={handleChange}
-            defaultValue={values.major2}
-            label="학과2"
-          />
-          <Input
             type="email"
             name="email"
             onChange={handleChange}
             defaultValue={email}
             label="이메일"
           />
-          <Input
-            type="text"
-            name="isEnroll"
-            onChange={handleChange}
-            defaultValue={isEnroll}
-            label="재학 여부"
-          />
-          <Input
+          <RadioGroup
+            label="동아리 운영진"
+            value={clubPresidentCheck}
+            onChange={() => setClubPresidentCheck(!clubPresidentCheck)}>
+            <Radio name="clubPresidentCheck" value={false} defaultChecked>
+              일반 회원
+            </Radio>
+            <Radio name="clubPresidentCheck" value={true}>
+              동아리 운영진
+            </Radio>
+          </RadioGroup>
+          {clubPresidentCheck && (
+            <Input
+              type="text"
+              name="isPresident"
+              onChange={handleChange}
+              label="동아리 이름"
+            />
+          )}
+          {/* <Input
             type="text"
             name="isPresident"
             onChange={handleChange}
             defaultValue={isPresident}
             label="동아리 운영진"
-          />
+          /> */}
         </Content>
       </ContentWrap>
       <ButtonWrap>

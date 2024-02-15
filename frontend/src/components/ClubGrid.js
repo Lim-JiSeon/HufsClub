@@ -16,7 +16,7 @@ const GridWrap = styled.div`
 `;
 
 const ClubGrid = (data) => {
-  const clubs = data.data.data;
+  const clubs = data.data?.data;
 
   return (
     <GridWrap>

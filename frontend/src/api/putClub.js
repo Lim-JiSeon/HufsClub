@@ -1,6 +1,5 @@
 import axios from "axios";
 import { API_END_POINT } from "../constants/api";
-import { useParams } from "react-router-dom";
 
 const putClub = async (values, id) => {
   const token = sessionStorage.getItem("hufs-club_isLogin");

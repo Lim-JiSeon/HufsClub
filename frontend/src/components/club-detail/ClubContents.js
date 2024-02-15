@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import getClub from "../../api/getClub";
 import { ClubMember } from "./ClubMember";
 import ClubActivity from "./ClubActivity";
-import ClubJoin from "./ClubJoin";
 import getUserInfo from "../../api/getUserInfo";
 import Popup from "../func/Popup";
 import { useNavigate } from "react-router-dom";
