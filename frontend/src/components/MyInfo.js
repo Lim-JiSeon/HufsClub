@@ -79,7 +79,7 @@ const MyInfo = (data) => {
             defaultValue={email}
             label="이메일"
           />
-          <RadioGroup
+          {/* <RadioGroup
             label="동아리 운영진"
             value={clubPresidentCheck}
             onChange={() => setClubPresidentCheck(!clubPresidentCheck)}>
@@ -95,16 +95,17 @@ const MyInfo = (data) => {
               type="text"
               name="isPresident"
               onChange={handleChange}
+              defaultValue={isPresident}
               label="동아리 이름"
             />
-          )}
-          {/* <Input
+          )} */}
+          <Input
             type="text"
             name="isPresident"
             onChange={handleChange}
             defaultValue={isPresident}
             label="동아리 운영진"
-          /> */}
+          />
         </Content>
       </ContentWrap>
       <ButtonWrap>

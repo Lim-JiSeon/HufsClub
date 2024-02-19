@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "../func/Image";
 import HomeImage from "../../images/home.png";
 import PeopleImage from "../../images/people.png";
@@ -8,6 +8,8 @@ import JoinImage from "../../images/join.png";
 import LinkImage from "../../images/link.png";
 import LikeImage from "../../images/like_icon.png";
 import putLike from "../../api/putLike";
+import getUserInfo from "../../api/getUserInfo";
+import deleteLike from "../../api/deleteLike";
 
 const ContentWrap = styled.div`
   width: 100%;
@@ -63,6 +65,7 @@ const ClubRoomWrap = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  margin-bottom: 10px;
 `;
 
 const AllWrap = styled.div`
@@ -91,14 +94,29 @@ const LinkText = styled.a`
 
 const ClubDetail = styled.div`
   display: flex;
+  flex-direction: column;
 `;
 
 const ClubIntro = (data) => {
+  const [like, setLike] = useState();
+
   const { logoUrl, room, name, topic, recruit } = data.data;
 
   const handleButton = async () => {
-    await putLike(name);
+    const check = like.filter((element) => element[0].name === name);
+
+    check.length ? await deleteLike(name) : await putLike(name);
+
+    window.location.reload();
   };
+
+  useEffect(() => {
+    getUserInfo()
+      .then((res) => {
+        setLike(res.likes);
+      })
+      .catch((error) => console.log(error));
+  }, []);
 
   return (
     <AllWrap>

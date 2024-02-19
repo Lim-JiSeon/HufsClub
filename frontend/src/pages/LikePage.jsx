@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
-import ClubGrid from "../components/ClubGrid";
+import LikeGrid from "../components/LikeGrid";
 import getUserInfo from "../api/getUserInfo";
 
 const AreaContainer = styled.div`
@@ -25,7 +25,7 @@ export default function LikePage() {
   const [club, setClub] = useState([]);
 
   const getClub = async () => {
-    setClub(await getUserInfo().likes);
+    setClub(await getUserInfo());
   };
 
   useEffect(() => {
@@ -36,7 +36,7 @@ export default function LikePage() {
     <AreaContainer>
       <Header></Header>
       <Title>좋아요 관리</Title>
-      <ClubGrid data={club} />
+      <LikeGrid data={club} />
     </AreaContainer>
   );
 }
