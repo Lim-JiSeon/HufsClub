@@ -23,6 +23,22 @@ const useForm = ({ initialValues, onSubmit, validate }) => {
     }
   };
 
+  const handleFile = (e) => {
+    if (e.target.files && e.target.files.length) {
+      const fileBlob = e.target.files[0];
+      const reader = new FileReader();
+
+      reader.readAsDataURL(fileBlob);
+
+      return new Promise((resolve) => {
+        reader.onload = () => {
+          setValues({ ...values, [e.target.id]: reader.result });
+          resolve();
+        };
+      });
+    }
+  };
+
   const handleLogin = async (e) => {
     setIsLoading(true);
     e.preventDefault();
@@ -110,6 +126,7 @@ const useForm = ({ initialValues, onSubmit, validate }) => {
     errors,
     isLoading,
     handleChange,
+    handleFile,
     handleLogin,
     handleSignUp,
     handleFindPw,

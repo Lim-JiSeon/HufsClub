@@ -7,8 +7,8 @@ import useForm from "../hooks/useForm";
 import SubmitButton from "./SubmitButton";
 import { useNavigate } from "react-router-dom";
 import putUserInfo from "../api/putUserInfo";
-import Radio from "./func/Radio";
-import RadioGroup from "./func/RadioGroup";
+// import Radio from "./func/Radio";
+// import RadioGroup from "./func/RadioGroup";
 
 const ContentWrap = styled.div`
   width: 100%;
@@ -60,7 +60,7 @@ const MyInfo = (data) => {
         <Content>
           <Input
             type="text"
-            name="usename"
+            name="username"
             onChange={handleChange}
             defaultValue={username}
             label="이름"

@@ -5,7 +5,8 @@ import SubmitButton from "../components/SubmitButton";
 import postClub from "../api/postClub";
 import ImageUploader from "../images/image-upload.png";
 import { useNavigate, useParams } from "react-router-dom";
-import { useForm } from "react-hook-form";
+//import { useForm } from "react-hook-form";
+import useForm from "../hooks/useForm";
 import getUserInfo from "../api/getUserInfo";
 
 const ContentWrap = styled.form`
@@ -151,32 +152,45 @@ const ImgUploader = styled.label`
   }
 `;
 
-const RegisterClubContents = () => {
+const RegisterClubContents = (data) => {
   const navigator = useNavigate();
 
   const area = useParams().field;
+  const { isPresident, username, email } = data.data;
 
-  const { register, watch, reset } = useForm();
-
-  useEffect(() => {
-    getUserInfo()
-      .then((res) => {
-        reset({
-          field: area,
-          name: res.isPresident,
-          room: "",
-          topic: "",
-          executive1Name: res.username,
-          executive1Email: res.email,
-          executive1Role: "운영진",
-          period: "미정",
-          way: "미정",
-          applyUrl: "",
-          num: "미정",
-        });
-      })
-      .catch((error) => console.log(error));
-  }, [reset, area]);
+  const { handleChange, handleFile, values } = useForm({
+    initialValues: {
+      activityImg1: ImageUploader,
+      activityImg2: ImageUploader,
+      activityImg3: ImageUploader,
+      activityImg4: ImageUploader,
+      activityText1: "",
+      activityText2: "",
+      activityText3: "",
+      activityText4: "",
+      applyUrl: "",
+      executive1Email: email,
+      executive1Name: username,
+      executive1Role: "운영진",
+      executive2Email: "",
+      executive2Name: "",
+      executive2Role: "",
+      executive3Email: "",
+      executive3Name: "",
+      executive3Role: "",
+      executive4Email: "",
+      executive4Name: "",
+      executive4Role: "",
+      field: area,
+      logoUrl: ImageUploader,
+      name: isPresident,
+      num: "",
+      period: "",
+      room: "",
+      topic: "",
+      way: "",
+    },
+  });
 
   const [logoUrl, setLogoUrl] = useState(ImageUploader);
   const [activityImg1, setActivityImg1] = useState(ImageUploader);
@@ -184,32 +198,13 @@ const RegisterClubContents = () => {
   const [activityImg3, setActivityImg3] = useState(ImageUploader);
   const [activityImg4, setActivityImg4] = useState(ImageUploader);
 
-  const logoImg = watch("logoUrl");
-  const activity1 = watch("activityImg1");
-  const activity2 = watch("activityImg2");
-  const activity3 = watch("activityImg3");
-  const activity4 = watch("activityImg4");
-
-  const values = watch();
-
   useEffect(() => {
-    if (logoImg && logoImg.length) {
-      const file = logoImg[0];
-      setLogoUrl(URL.createObjectURL(file) ?? "");
-    } else if (activity1 && activity1.length) {
-      const file = activity1[0];
-      setActivityImg1(URL.createObjectURL(file) ?? "");
-    } else if (activity2 && activity2.length) {
-      const file = activity2[0];
-      setActivityImg2(URL.createObjectURL(file) ?? "");
-    } else if (activity3 && activity3.length) {
-      const file = activity3[0];
-      setActivityImg3(URL.createObjectURL(file) ?? "");
-    } else if (activity4 && activity4.length) {
-      const file = activity4[0];
-      setActivityImg4(URL.createObjectURL(file) ?? "");
-    }
-  }, [logoImg, activity1, activity2, activity3, activity4]);
+    setLogoUrl(values.logoUrl);
+    setActivityImg1(values.activityImg1);
+    setActivityImg2(values.activityImg2);
+    setActivityImg3(values.activityImg3);
+    setActivityImg4(values.activityImg4);
+  }, [values]);
 
   return (
     <>
@@ -220,7 +215,8 @@ const RegisterClubContents = () => {
               type="file"
               style={{ display: "none" }}
               accept="image/jpg, image/png, image/jpeg"
-              {...register("logoUrl")}
+              onChange={handleFile}
+              // {...register("logoUrl")}
               id="logoUrl"
             />
             <img
@@ -237,30 +233,38 @@ const RegisterClubContents = () => {
               <Input
                 type="text"
                 name="name"
-                value={watch().name}
-                {...register("name")}
+                // value={watch().name}
+                // {...register("name")}
+                onChange={handleChange}
+                defaultValue={isPresident}
                 label="동아리 이름"
                 readonly
               />
               <Input
                 type="text"
+                // {...register("field")}
+                // value={area}
                 name="field"
-                {...register("field")}
-                value={area}
+                onChange={handleChange}
+                defaultValue={area}
                 label="동아리 분야"
                 readonly
               />
             </ClubJoinContent>
             <Input
               type="text"
+              defaultValue=""
               name="room"
-              {...register("room")}
+              onChange={handleChange}
+              //{...register("room")}
               label="동아리 방"
             />
             <Input
               type="text"
               name="topic"
-              {...register("topic")}
+              defaultValue=""
+              onChange={handleChange}
+              //{...register("topic")}
               label="동아리 주제"
             />
           </ClubContentWrap>
@@ -273,24 +277,27 @@ const RegisterClubContents = () => {
                 type="text"
                 label="이름"
                 name="executive1Name"
-                {...register("executive1Name")}
-                value={watch().executive1Name}
+                defaultValue={username}
+                // {...register("executive1Name")}
+                // value={watch().executive1Name}
                 readonly
               />
               <Input
                 type="text"
                 label="이메일"
                 name="executive1Email"
-                {...register("executive1Email")}
-                value={watch().executive1Email}
+                defaultValue={email}
+                // {...register("executive1Email")}
+                // value={watch().executive1Email}
                 readonly
               />
               <Input
                 type="text"
                 label="역할"
                 name="executive1Role"
-                {...register("executive1Role")}
-                value="운영진"
+                defaultValue="운영진"
+                // {...register("executive1Role")}
+                // value="운영진"
                 readonly
               />
             </MemberContainer>
@@ -299,19 +306,25 @@ const RegisterClubContents = () => {
                 type="text"
                 label="이름"
                 name="executive2Name"
-                {...register("executive2Name")}
+                defaultValue=""
+                onChange={handleChange}
+                // {...register("executive2Name")}
               />
               <Input
                 type="text"
                 label="이메일"
                 name="executive2Email"
-                {...register("executive2Email")}
+                defaultValue=""
+                onChange={handleChange}
+                //{...register("executive2Email")}
               />
               <Input
                 type="text"
                 label="역할"
                 name="executive2Role"
-                {...register("executive2Role")}
+                defaultValue=""
+                onChange={handleChange}
+                // {...register("executive2Role")}
               />
             </MemberContainer>
             <MemberContainer>
@@ -319,19 +332,25 @@ const RegisterClubContents = () => {
                 type="text"
                 label="이름"
                 name="executive3Name"
-                {...register("executive3Name")}
+                defaultValue=""
+                onChange={handleChange}
+                // {...register("executive3Name")}
               />
               <Input
                 type="text"
                 label="이메일"
                 name="executive3Email"
-                {...register("executive3Email")}
+                defaultValue=""
+                onChange={handleChange}
+                // {...register("executive3Email")}
               />
               <Input
                 type="text"
                 label="역할"
                 name="executive3Role"
-                {...register("executive3Role")}
+                defaultValue=""
+                onChange={handleChange}
+                // {...register("executive3Role")}
               />
             </MemberContainer>
             <MemberContainer>
@@ -339,19 +358,25 @@ const RegisterClubContents = () => {
                 type="text"
                 label="이름"
                 name="executive4Name"
-                {...register("executive4Name")}
+                defaultValue=""
+                onChange={handleChange}
+                // {...register("executive4Name")}
               />
               <Input
                 type="text"
                 label="이메일"
                 name="executive4Email"
-                {...register("executive4Email")}
+                defaultValue=""
+                onChange={handleChange}
+                // {...register("executive4Email")}
               />
               <Input
                 type="text"
                 label="역할"
                 name="executive4Role"
-                {...register("executive4Role")}
+                defaultValue=""
+                onChange={handleChange}
+                // {...register("executive4Role")}
               />
             </MemberContainer>
           </MemberWrap>
@@ -366,14 +391,17 @@ const RegisterClubContents = () => {
                   style={{ display: "none" }}
                   accept="image/jpg, image/png, image/jpeg"
                   id="activityImg1"
-                  {...register("activityImg1")}
+                  onChange={handleFile}
+                  // {...register("activityImg1")}
                 />
                 <img alt="" src={activityImg1} width={300} height={200} />
                 <ImgUploader htmlFor="activityImg1">파일 선택</ImgUploader>
               </ImageWrap>
               <TextareaWrap
                 type="text"
-                {...register("activityText1")}
+                defaultValue=""
+                onChange={handleChange}
+                // {...register("activityText1")}
                 name="activityText1"
               />
             </ClubActivity>
@@ -384,14 +412,17 @@ const RegisterClubContents = () => {
                   style={{ display: "none" }}
                   accept="image/jpg, image/png, image/jpeg"
                   id="activityImg2"
-                  {...register("activityImg2")}
+                  onChange={handleFile}
+                  // {...register("activityImg2")}
                 />
                 <img alt="" src={activityImg2} width={300} height={200} />
                 <ImgUploader htmlFor="activityImg2">파일 선택</ImgUploader>
               </ImageWrap>
               <TextareaWrap
                 type="text"
-                {...register("activityText2")}
+                defaultValue=""
+                onChange={handleChange}
+                // {...register("activityText2")}
                 name="activityText2"
               />
             </ClubActivity>
@@ -402,14 +433,17 @@ const RegisterClubContents = () => {
                   style={{ display: "none" }}
                   accept="image/jpg, image/png, image/jpeg"
                   id="activityImg3"
-                  {...register("activityImg3")}
+                  onChange={handleFile}
+                  // {...register("activityImg3")}
                 />
                 <img alt="" src={activityImg3} width={300} height={200} />
                 <ImgUploader htmlFor="activityImg3">파일 선택</ImgUploader>
               </ImageWrap>
               <TextareaWrap
                 type="text"
-                {...register("activityText3")}
+                defaultValue=""
+                onChange={handleChange}
+                // {...register("activityText3")}
                 name="activityText3"
               />
             </ClubActivity>
@@ -420,14 +454,17 @@ const RegisterClubContents = () => {
                   style={{ display: "none" }}
                   accept="image/jpg, image/png, image/jpeg"
                   id="activityImg4"
-                  {...register("activityImg4")}
+                  onChange={handleFile}
+                  // {...register("activityImg4")}
                 />
                 <img alt="" src={activityImg4} width={300} height={200} />
                 <ImgUploader htmlFor="activityImg4">파일 선택</ImgUploader>
               </ImageWrap>
               <TextareaWrap
                 type="text"
-                {...register("activityText4")}
+                defaultValue=""
+                onChange={handleChange}
+                // {...register("activityText4")}
                 name="activityText4"
               />
             </ClubActivity>
@@ -439,25 +476,33 @@ const RegisterClubContents = () => {
             <Input
               type="text"
               name="num"
-              {...register("num", { required: true })}
+              defaultValue=""
+              onChange={handleChange}
+              // {...register("num", { required: true })}
               label="모집 인원"
             />
             <Input
               type="text"
               name="period"
-              {...register("period", { required: true })}
+              defaultValue=""
+              onChange={handleChange}
+              // {...register("period", { required: true })}
               label="모집 시기"
             />
             <Input
               type="text"
               name="way"
-              {...register("way", { required: true })}
+              defaultValue=""
+              onChange={handleChange}
+              // {...register("way", { required: true })}
               label="모집 방법"
             />
             <Input
               type="text"
               name="applyUrl"
-              {...register("applyUrl")}
+              defaultValue=""
+              onChange={handleChange}
+              // {...register("applyUrl")}
               label="지원서 작성"
             />
           </MemberWrap>
