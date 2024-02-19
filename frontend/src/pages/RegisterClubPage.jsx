@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
 import styled from "@emotion/styled";
 import RegisterClubContents from "../components/RegisterClubContents";
+import getUserInfo from "../api/getUserInfo";
 
 const RegisterClubContainer = styled.div`
   display: flex;
@@ -13,10 +14,20 @@ const RegisterClubContainer = styled.div`
 `;
 
 const RegisterClubPage = () => {
+  const [data, setData] = useState();
+
+  useEffect(() => {
+    getUserInfo()
+      .then((res) => {
+        setData(res);
+      })
+      .catch((error) => console.log(error));
+  }, []);
+
   return (
     <RegisterClubContainer>
       <Header />
-      <RegisterClubContents />
+      {data && <RegisterClubContents data={data} />}
     </RegisterClubContainer>
   );
 };
