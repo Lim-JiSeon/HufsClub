@@ -114,8 +114,8 @@ const ClubContents = () => {
     <>
       {(admin || isPresident === data?.name) && (
         <ButtonWrap>
-          {/* <StyledLink to={`/edit-club/${data?._id}`}>수정</StyledLink> */}
-          <Button
+          <StyledLink to={`/edit-club/${data?._id}`}>수정</StyledLink>
+          {/* <Button
             onClick={() =>
               alert(
                 "현재 오류로 인해 수정이 어렵습니다. \n해당 글을 삭제한 후 다시 작성해주세요."
@@ -123,7 +123,7 @@ const ClubContents = () => {
             }>
             수정
           </Button>
-          <Temp></Temp>
+          <Temp></Temp> */}
           <Button onClick={() => setDeletePopup(true)}>삭제</Button>
         </ButtonWrap>
       )}
