@@ -1,3 +1,4 @@
+import imageCompression from "browser-image-compression";
 import { useState } from "react";
 import login from "../api/login";
 import signup from "../api/signup";
@@ -23,19 +24,40 @@ const useForm = ({ initialValues, onSubmit, validate }) => {
     }
   };
 
-  const handleFile = (e) => {
+  const handleFile = async (e) => {
     if (e.target.files && e.target.files.length) {
-      const fileBlob = e.target.files[0];
-      const reader = new FileReader();
+      const file = e.target.files[0];
 
-      reader.readAsDataURL(fileBlob);
+      const options = {
+        maxSizeMB: 0.2, // 이미지 최대 용량
+        maxWidthOrHeight: 1920, // 최대 넓이(혹은 높이)
+        useWebWorker: true,
+      };
+      try {
+        const compressedFile = await imageCompression(file, options);
+        
+        const promise = imageCompression.getDataUrlFromFile(compressedFile);
+        
+        promise.then((result) => {
+          setValues({ ...values, [e.target.id]: result });
+        });
+      } catch (error) {
+        console.log(error);
+      }
 
-      return new Promise((resolve) => {
-        reader.onload = () => {
-          setValues({ ...values, [e.target.id]: reader.result });
-          resolve();
-        };
-      });
+      //const fileBlob = e.target.files[0];
+
+      // const reader = new FileReader();
+
+      // reader.readAsDataURL(fileBlob);
+
+      // return new Promise((resolve) => {
+      //   reader.onload = () => {
+      //     setValues({ ...values, [e.target.id]: reader.result });
+
+      //     resolve();
+      //   };
+      // });
     }
   };
 
