@@ -152,6 +152,11 @@ const ImgUploader = styled.label`
   }
 `;
 
+const RedDiv = styled.div`
+  font-size: 12px;
+  color: red;
+`;
+
 const RegisterClubContents = (data) => {
   const navigator = useNavigate();
 
@@ -184,11 +189,11 @@ const RegisterClubContents = (data) => {
       field: area,
       logoUrl: ImageUploader,
       name: isPresident,
-      num: "",
-      period: "",
+      num: "미정",
+      period: "미정",
       room: "",
       topic: "",
-      way: "",
+      way: "동아리 운영진에게 문의해주세요.",
     },
   });
 
@@ -267,6 +272,7 @@ const RegisterClubContents = (data) => {
               //{...register("topic")}
               label="동아리 주제"
             />
+            <RedDiv>동아리 주제는 ,로 구분해서 작성해주세요.</RedDiv>
           </ClubContentWrap>
         </ClubIntroContent>
         <div style={{ width: "100%" }}>
