@@ -3,8 +3,8 @@ import React, { useEffect, useState } from "react";
 import Input from "../../components/func/Input";
 import SubmitButton from "../../components/SubmitButton";
 import ImageUploader from "../../images/image-upload.png";
-import { useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
+import { useNavigate, useParams } from "react-router-dom";
+import useForm from "../../hooks/useForm";
 import putClub from "../../api/putClub";
 
 const ContentWrap = styled.form`
@@ -120,22 +120,43 @@ const ImgUploader = styled.label`
   }
 `;
 
+const RedDiv = styled.div`
+  font-size: 12px;
+  color: red;
+`;
+
 const EditClubContents = (data) => {
   const navigator = useNavigate();
+
+  const id = useParams().id;
 
   const { logoUrl, name, field, room, topic, recruit, executive, activity } =
     data.data;
 
-  const { register, watch, reset } = useForm({
-    defaultValues: {
+  const [logoUrlImg, setLogoUrlImg] = useState(logoUrl ?? ImageUploader);
+  const [activityImg1, setActivityImg1] = useState(
+    activity[0]?.imageUrl ?? ImageUploader
+  );
+  const [activityImg2, setActivityImg2] = useState(
+    activity[1]?.imageUrl ?? ImageUploader
+  );
+  const [activityImg3, setActivityImg3] = useState(
+    activity[2]?.imageUrl ?? ImageUploader
+  );
+  const [activityImg4, setActivityImg4] = useState(
+    activity[3]?.imageUrl ?? ImageUploader
+  );
+
+  const { handleChange, handleFile, values } = useForm({
+    initialValues: {
       field,
       name,
       room: room ?? "",
       topic: topic ?? "",
-      activityImg1: activity[0]?.imageUrl ?? "",
-      activityImg2: activity[1]?.imageUrl ?? "",
-      activityImg3: activity[2]?.imageUrl ?? "",
-      activityImg4: activity[3]?.imageUrl ?? "",
+      activityImg1: activity[0]?.imageUrl ?? ImageUploader,
+      activityImg2: activity[1]?.imageUrl ?? ImageUploader,
+      activityImg3: activity[2]?.imageUrl ?? ImageUploader,
+      activityImg4: activity[3]?.imageUrl ?? ImageUploader,
       activityText1: activity[0]?.text ?? "",
       activityText2: activity[1]?.text ?? "",
       activityText3: activity[2]?.text ?? "",
@@ -153,110 +174,20 @@ const EditClubContents = (data) => {
       executive4Email: executive[3]?.email ?? "",
       executive4Role: executive[3]?.role ?? "",
       period: recruit?.period ?? "미정",
-      way: recruit?.way ?? "미정",
+      way: recruit?.way ?? "동아리 운영진에게 문의해주세요.",
       applyUrl: recruit?.applyUrl ?? "",
       num: recruit?.num ?? "미정",
+      logoUrl: logoUrlImg,
     },
   });
 
-  // useEffect(() => {
-  //   reset({
-  //     field,
-  //     name,
-  //     room: room ?? "",
-  //     topic: topic ?? "",
-  //     activityImg1: activity[0]?.imageUrl ?? "",
-  //     activityImg2: activity[1]?.imageUrl ?? "",
-  //     activityImg3: activity[2]?.imageUrl ?? "",
-  //     activityImg4: activity[3]?.imageUrl ?? "",
-  //     activityText1: activity[0]?.text ?? "",
-  //     activityText2: activity[1]?.text ?? "",
-  //     activityText3: activity[2]?.text ?? "",
-  //     activityText4: activity[3]?.text ?? "",
-  //     executive1Name: executive[0]?.name ?? "",
-  //     executive1Email: executive[0]?.email ?? "",
-  //     executive1Role: executive[0]?.role ?? "",
-  //     executive2Name: executive[1]?.name ?? "",
-  //     executive2Email: executive[1]?.email ?? "",
-  //     executive2Role: executive[1]?.role ?? "",
-  //     executive3Name: executive[2]?.name ?? "",
-  //     executive3Email: executive[2]?.email ?? "",
-  //     executive3Role: executive[2]?.role ?? "",
-  //     executive4Name: executive[3]?.name ?? "",
-  //     executive4Email: executive[3]?.email ?? "",
-  //     executive4Role: executive[3]?.role ?? "",
-  //     period: recruit?.period ?? "미정",
-  //     way: recruit?.way ?? "미정",
-  //     applyUrl: recruit?.applyUrl ?? "",
-  //     num: recruit?.num ?? "미정",
-  //   });
-  // }, []);
-
-  const [logoUrlImg, setLogoUrlImg] = useState(logoUrl ?? ImageUploader);
-  const [activityImg1, setActivityImg1] = useState(
-    activity[0]?.imageUrl ?? ImageUploader
-  );
-  const [activityImg2, setActivityImg2] = useState(
-    activity[1]?.imageUrl ?? ImageUploader
-  );
-  const [activityImg3, setActivityImg3] = useState(
-    activity[2]?.imageUrl ?? ImageUploader
-  );
-  const [activityImg4, setActivityImg4] = useState(
-    activity[3]?.imageUrl ?? ImageUploader
-  );
-
-  const logoImg = watch("logoUrl");
-  const activity1 = watch("activityImg1");
-  const activity2 = watch("activityImg2");
-  const activity3 = watch("activityImg3");
-  const activity4 = watch("activityImg4");
-
-  const values = watch();
-
   useEffect(() => {
-    if (logoImg && logoImg.length) {
-      try {
-        const file = logoImg[0];
-        setLogoUrlImg(URL.createObjectURL(file));
-      } catch {
-        setLogoUrlImg(logoUrl);
-      }
-    } else if (activity1 && activity1.length) {
-      try {
-        const file = activity1[0];
-        setActivityImg1(URL.createObjectURL(file));
-      } catch {
-        setActivityImg1(activity[0]?.imageUrl ?? "");
-      }
-    } else if (activity2 && activity2.length) {
-      try {
-        const file = activity2[0];
-        setActivityImg2(URL.createObjectURL(file));
-      } catch {
-        setActivityImg2(activity[1]?.imageUrl ?? "");
-      }
-    } else if (activity3 && activity3.length) {
-      try {
-        const file = activity3[0];
-        setActivityImg3(URL.createObjectURL(file));
-      } catch {
-        setActivityImg3(activity[2]?.imageUrl ?? "");
-      }
-    } else if (activity4.length) {
-      console.log('변동')
-      try {
-        const file = activity4[0];
-        setActivityImg4(URL.createObjectURL(file));
-        console.log("test");
-      } catch {
-        console.log("catch");
-        setActivityImg4(activity[3]?.imageUrl ?? "");
-      }
-    }
-    console.log(activity4)
-    console.log(activity4.length)
-  }, [logoImg, activity1, activity2, activity3, activity4, activity, logoUrl]);
+    setLogoUrlImg(values.logoUrl);
+    setActivityImg1(values.activityImg1);
+    setActivityImg2(values.activityImg2);
+    setActivityImg3(values.activityImg3);
+    setActivityImg4(values.activityImg4);
+  }, [values]);
 
   return (
     <>
@@ -267,7 +198,8 @@ const EditClubContents = (data) => {
               type="file"
               style={{ display: "none" }}
               accept="image/jpg, image/png, image/jpeg"
-              {...register("logoUrl")}
+              onChange={handleFile}
+              // {...register("logoUrl")}
               id="logoUrl"
             />
             <img
@@ -284,16 +216,20 @@ const EditClubContents = (data) => {
               <Input
                 type="text"
                 name="name"
-                value={name}
-                {...register("name")}
+                // value={watch().name}
+                // {...register("name")}
+                onChange={handleChange}
+                defaultValue={name}
                 label="동아리 이름"
                 readonly
               />
               <Input
                 type="text"
+                // {...register("field")}
+                // value={area}
                 name="field"
-                {...register("field")}
-                value={field}
+                onChange={handleChange}
+                defaultValue={field}
                 label="동아리 분야"
                 readonly
               />
@@ -301,15 +237,20 @@ const EditClubContents = (data) => {
             <Input
               type="text"
               name="room"
-              {...register("room")}
+              onChange={handleChange}
+              defaultValue={room}
+              //{...register("room")}
               label="동아리 방"
             />
             <Input
               type="text"
               name="topic"
-              {...register("topic")}
+              defaultValue={topic}
+              onChange={handleChange}
+              //{...register("topic")}
               label="동아리 주제"
             />
+            <RedDiv>동아리 주제는 ,로 구분해서 작성해주세요.</RedDiv>
           </ClubContentWrap>
         </ClubIntroContent>
         <div style={{ width: "100%" }}>
@@ -320,24 +261,27 @@ const EditClubContents = (data) => {
                 type="text"
                 label="이름"
                 name="executive1Name"
-                {...register("executive1Name")}
-                //value={watch().executive1Name}
+                defaultValue={executive[0]?.name ?? ""}
+                // {...register("executive1Name")}
+                // value={watch().executive1Name}
                 readonly
               />
               <Input
                 type="text"
                 label="이메일"
                 name="executive1Email"
-                {...register("executive1Email")}
-                //value={watch().executive1Email}
+                defaultValue={executive[0]?.email ?? ""}
+                // {...register("executive1Email")}
+                // value={watch().executive1Email}
                 readonly
               />
               <Input
                 type="text"
                 label="역할"
                 name="executive1Role"
-                {...register("executive1Role")}
-                //value="운영진"
+                defaultValue={executive[0]?.role ?? "운영진"}
+                // {...register("executive1Role")}
+                // value="운영진"
                 readonly
               />
             </MemberContainer>
@@ -346,19 +290,25 @@ const EditClubContents = (data) => {
                 type="text"
                 label="이름"
                 name="executive2Name"
-                {...register("executive2Name")}
+                defaultValue={executive[1]?.name ?? ""}
+                onChange={handleChange}
+                // {...register("executive2Name")}
               />
               <Input
                 type="text"
                 label="이메일"
                 name="executive2Email"
-                {...register("executive2Email")}
+                defaultValue={executive[1]?.email ?? ""}
+                onChange={handleChange}
+                //{...register("executive2Email")}
               />
               <Input
                 type="text"
                 label="역할"
                 name="executive2Role"
-                {...register("executive2Role")}
+                defaultValue={executive[1]?.role ?? ""}
+                onChange={handleChange}
+                // {...register("executive2Role")}
               />
             </MemberContainer>
             <MemberContainer>
@@ -366,19 +316,25 @@ const EditClubContents = (data) => {
                 type="text"
                 label="이름"
                 name="executive3Name"
-                {...register("executive3Name")}
+                defaultValue={executive[2]?.name ?? ""}
+                onChange={handleChange}
+                // {...register("executive3Name")}
               />
               <Input
                 type="text"
                 label="이메일"
                 name="executive3Email"
-                {...register("executive3Email")}
+                defaultValue={executive[2]?.email ?? ""}
+                onChange={handleChange}
+                // {...register("executive3Email")}
               />
               <Input
                 type="text"
                 label="역할"
                 name="executive3Role"
-                {...register("executive3Role")}
+                defaultValue={executive[2]?.role ?? ""}
+                onChange={handleChange}
+                // {...register("executive3Role")}
               />
             </MemberContainer>
             <MemberContainer>
@@ -386,19 +342,25 @@ const EditClubContents = (data) => {
                 type="text"
                 label="이름"
                 name="executive4Name"
-                {...register("executive4Name")}
+                defaultValue={executive[3]?.name ?? ""}
+                onChange={handleChange}
+                // {...register("executive4Name")}
               />
               <Input
                 type="text"
                 label="이메일"
                 name="executive4Email"
-                {...register("executive4Email")}
+                defaultValue={executive[3]?.email ?? ""}
+                onChange={handleChange}
+                // {...register("executive4Email")}
               />
               <Input
                 type="text"
                 label="역할"
                 name="executive4Role"
-                {...register("executive4Role")}
+                defaultValue={executive[3]?.role ?? ""}
+                onChange={handleChange}
+                // {...register("executive4Role")}
               />
             </MemberContainer>
           </MemberWrap>
@@ -413,14 +375,17 @@ const EditClubContents = (data) => {
                   style={{ display: "none" }}
                   accept="image/jpg, image/png, image/jpeg"
                   id="activityImg1"
-                  {...register("activityImg1")}
+                  onChange={handleFile}
+                  // {...register("activityImg1")}
                 />
                 <img alt="" src={activityImg1} width={300} height={200} />
                 <ImgUploader htmlFor="activityImg1">파일 선택</ImgUploader>
               </ImageWrap>
               <TextareaWrap
                 type="text"
-                {...register("activityText1")}
+                defaultValue={activity[0]?.text ?? ""}
+                onChange={handleChange}
+                // {...register("activityText1")}
                 name="activityText1"
               />
             </ClubActivity>
@@ -431,14 +396,17 @@ const EditClubContents = (data) => {
                   style={{ display: "none" }}
                   accept="image/jpg, image/png, image/jpeg"
                   id="activityImg2"
-                  {...register("activityImg2")}
+                  onChange={handleFile}
+                  // {...register("activityImg2")}
                 />
                 <img alt="" src={activityImg2} width={300} height={200} />
                 <ImgUploader htmlFor="activityImg2">파일 선택</ImgUploader>
               </ImageWrap>
               <TextareaWrap
                 type="text"
-                {...register("activityText2")}
+                defaultValue={activity[1]?.text ?? ""}
+                onChange={handleChange}
+                // {...register("activityText2")}
                 name="activityText2"
               />
             </ClubActivity>
@@ -449,14 +417,17 @@ const EditClubContents = (data) => {
                   style={{ display: "none" }}
                   accept="image/jpg, image/png, image/jpeg"
                   id="activityImg3"
-                  {...register("activityImg3")}
+                  onChange={handleFile}
+                  // {...register("activityImg3")}
                 />
                 <img alt="" src={activityImg3} width={300} height={200} />
                 <ImgUploader htmlFor="activityImg3">파일 선택</ImgUploader>
               </ImageWrap>
               <TextareaWrap
                 type="text"
-                {...register("activityText3")}
+                defaultValue={activity[2]?.text ?? ""}
+                onChange={handleChange}
+                // {...register("activityText3")}
                 name="activityText3"
               />
             </ClubActivity>
@@ -467,14 +438,17 @@ const EditClubContents = (data) => {
                   style={{ display: "none" }}
                   accept="image/jpg, image/png, image/jpeg"
                   id="activityImg4"
-                  {...register("activityImg4")}
+                  onChange={handleFile}
+                  // {...register("activityImg4")}
                 />
                 <img alt="" src={activityImg4} width={300} height={200} />
                 <ImgUploader htmlFor="activityImg4">파일 선택</ImgUploader>
               </ImageWrap>
               <TextareaWrap
                 type="text"
-                {...register("activityText4")}
+                defaultValue={activity[3]?.text ?? ""}
+                onChange={handleChange}
+                // {...register("activityText4")}
                 name="activityText4"
               />
             </ClubActivity>
@@ -486,39 +460,45 @@ const EditClubContents = (data) => {
             <Input
               type="text"
               name="num"
-              {...register("num", { required: true })}
+              defaultValue={recruit.num}
+              onChange={handleChange}
+              // {...register("num", { required: true })}
               label="모집 인원"
             />
             <Input
               type="text"
               name="period"
-              {...register("period", { required: true })}
+              defaultValue={recruit.period}
+              onChange={handleChange}
+              // {...register("period", { required: true })}
               label="모집 시기"
             />
             <Input
               type="text"
               name="way"
-              {...register("way", { required: true })}
+              defaultValue={recruit.way}
+              onChange={handleChange}
+              // {...register("way", { required: true })}
               label="모집 방법"
             />
             <Input
               type="text"
               name="applyUrl"
-              {...register("applyUrl")}
-              label="지원서 작성"
+              defaultValue={recruit.applyUrl}
+              onChange={handleChange}
+              // {...register("applyUrl")}
+              label="링크"
             />
           </MemberWrap>
         </ClubJoin>
         <SubmitButton
           type="button"
           onClick={() => {
-            console.log(values);
-            console.log(watch().topic);
-            // putClub(values).then(() => {
-            //   navigator("/");
-            // });
+            putClub(values, id).then(() => {
+              navigator("/");
+            });
           }}>
-          동아리 등록하기
+          동아리 수정하기
         </SubmitButton>
       </ContentWrap>
     </>

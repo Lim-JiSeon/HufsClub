@@ -509,7 +509,7 @@ const RegisterClubContents = (data) => {
               defaultValue=""
               onChange={handleChange}
               // {...register("applyUrl")}
-              label="지원서 작성"
+              label="링크"
             />
           </MemberWrap>
         </ClubJoin>
