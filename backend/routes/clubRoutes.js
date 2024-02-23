@@ -2,15 +2,11 @@ import express from 'express';
 import expressAsyncHandler from 'express-async-handler';
 import User from '../models/userModel.js';
 import Club from '../models/clubModel.js';
+import upload from './imageUploader.js';
 import { isAuth } from '../utili.js';
+import bodyParser from 'body-parser';
 
 const clubRouter = express.Router();
-
-//전체 동아리 조회
-clubRouter.get('/', async (req, res) => {
-  const clubs = await Club.find();
-  res.send(clubs);
-});
 
 function isEmptyObject(obj) {
   return JSON.stringify(obj) === '[]';
@@ -98,24 +94,49 @@ clubRouter.get(
   })
 );
 
+clubRouter.post(
+  '/upload',
+  upload.single('image'),
+  (req, res) => {
+      res.send("success!");
+  }
+);
+
 //동아리 글 작성
 clubRouter.post(
   '/',
   isAuth,
+  upload.fields([ { name: 'logo', limits: 1 }, {name: 'activityImage1', limits: 1 }, {name: 'activityImage2', limits: 1 }, {name: 'activityImage3', limits: 1 }, {name: 'activityImage4', limits: 1 } ]),
   expressAsyncHandler(async (req, res) => {
+    const executiveName = req.body.executiveName.split(',');
+    const executiveEmail = req.body.executiveEmail.split(',');
+    const executiveRole = req.body.executiveRole.split(',');
+    const activityText = req.body.activityText.split(',');
+    const recruit = req.body.recruit.split(',');
+
     const user = await User.findById(req.user._id);
     const newClub = new Club({
       name: (user.isAdmin)? req.body.name : user.isPresident, 
       field: req.body.field,
       topic: (req.body.topic)? Club.formatHashtags(req.body.topic) : req.body.topic,
-      executive: req.body.executive,
-      activity: req.body.activity,
-      recruit: req.body.recruit,
+      executive: [
+        { name: executiveName[0], email: executiveEmail[0], role: executiveRole[0] },
+        { name: executiveName[1], email: executiveEmail[1], role: executiveRole[1] },
+        { name: executiveName[2], email: executiveEmail[2], role: executiveRole[2] },
+        { name: executiveName[3], email: executiveEmail[3], role: executiveRole[3] },
+      ],
+      activity: [
+        { imageUrl: req.files.activityImage1 ? req.files.activityImage1[0].location : '', text: activityText[0] },
+        { imageUrl: req.files.activityImage2 ? req.files.activityImage2[0].location : '', text: activityText[1] },
+        { imageUrl: req.files.activityImage3 ? req.files.activityImage3[0].location : '', text: activityText[2] },
+        { imageUrl: req.files.activityImage4 ? req.files.activityImage4[0].location : '', text: activityText[3] },
+      ],
+      recruit: { period: recruit[0], way: recruit[1], num: recruit[2], applyUrl: recruit[3] },
       room: req.body.room,
-      logoUrl: req.body.logoUrl,
+      logoUrl: req.files.logo ? req.files.logo[0].location : '',
     });
-    const club = await newClub.save();
-    res.send({ message: 'Club Created', club });
+    await newClub.save();
+    res.send(newClub);
   })
 );
 
