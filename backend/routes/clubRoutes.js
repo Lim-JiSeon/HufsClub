@@ -2,15 +2,11 @@ import express from 'express';
 import expressAsyncHandler from 'express-async-handler';
 import User from '../models/userModel.js';
 import Club from '../models/clubModel.js';
+import { upload, deleteImage } from './imageUploader.js';
 import { isAuth } from '../utili.js';
+import bodyParser from 'body-parser';
 
 const clubRouter = express.Router();
-
-//전체 동아리 조회
-clubRouter.get('/', async (req, res) => {
-  const clubs = await Club.find();
-  res.send(clubs);
-});
 
 function isEmptyObject(obj) {
   return JSON.stringify(obj) === '[]';
@@ -22,7 +18,7 @@ clubRouter.get('/field/:field', async (req, res) => {
     res.status(404).send({ message: 'Clubs Not Found' });
   } else {
     res.send(clubs);
-  }
+  } 
 });
 
 //동아리명 검색
@@ -98,24 +94,48 @@ clubRouter.get(
   })
 );
 
+clubRouter.post(
+  '/upload',
+  upload.single('image'),
+  (req, res) => {
+      res.send("success!");
+  }
+);
+
 //동아리 글 작성
 clubRouter.post(
   '/',
   isAuth,
+  upload.fields([ { name: 'logo', limits: 1 }, {name: 'activityImage1', limits: 1 }, {name: 'activityImage2', limits: 1 }, {name: 'activityImage3', limits: 1 }, {name: 'activityImage4', limits: 1 } ]),
   expressAsyncHandler(async (req, res) => {
+    const executiveName = req.body.executiveName.split(',');
+    const executiveEmail = req.body.executiveEmail.split(',');
+    const executiveRole = req.body.executiveRole.split(',');
+    let executive = [];
+    for(let i = 0; i < executiveName.length; i++){
+      executive.push({ name: executiveName[i], email: executiveEmail[i] || '', role: executiveRole[i] || ''});
+    }
+    const activityText = req.body.activityText.split(',');
+    const recruit = req.body.recruit.split(',');
+
     const user = await User.findById(req.user._id);
     const newClub = new Club({
       name: (user.isAdmin)? req.body.name : user.isPresident, 
       field: req.body.field,
       topic: (req.body.topic)? Club.formatHashtags(req.body.topic) : req.body.topic,
-      executive: req.body.executive,
-      activity: req.body.activity,
-      recruit: req.body.recruit,
+      executive: executive,
+      activity: [
+        { imageUrl: req.files.activityImage1 ? req.files.activityImage1[0].location : '', text: activityText[0] },
+        { imageUrl: req.files.activityImage2 ? req.files.activityImage2[0].location : '', text: activityText[1] },
+        { imageUrl: req.files.activityImage3 ? req.files.activityImage3[0].location : '', text: activityText[2] },
+        { imageUrl: req.files.activityImage4 ? req.files.activityImage4[0].location : '', text: activityText[3] },
+      ],
+      recruit: { period: recruit[0], way: recruit[1], num: recruit[2], applyUrl: recruit[3] },
       room: req.body.room,
-      logoUrl: req.body.logoUrl,
+      logoUrl: req.files.logo ? req.files.logo[0].location : '',
     });
-    const club = await newClub.save();
-    res.send({ message: 'Club Created', club });
+    await newClub.save();
+    res.send("Club created!");
   })
 );
 
@@ -123,21 +143,63 @@ clubRouter.post(
 clubRouter.put(
   '/:id',
   isAuth,
+  upload.fields([{ name: 'logo', limits: 1 }, { name: 'activityImage1', limits: 1 }, { name: 'activityImage2', limits: 1 }, { name: 'activityImage3', limits: 1 }, { name: 'activityImage4', limits: 1 }]),
   expressAsyncHandler(async (req, res) => {
     const user = await User.findById(req.user._id);
     const clubId = req.params.id;
     const club = await Club.findById(clubId);
     if (club) {
+      const oldClubName = club.name; // 이전 동아리명 보관
       if (user.isAdmin || user.isPresident === club.name) {
+        const executiveName = req.body.executiveName.split(',');
+        const executiveEmail = req.body.executiveEmail.split(',');
+        const executiveRole = req.body.executiveRole.split(',');
+        let executive = [];
+        for(let i = 0; i < executiveName.length; i++){
+          executive.push({ name: executiveName[i], email: executiveEmail[i], role: executiveRole[i] });
+        }
+        const activityText = req.body.activityText.split(',');
+        const recruit = req.body.recruit.split(',');
+
+        // 기존 이미지들 삭제
+        const url = club.logoUrl.split('/');     // club에 저장된 logoUrl을 가져옴
+        const delLogoName = decodeURIComponent(url[url.length - 1]); // 버킷에 저장된 객체 URL만 가져옴, 파일명이 한글일 경우 decodeURIComponent()를 사용해 디코딩함.
+        let fileKeys = [ delLogoName ];
+        for(let i = 0; i < club.activity.length; i++) {
+          const url = club.activity[i].imageUrl.split('/');
+          const delFileName = decodeURIComponent(url[url.length - 1]);
+          fileKeys.push(delFileName);
+        }
+        deleteImage(fileKeys);
+
         club.name = ((user.isAdmin)? req.body.name : user.isPresident) || club.name, 
         club.field = req.body.field || club.field,
         club.topic = (req.body.topic)? Club.formatHashtags(req.body.topic) : req.body.topic,
-        club.executive = req.body.executive,
-        club.activity = req.body.activity,
-        club.recruit = req.body.recruit,
+        club.executive = executive,
+        club.activity = [
+          { imageUrl: req.files.activityImage1 ? req.files.activityImage1[0].location : '', text: activityText[0] },
+          { imageUrl: req.files.activityImage2 ? req.files.activityImage2[0].location : '', text: activityText[1] },
+          { imageUrl: req.files.activityImage3 ? req.files.activityImage3[0].location : '', text: activityText[2] },
+          { imageUrl: req.files.activityImage4 ? req.files.activityImage4[0].location : '', text: activityText[3] },
+        ],
+        club.recruit = { period: recruit[0], way: recruit[1], num: recruit[2], applyUrl: recruit[3] },
         club.room = req.body.room,
-        club.logoUrl = req.body.logoUrl,
+        club.logoUrl = req.files.logo ? req.files.logo[0].location : '';
+        // 모든 사용자의 좋아요 목록에서도 이름 수정
+        if (oldClubName != req.body.name) { // 동아리명이 변경됐을 경우
+          try {
+            // 모든 사용자의 like 배열에서 동아리명을 업데이트
+            await User.updateMany(
+              { like: oldClubName },
+              { $set: { 'like.$': req.body.name } }
+            );
+          } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: '좋아요 수정 에러' });
+          }
+        }
         await club.save();
+
         res.send({ message: 'Club Updated', club });
       } else {
         res.status(404).send( { message: 'Neither President of this club nor Admin' });
@@ -154,6 +216,18 @@ clubRouter.delete(
   expressAsyncHandler(async (req, res) => {
     const club = await Club.findById(req.params.id);
     if (club) {
+      const url = club.logoUrl.split('/');     // club에 저장된 logoUrl을 가져옴
+      const delLogoName = decodeURIComponent(url[url.length - 1]); // 버킷에 저장된 객체 URL만 가져옴, 파일명이 한글일 경우 decodeURIComponent()를 사용해 디코딩함.
+      let fileKeys = [ delLogoName ];
+
+      for(let i = 0; i < club.activity.length; i++) {
+        const url = club.activity[i].imageUrl.split('/');
+        const delFileName = decodeURIComponent(url[url.length - 1]);
+        fileKeys.push(delFileName);
+      }
+
+      deleteImage(fileKeys);
+
       try {
         // 모든 사용자의 like 배열에서 해당 동아리를 삭제합니다.
         await User.updateMany(
