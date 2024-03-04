@@ -26,10 +26,10 @@ const ActivityWrap = styled.div`
 `;
 
 const ActivityDiv = styled.div`
-  width: 100%;
   display: flex;
   align-items: center;
   color: #27374d;
+  word-break: break-all;
 `;
 
 const ClubActivity = (data) => {

@@ -10,6 +10,12 @@ import LikeImage from "../../images/like_icon.png";
 import putLike from "../../api/putLike";
 import getUserInfo from "../../api/getUserInfo";
 import deleteLike from "../../api/deleteLike";
+import Image1 from "../../images/학술.png";
+import Image2 from "../../images/종교.png";
+import Image3 from "../../images/스포츠.png";
+import Image4 from "../../images/친목.png";
+import Image5 from "../../images/문화.png";
+import Image6 from "../../images/봉사.png";
 
 const ContentWrap = styled.div`
   width: 100%;
@@ -19,7 +25,7 @@ const ContentWrap = styled.div`
 `;
 
 const ImageWrap = styled.div`
-  padding-right: 40px;
+  padding-right: 100px;
 `;
 
 const ClubContent = styled.div`
@@ -100,14 +106,19 @@ const ClubDetail = styled.div`
 const ClubIntro = (data) => {
   const [like, setLike] = useState();
 
-  const { logoUrl, room, name, topic, recruit } = data.data;
+  const { logoUrl, field, room, name, topic, recruit } = data.data;
 
   const handleButton = async () => {
-    const check = like.filter((element) => element[0].name === name);
+    const isLogin = sessionStorage.getItem("hufs-club_isLogin") ?? false;
+    if (isLogin) {
+      const check = like.filter((element) => element[0]?.name === name);
 
-    check.length ? await deleteLike(name) : await putLike(name);
+      check.length ? await deleteLike(name) : await putLike(name);
 
-    window.location.reload();
+      window.location.reload();
+    } else {
+      alert("로그인을 해주세요.");
+    }
   };
 
   useEffect(() => {
@@ -118,11 +129,18 @@ const ClubIntro = (data) => {
       .catch((error) => console.log(error));
   }, []);
 
+  const isLink = recruit.applyUrl.includes("http");
+  
   return (
     <AllWrap>
       <ContentWrap>
         <ImageWrap>
-          <Image src={logoUrl} alt="" width="250px" height="auto" />
+          <Image
+            src={logoUrl === "" ? getImgURL(field) : logoUrl}
+            alt=""
+            width="250px"
+            height="auto"
+          />
         </ImageWrap>
         <ClubContent>
           <ClubName>{name}</ClubName>
@@ -147,7 +165,8 @@ const ClubIntro = (data) => {
             </ClubRoomWrap>
             <ClubRoomWrap>
               <img src={LinkImage} width={20} height={20} alt="" />
-              <LinkText href={recruit.applyUrl}>접속하기</LinkText>
+              {!isLink && <ClubRoom>{recruit.applyUrl}</ClubRoom>}
+              {isLink && <LinkText href={recruit.applyUrl}>접속하기</LinkText>}
             </ClubRoomWrap>
           </ClubDetail>
           <TopicWrap>
@@ -166,6 +185,11 @@ const ClubIntro = (data) => {
 
 export default ClubIntro;
 
-export const tempData = {
-  room: "미정",
+export const getImgURL = (area) => {
+  if (area === "학술") return Image1;
+  if (area === "종교") return Image2;
+  if (area === "스포츠") return Image3;
+  if (area === "친목") return Image4;
+  if (area === "문화") return Image5;
+  if (area === "봉사") return Image6;
 };

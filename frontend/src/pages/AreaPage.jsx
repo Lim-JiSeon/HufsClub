@@ -61,7 +61,8 @@ function AreaPage() {
   const [club, setClub] = useState([]);
 
   const registerButton =
-    sessionStorage.getItem("hufs-isAdmin") || sessionStorage.getItem("hufs-");
+    sessionStorage.getItem("hufs-isAdmin") &&
+    sessionStorage.getItem("hufs-isPresident");
 
   const getClub = async () => {
     setClub(await getField(area));

@@ -28,36 +28,7 @@ const useForm = ({ initialValues, onSubmit, validate }) => {
     if (e.target.files && e.target.files.length) {
       const file = e.target.files[0];
 
-      const options = {
-        maxSizeMB: 0.2, // 이미지 최대 용량
-        maxWidthOrHeight: 1920, // 최대 넓이(혹은 높이)
-        useWebWorker: true,
-      };
-      try {
-        const compressedFile = await imageCompression(file, options);
-        
-        const promise = imageCompression.getDataUrlFromFile(compressedFile);
-        
-        promise.then((result) => {
-          setValues({ ...values, [e.target.id]: result });
-        });
-      } catch (error) {
-        console.log(error);
-      }
-
-      //const fileBlob = e.target.files[0];
-
-      // const reader = new FileReader();
-
-      // reader.readAsDataURL(fileBlob);
-
-      // return new Promise((resolve) => {
-      //   reader.onload = () => {
-      //     setValues({ ...values, [e.target.id]: reader.result });
-
-      //     resolve();
-      //   };
-      // });
+      setValues({ ...values, [e.target.id]: file });
     }
   };
 

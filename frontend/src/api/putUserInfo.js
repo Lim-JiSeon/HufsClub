@@ -21,6 +21,7 @@ const putUserInfo = async (values) => {
         },
       }
     );
+    sessionStorage.setItem("hufs-isPresident", values.isPresident);
     alert("프로필이 수정되었습니다.");
   } catch (error) {
     alert("오류가 발생했습니다.");

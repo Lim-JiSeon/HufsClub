@@ -6,6 +6,12 @@ import ImageUploader from "../../images/image-upload.png";
 import { useNavigate, useParams } from "react-router-dom";
 import useForm from "../../hooks/useForm";
 import putClub from "../../api/putClub";
+import Image1 from "../../images/학술.png";
+import Image2 from "../../images/종교.png";
+import Image3 from "../../images/스포츠.png";
+import Image4 from "../../images/친목.png";
+import Image5 from "../../images/문화.png";
+import Image6 from "../../images/봉사.png";
 
 const ContentWrap = styled.form`
   width: 70vw;
@@ -133,18 +139,26 @@ const EditClubContents = (data) => {
   const { logoUrl, name, field, room, topic, recruit, executive, activity } =
     data.data;
 
-  const [logoUrlImg, setLogoUrlImg] = useState(logoUrl ?? ImageUploader);
-  const [activityImg1, setActivityImg1] = useState(
-    activity[0]?.imageUrl ?? ImageUploader
+  const [logoUrlImg, setLogoUrlImg] = useState(logoUrl);
+  const [activityImg1, setActivityImg1] = useState(activity[0]?.imageUrl);
+  const [activityImg2, setActivityImg2] = useState(activity[1]?.imageUrl);
+  const [activityImg3, setActivityImg3] = useState(activity[2]?.imageUrl);
+  const [activityImg4, setActivityImg4] = useState(activity[3]?.imageUrl);
+
+  const [logoPrev, setLogoPrev] = useState(
+    logoUrl === "" ? getImgURL(field) : logoUrl
   );
-  const [activityImg2, setActivityImg2] = useState(
-    activity[1]?.imageUrl ?? ImageUploader
+  const [act1ImgPrev, setAct1ImgPrev] = useState(
+    activity[0]?.imageUrl === "" ? ImageUploader : activity[0]?.imageUrl
   );
-  const [activityImg3, setActivityImg3] = useState(
-    activity[2]?.imageUrl ?? ImageUploader
+  const [act2ImgPrev, setAct2ImgPrev] = useState(
+    activity[1]?.imageUrl === "" ? ImageUploader : activity[1]?.imageUrl
   );
-  const [activityImg4, setActivityImg4] = useState(
-    activity[3]?.imageUrl ?? ImageUploader
+  const [act3ImgPrev, setAct3ImgPrev] = useState(
+    activity[2]?.imageUrl === "" ? ImageUploader : activity[2]?.imageUrl
+  );
+  const [act4ImgPrev, setAct4ImgPrev] = useState(
+    activity[3]?.imageUrl === "" ? ImageUploader : activity[3]?.imageUrl
   );
 
   const { handleChange, handleFile, values } = useForm({
@@ -153,10 +167,10 @@ const EditClubContents = (data) => {
       name,
       room: room ?? "",
       topic: topic ?? "",
-      activityImg1: activity[0]?.imageUrl ?? ImageUploader,
-      activityImg2: activity[1]?.imageUrl ?? ImageUploader,
-      activityImg3: activity[2]?.imageUrl ?? ImageUploader,
-      activityImg4: activity[3]?.imageUrl ?? ImageUploader,
+      activityImg1: activity[0]?.imageUrl,
+      activityImg2: activity[1]?.imageUrl,
+      activityImg3: activity[2]?.imageUrl,
+      activityImg4: activity[3]?.imageUrl,
       activityText1: activity[0]?.text ?? "",
       activityText2: activity[1]?.text ?? "",
       activityText3: activity[2]?.text ?? "",
@@ -175,7 +189,7 @@ const EditClubContents = (data) => {
       executive4Role: executive[3]?.role ?? "",
       period: recruit?.period ?? "미정",
       way: recruit?.way ?? "동아리 운영진에게 문의해주세요.",
-      applyUrl: recruit?.applyUrl ?? "",
+      applyUrl: recruit?.applyUrl ?? "추후 공지",
       num: recruit?.num ?? "미정",
       logoUrl: logoUrlImg,
     },
@@ -187,6 +201,17 @@ const EditClubContents = (data) => {
     setActivityImg2(values.activityImg2);
     setActivityImg3(values.activityImg3);
     setActivityImg4(values.activityImg4);
+
+    if (values.logoUrl && typeof values.logoUrl !== "string")
+      setLogoPrev(URL.createObjectURL(values.logoUrl));
+    if (values.activityImg1 && typeof values.activityImg1 !== "string")
+      setAct1ImgPrev(URL.createObjectURL(values.activityImg1));
+    if (values.activityImg2 && typeof values.activityImg2 !== "string")
+      setAct2ImgPrev(URL.createObjectURL(values.activityImg2));
+    if (values.activityImg3 && typeof values.activityImg3 !== "string")
+      setAct3ImgPrev(URL.createObjectURL(values.activityImg3));
+    if (values.activityImg4 && typeof values.activityImg4 !== "string")
+      setAct4ImgPrev(URL.createObjectURL(values.activityImg4));
   }, [values]);
 
   return (
@@ -204,7 +229,7 @@ const EditClubContents = (data) => {
             />
             <img
               alt=""
-              src={logoUrlImg}
+              src={logoPrev}
               width={300}
               height={200}
               style={{ cursor: "pointer" }}
@@ -245,7 +270,7 @@ const EditClubContents = (data) => {
             <Input
               type="text"
               name="topic"
-              defaultValue={topic}
+              defaultValue={topic.join("").replaceAll("#", ", ").slice(1)}
               onChange={handleChange}
               //{...register("topic")}
               label="동아리 주제"
@@ -378,7 +403,7 @@ const EditClubContents = (data) => {
                   onChange={handleFile}
                   // {...register("activityImg1")}
                 />
-                <img alt="" src={activityImg1} width={300} height={200} />
+                <img alt="" src={act1ImgPrev} width={300} height={200} />
                 <ImgUploader htmlFor="activityImg1">파일 선택</ImgUploader>
               </ImageWrap>
               <TextareaWrap
@@ -399,7 +424,7 @@ const EditClubContents = (data) => {
                   onChange={handleFile}
                   // {...register("activityImg2")}
                 />
-                <img alt="" src={activityImg2} width={300} height={200} />
+                <img alt="" src={act2ImgPrev} width={300} height={200} />
                 <ImgUploader htmlFor="activityImg2">파일 선택</ImgUploader>
               </ImageWrap>
               <TextareaWrap
@@ -420,7 +445,7 @@ const EditClubContents = (data) => {
                   onChange={handleFile}
                   // {...register("activityImg3")}
                 />
-                <img alt="" src={activityImg3} width={300} height={200} />
+                <img alt="" src={act3ImgPrev} width={300} height={200} />
                 <ImgUploader htmlFor="activityImg3">파일 선택</ImgUploader>
               </ImageWrap>
               <TextareaWrap
@@ -441,7 +466,7 @@ const EditClubContents = (data) => {
                   onChange={handleFile}
                   // {...register("activityImg4")}
                 />
-                <img alt="" src={activityImg4} width={300} height={200} />
+                <img alt="" src={act4ImgPrev} width={300} height={200} />
                 <ImgUploader htmlFor="activityImg4">파일 선택</ImgUploader>
               </ImageWrap>
               <TextareaWrap
@@ -506,3 +531,12 @@ const EditClubContents = (data) => {
 };
 
 export default EditClubContents;
+
+export const getImgURL = (area) => {
+  if (area === "학술") return Image1;
+  if (area === "종교") return Image2;
+  if (area === "스포츠") return Image3;
+  if (area === "친목") return Image4;
+  if (area === "문화") return Image5;
+  if (area === "봉사") return Image6;
+};

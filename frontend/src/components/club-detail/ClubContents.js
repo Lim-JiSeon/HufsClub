@@ -80,7 +80,7 @@ const ClubContents = () => {
   const clubId = useParams().id;
   const navigate = useNavigate();
 
-  const admin = sessionStorage.getItem("hufs-isAdmin") || false;
+  const admin = sessionStorage.getItem("hufs-isAdmin") ?? false;
 
   const [data, setData] = useState();
   const [isPresident, setIsPresident] = useState("");
@@ -110,20 +110,13 @@ const ClubContents = () => {
       .catch((error) => console.log(error));
   }, [clubId]);
 
+  const manager = admin === "true" || isPresident === data?.name;
+
   return (
     <>
-      {(admin || isPresident === data?.name) && (
+      {manager && (
         <ButtonWrap>
           <StyledLink to={`/edit-club/${data?._id}`}>수정</StyledLink>
-          {/* <Button
-            onClick={() =>
-              alert(
-                "현재 오류로 인해 수정이 어렵습니다. \n해당 글을 삭제한 후 다시 작성해주세요."
-              )
-            }>
-            수정
-          </Button>
-          <Temp></Temp> */}
           <Button onClick={() => setDeletePopup(true)}>삭제</Button>
         </ButtonWrap>
       )}
