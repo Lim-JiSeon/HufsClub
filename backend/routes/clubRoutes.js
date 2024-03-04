@@ -154,6 +154,10 @@ clubRouter.put(
         const executiveName = req.body.executiveName.split(',');
         const executiveEmail = req.body.executiveEmail.split(',');
         const executiveRole = req.body.executiveRole.split(',');
+        let activityImageUrl;
+        if (req.body.activityImageUrl) {
+          activityImageUrl = req.body.activityImageUrl.split(',');
+        }
         let executive = [];
         for(let i = 0; i < executiveName.length; i++){
           executive.push({ name: executiveName[i], email: executiveEmail[i], role: executiveRole[i] });
@@ -161,14 +165,19 @@ clubRouter.put(
         const activityText = req.body.activityText.split(',');
         const recruit = req.body.recruit.split(',');
 
-        // 기존 이미지들 삭제
-        const url = club.logoUrl.split('/');     // club에 저장된 logoUrl을 가져옴
-        const delLogoName = decodeURIComponent(url[url.length - 1]); // 버킷에 저장된 객체 URL만 가져옴, 파일명이 한글일 경우 decodeURIComponent()를 사용해 디코딩함.
-        let fileKeys = [ delLogoName ];
+        // 기존 이미지들 삭제(이미지 객체가 오거나 이미지 객체와 url 모두 없는 경우) 
+        let fileKeys = [];
+        if (req.body.logoUrl === "null") {
+          const url = club.logoUrl.split('/');     // club에 저장된 logoUrl을 가져옴
+          const delLogoName = decodeURIComponent(url[url.length - 1]); // 버킷에 저장된 객체 URL만 가져옴, 파일명이 한글일 경우 decodeURIComponent()를 사용해 디코딩함.
+          fileKeys.push(delLogoName);
+        }
         for(let i = 0; i < club.activity.length; i++) {
-          const url = club.activity[i].imageUrl.split('/');
-          const delFileName = decodeURIComponent(url[url.length - 1]);
-          fileKeys.push(delFileName);
+          if (activityImageUrl[i].trim() === "null"){
+            const url = club.activity[i].imageUrl.split('/');
+            const delFileName = decodeURIComponent(url[url.length - 1]);
+            fileKeys.push(delFileName);
+          }
         }
         deleteImage(fileKeys);
 
@@ -177,14 +186,14 @@ clubRouter.put(
         club.topic = (req.body.topic)? Club.formatHashtags(req.body.topic) : req.body.topic,
         club.executive = executive,
         club.activity = [
-          { imageUrl: req.files.activityImage1 ? req.files.activityImage1[0].location : '', text: activityText[0] },
-          { imageUrl: req.files.activityImage2 ? req.files.activityImage2[0].location : '', text: activityText[1] },
-          { imageUrl: req.files.activityImage3 ? req.files.activityImage3[0].location : '', text: activityText[2] },
-          { imageUrl: req.files.activityImage4 ? req.files.activityImage4[0].location : '', text: activityText[3] },
+          { imageUrl: req.files.activityImage1 ? req.files.activityImage1[0].location : (activityImageUrl[0] ? activityImageUrl[0].trim() : ''), text: activityText[0] },
+          { imageUrl: req.files.activityImage2 ? req.files.activityImage2[0].location : (activityImageUrl[1] ? activityImageUrl[1].trim() : ''), text: activityText[1] },
+          { imageUrl: req.files.activityImage3 ? req.files.activityImage3[0].location : (activityImageUrl[2] ? activityImageUrl[2].trim() : ''), text: activityText[2] },
+          { imageUrl: req.files.activityImage4 ? req.files.activityImage4[0].location : (activityImageUrl[3] ? activityImageUrl[3].trim() : ''), text: activityText[3] },
         ],
         club.recruit = { period: recruit[0], way: recruit[1], num: recruit[2], applyUrl: recruit[3] },
         club.room = req.body.room,
-        club.logoUrl = req.files.logo ? req.files.logo[0].location : '';
+        club.logoUrl = req.files.logo ? req.files.logo[0].location : (req.body.logoUrl ? req.body.logoUrl : '');
         // 모든 사용자의 좋아요 목록에서도 이름 수정
         if (oldClubName != req.body.name) { // 동아리명이 변경됐을 경우
           try {
