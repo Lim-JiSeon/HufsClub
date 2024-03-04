@@ -64,6 +64,8 @@ const putClub = async (values, id) => {
       : null
   }`;
 
+  console.log(values.topic);
+
   const data = axios
     .putForm(
       `${API_END_POINT}clubs/${id}`,
@@ -91,11 +93,14 @@ const putClub = async (values, id) => {
           .join(","),
         activityText: newActivity
           .map((element) => element.text)
-          .filter((element) => element)
+          .filter((element) => (element ? element : " "))
           .join(","),
         name: values.name,
         field: values.field,
-        topic: values.topic,
+        topic:
+          typeof values.topic === "string"
+            ? values.topic
+            : values.topic.join("").replaceAll("#", ", ").slice(1),
         recruit:
           values.period +
           "," +

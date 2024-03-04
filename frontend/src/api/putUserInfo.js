@@ -13,7 +13,7 @@ const putUserInfo = async (values) => {
         email: values.email,
         isPresident: values.isPresident,
         password: values.password,
-        newPassword: values.password,
+        newPassword: values.newPassword,
       },
       {
         headers: {
@@ -22,6 +22,7 @@ const putUserInfo = async (values) => {
       }
     );
     sessionStorage.setItem("hufs-isPresident", values.isPresident);
+    sessionStorage.setItem("hufs-password", values.newPassword);
     alert("프로필이 수정되었습니다.");
   } catch (error) {
     alert("오류가 발생했습니다.");

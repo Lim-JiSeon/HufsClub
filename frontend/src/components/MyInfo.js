@@ -50,7 +50,7 @@ const MyInfo = (data) => {
 
   const checkNum = /^[0-9]+$/;
   const checkEmail = /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/;
-  const { errors, isLoading, handleChange, values } = useForm({
+  const { errors, isLoading, handleChange, values, handleMyInfo } = useForm({
     initialValues: {
       username,
       studentId,
@@ -62,7 +62,11 @@ const MyInfo = (data) => {
     validate: ({ username, studentId, password, newPassword }) => {
       const newErrors = {};
       if (!username) newErrors.username = "필수 입력란입니다.";
-      if (!studentId || studentId.length !== 9 || !checkNum.test(studentId))
+      if (
+        !studentId ||
+        studentId.toString().length !== 9 ||
+        !checkNum.test(studentId)
+      )
         newErrors.studentId = "숫자 9자리를 입력해주세요";
       if (!email || !checkEmail.test(email))
         newErrors.email = "이메일을 입력해주세요.";
@@ -72,15 +76,9 @@ const MyInfo = (data) => {
     },
   });
 
-  const handleSubmitButton = () => {
-    if (values.password === password)
-      putUserInfo(values).then(() => navigate("/"));
-    else alert("비밀번호가 일치하지 않습니다.");
-  };
-
   return (
     <>
-      <CardForm onSubmit={handleSubmitButton}>
+      <CardForm onSubmit={handleMyInfo}>
         <ContentWrap>
           {/* <ImageWrap>
           <Image src={profileImage} alt="" width="200px" height="auto" />
