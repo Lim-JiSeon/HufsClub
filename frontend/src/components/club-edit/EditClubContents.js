@@ -134,6 +134,8 @@ const RedDiv = styled.div`
 const EditClubContents = (data) => {
   const navigator = useNavigate();
 
+  console.log(data);
+
   const id = useParams().id;
 
   const { logoUrl, name, field, room, topic, recruit, executive, activity } =
@@ -146,19 +148,27 @@ const EditClubContents = (data) => {
   const [activityImg4, setActivityImg4] = useState(activity[3]?.imageUrl);
 
   const [logoPrev, setLogoPrev] = useState(
-    logoUrl === "" ? getImgURL(field) : logoUrl
+    !logoUrl || logoUrl === "null" ? getImgURL(field) : logoUrl
   );
   const [act1ImgPrev, setAct1ImgPrev] = useState(
-    activity[0]?.imageUrl === "" ? ImageUploader : activity[0]?.imageUrl
+    !activity[0]?.imageUrl || activity[0]?.imageUrl === "null"
+      ? ImageUploader
+      : activity[0]?.imageUrl
   );
   const [act2ImgPrev, setAct2ImgPrev] = useState(
-    activity[1]?.imageUrl === "" ? ImageUploader : activity[1]?.imageUrl
+    !activity[1]?.imageUrl || activity[1]?.imageUrl === "null"
+      ? ImageUploader
+      : activity[1]?.imageUrl
   );
   const [act3ImgPrev, setAct3ImgPrev] = useState(
-    activity[2]?.imageUrl === "" ? ImageUploader : activity[2]?.imageUrl
+    !activity[2]?.imageUrl || activity[2]?.imageUrl === "null"
+      ? ImageUploader
+      : activity[2]?.imageUrl
   );
   const [act4ImgPrev, setAct4ImgPrev] = useState(
-    activity[3]?.imageUrl === "" ? ImageUploader : activity[3]?.imageUrl
+    !activity[3]?.imageUrl || activity[3]?.imageUrl === "null"
+      ? ImageUploader
+      : activity[3]?.imageUrl
   );
 
   const { handleChange, handleFile, values } = useForm({

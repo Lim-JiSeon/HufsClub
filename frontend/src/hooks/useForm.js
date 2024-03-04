@@ -46,6 +46,7 @@ const useForm = ({ initialValues, onSubmit, validate }) => {
           "hufs-isPresident",
           response.data.isPresident ?? ""
         );
+        sessionStorage.setItem("hufs-password", values.password);
         navigate("/");
       } catch (error) {
         alert(

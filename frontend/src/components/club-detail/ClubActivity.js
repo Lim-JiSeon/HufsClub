@@ -35,6 +35,8 @@ const ActivityDiv = styled.div`
 const ClubActivity = (data) => {
   const { activity } = data.data;
 
+  console.log(activity);
+
   return (
     <ContentWrap>
       <TitleWrap>동아리 활동 소개</TitleWrap>
@@ -43,7 +45,7 @@ const ClubActivity = (data) => {
           (value, index) =>
             value && (
               <ActivityDiv key={index}>
-                {value.imageUrl && (
+                {value.imageUrl && value.imageUrl !== "null" && (
                   <div style={{ paddingRight: "40px" }}>
                     <Image src={value.imageUrl} width="30vw" height="27vh" />
                   </div>
