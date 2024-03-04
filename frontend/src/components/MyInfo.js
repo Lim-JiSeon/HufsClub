@@ -50,7 +50,7 @@ const MyInfo = (data) => {
 
   const checkNum = /^[0-9]+$/;
   const checkEmail = /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/;
-  const { errors, handleChange, values } = useForm({
+  const { errors, isLoading, handleChange, values } = useForm({
     initialValues: {
       username,
       studentId,
@@ -73,7 +73,9 @@ const MyInfo = (data) => {
   });
 
   const handleSubmitButton = () => {
-    putUserInfo(values).then(() => navigate("/"));
+    if (values.password === password)
+      putUserInfo(values).then(() => navigate("/"));
+    else alert("비밀번호가 일치하지 않습니다.");
   };
 
   return (
@@ -154,7 +156,9 @@ const MyInfo = (data) => {
           </Content>
         </ContentWrap>
         <ButtonWrap>
-          <SubmitButton type="submit">프로필 수정하기</SubmitButton>
+          <SubmitButton type="submit" disabled={isLoading}>
+            프로필 수정하기
+          </SubmitButton>
         </ButtonWrap>
       </CardForm>
     </>
