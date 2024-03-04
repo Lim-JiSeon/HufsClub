@@ -43,8 +43,8 @@ const MyInfo = (data) => {
 
   const password = sessionStorage.getItem("hufs-password");
 
-  console.log(data.data);
-  console.log(password);
+  //console.log(data.data);
+  //console.log(password);
 
   const navigate = useNavigate();
 
