@@ -46,14 +46,39 @@ const putClub = async (values, id) => {
     },
   ];
 
+  const newActImgUrl = `${
+    typeof values.activityImg1 === "string" && values.activityImg1
+      ? values.activityImg1
+      : null
+  },${
+    typeof values.activityImg2 === "string" && values.activityImg2
+      ? values.activityImg2
+      : null
+  },${
+    typeof values.activityImg3 === "string" && values.activityImg3
+      ? values.activityImg3
+      : null
+  },${
+    typeof values.activityImg4 === "string" && values.activityImg4
+      ? values.activityImg4
+      : null
+  }`;
+
+  console.log(values.topic);
+
   const data = axios
     .putForm(
       `${API_END_POINT}clubs/${id}`,
       {
-        activityImage1: values.activityImg1,
-        activityImage2: values.activityImg2,
-        activityImage3: values.activityImg3,
-        activityImage4: values.activityImg4,
+        activityImage1:
+          typeof values.activityImg1 === "object" ? values.activityImg1 : null,
+        activityImage2:
+          typeof values.activityImg2 === "object" ? values.activityImg2 : null,
+        activityImage3:
+          typeof values.activityImg3 === "object" ? values.activityImg3 : null,
+        activityImage4:
+          typeof values.activityImg4 === "object" ? values.activityImg4 : null,
+        activityImageUrl: newActImgUrl,
         executiveName: newExecutive
           .map((element) => element.name)
           .filter((element) => element)
@@ -68,11 +93,14 @@ const putClub = async (values, id) => {
           .join(","),
         activityText: newActivity
           .map((element) => element.text)
-          .filter((element) => element)
+          .filter((element) => (element ? element : " "))
           .join(","),
         name: values.name,
         field: values.field,
-        topic: values.topic,
+        topic:
+          typeof values.topic === "string"
+            ? values.topic
+            : values.topic.join("").replaceAll("#", ", ").slice(1),
         recruit:
           values.period +
           "," +
@@ -82,7 +110,8 @@ const putClub = async (values, id) => {
           "," +
           values.applyUrl,
         room: values.room,
-        logo: values.logoUrl,
+        logo: typeof values.logoUrl === "object" ? values.logoUrl : null,
+        logoUrl: typeof values.logoUrl === "string" ? values.logoUrl : "null",
       },
       {
         headers: {

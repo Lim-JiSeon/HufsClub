@@ -35,8 +35,6 @@ const ActivityDiv = styled.div`
 const ClubActivity = (data) => {
   const { activity } = data.data;
 
-  console.log(activity);
-
   return (
     <ContentWrap>
       <TitleWrap>동아리 활동 소개</TitleWrap>

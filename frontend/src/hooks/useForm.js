@@ -7,6 +7,7 @@ import findPw from "../api/findPw";
 import changePw from "../api/changePw";
 import { useLocation } from "react-router-dom";
 import getId from "../api/getId";
+import putUserInfo from "../api/putUserInfo";
 
 const useForm = ({ initialValues, onSubmit, validate }) => {
   const [values, setValues] = useState(initialValues);
@@ -115,6 +116,25 @@ const useForm = ({ initialValues, onSubmit, validate }) => {
     setIsLoading(false);
   };
 
+  const handleMyInfo = async (e) => {
+    setIsLoading(true);
+    e.preventDefault();
+    const newErrors = validate(values);
+    if (Object.keys(newErrors).length === 0) {
+      try {
+        const password = sessionStorage.getItem("hufs-password");
+
+        if (values.password === password)
+          await putUserInfo(values).then(() => navigate("/"));
+        else alert("비밀번호가 일치하지 않습니다.");
+      } catch (error) {
+        alert("에러가 발생했습니다.");
+      }
+    }
+    setErrors(newErrors);
+    setIsLoading(false);
+  };
+
   return {
     values,
     errors,
@@ -126,6 +146,7 @@ const useForm = ({ initialValues, onSubmit, validate }) => {
     handleFindPw,
     handleChangePw,
     handleFindId,
+    handleMyInfo,
   };
 };
 

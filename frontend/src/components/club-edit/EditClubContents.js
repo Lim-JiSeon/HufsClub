@@ -134,8 +134,6 @@ const RedDiv = styled.div`
 const EditClubContents = (data) => {
   const navigator = useNavigate();
 
-  console.log(data);
-
   const id = useParams().id;
 
   const { logoUrl, name, field, room, topic, recruit, executive, activity } =

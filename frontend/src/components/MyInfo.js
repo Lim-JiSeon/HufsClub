@@ -43,14 +43,14 @@ const MyInfo = (data) => {
 
   const password = sessionStorage.getItem("hufs-password");
 
-  console.log(data.data);
-  console.log(password);
+  //console.log(data.data);
+  //console.log(password);
 
   const navigate = useNavigate();
 
   const checkNum = /^[0-9]+$/;
   const checkEmail = /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/;
-  const { errors, handleChange, values } = useForm({
+  const { errors, isLoading, handleChange, values, handleMyInfo } = useForm({
     initialValues: {
       username,
       studentId,
@@ -62,7 +62,11 @@ const MyInfo = (data) => {
     validate: ({ username, studentId, password, newPassword }) => {
       const newErrors = {};
       if (!username) newErrors.username = "필수 입력란입니다.";
-      if (!studentId || studentId.length !== 9 || !checkNum.test(studentId))
+      if (
+        !studentId ||
+        studentId.toString().length !== 9 ||
+        !checkNum.test(studentId)
+      )
         newErrors.studentId = "숫자 9자리를 입력해주세요";
       if (!email || !checkEmail.test(email))
         newErrors.email = "이메일을 입력해주세요.";
@@ -72,13 +76,9 @@ const MyInfo = (data) => {
     },
   });
 
-  const handleSubmitButton = () => {
-    putUserInfo(values).then(() => navigate("/"));
-  };
-
   return (
     <>
-      <CardForm onSubmit={handleSubmitButton}>
+      <CardForm onSubmit={handleMyInfo}>
         <ContentWrap>
           {/* <ImageWrap>
           <Image src={profileImage} alt="" width="200px" height="auto" />
@@ -154,7 +154,9 @@ const MyInfo = (data) => {
           </Content>
         </ContentWrap>
         <ButtonWrap>
-          <SubmitButton type="submit">프로필 수정하기</SubmitButton>
+          <SubmitButton type="submit" disabled={isLoading}>
+            프로필 수정하기
+          </SubmitButton>
         </ButtonWrap>
       </CardForm>
     </>
