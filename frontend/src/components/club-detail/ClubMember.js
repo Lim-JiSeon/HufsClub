@@ -58,8 +58,10 @@ export const ClubMember = (data) => {
               <MemberDiv key={member._id}>
                 <Image src={profileImage} />
                 <TextName>{member.name}</TextName>
-                <TextRole>{member.email}</TextRole>
-                <TextRole>{member.role}</TextRole>
+                <TextRole>{member.email === "" ? "X" : member.email}</TextRole>
+                <TextRole>
+                  {member.role === "" ? "운영자" : member.role}
+                </TextRole>
               </MemberDiv>
             )
         )}
