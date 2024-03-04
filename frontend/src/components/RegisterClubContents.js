@@ -165,15 +165,15 @@ const RegisterClubContents = (data) => {
 
   const { handleChange, handleFile, values } = useForm({
     initialValues: {
-      activityImg1: ImageUploader,
-      activityImg2: ImageUploader,
-      activityImg3: ImageUploader,
-      activityImg4: ImageUploader,
+      activityImg1: null,
+      activityImg2: null,
+      activityImg3: null,
+      activityImg4: null,
       activityText1: "",
       activityText2: "",
       activityText3: "",
       activityText4: "",
-      applyUrl: "",
+      applyUrl: "추후 공지",
       executive1Email: email,
       executive1Name: username,
       executive1Role: "운영진",
@@ -187,21 +187,27 @@ const RegisterClubContents = (data) => {
       executive4Name: "",
       executive4Role: "",
       field: area,
-      logoUrl: ImageUploader,
+      logoUrl: null,
       name: isPresident,
       num: "미정",
       period: "미정",
-      room: "",
+      room: "미정",
       topic: "",
       way: "동아리 운영진에게 문의해주세요.",
     },
   });
 
-  const [logoUrl, setLogoUrl] = useState(ImageUploader);
-  const [activityImg1, setActivityImg1] = useState(ImageUploader);
-  const [activityImg2, setActivityImg2] = useState(ImageUploader);
-  const [activityImg3, setActivityImg3] = useState(ImageUploader);
-  const [activityImg4, setActivityImg4] = useState(ImageUploader);
+  const [logoUrl, setLogoUrl] = useState(null);
+  const [activityImg1, setActivityImg1] = useState(null);
+  const [activityImg2, setActivityImg2] = useState(null);
+  const [activityImg3, setActivityImg3] = useState(null);
+  const [activityImg4, setActivityImg4] = useState(null);
+
+  const [logoPrev, setLogoPrev] = useState(ImageUploader);
+  const [act1ImgPrev, setAct1ImgPrev] = useState(ImageUploader);
+  const [act2ImgPrev, setAct2ImgPrev] = useState(ImageUploader);
+  const [act3ImgPrev, setAct3ImgPrev] = useState(ImageUploader);
+  const [act4ImgPrev, setAct4ImgPrev] = useState(ImageUploader);
 
   useEffect(() => {
     setLogoUrl(values.logoUrl);
@@ -209,6 +215,16 @@ const RegisterClubContents = (data) => {
     setActivityImg2(values.activityImg2);
     setActivityImg3(values.activityImg3);
     setActivityImg4(values.activityImg4);
+
+    if (values.logoUrl) setLogoPrev(URL.createObjectURL(values.logoUrl));
+    if (values.activityImg1)
+      setAct1ImgPrev(URL.createObjectURL(values.activityImg1));
+    if (values.activityImg2)
+      setAct2ImgPrev(URL.createObjectURL(values.activityImg2));
+    if (values.activityImg3)
+      setAct3ImgPrev(URL.createObjectURL(values.activityImg3));
+    if (values.activityImg4)
+      setAct4ImgPrev(URL.createObjectURL(values.activityImg4));
   }, [values]);
 
   return (
@@ -226,7 +242,7 @@ const RegisterClubContents = (data) => {
             />
             <img
               alt=""
-              src={logoUrl}
+              src={logoPrev}
               width={300}
               height={200}
               style={{ cursor: "pointer" }}
@@ -400,7 +416,7 @@ const RegisterClubContents = (data) => {
                   onChange={handleFile}
                   // {...register("activityImg1")}
                 />
-                <img alt="" src={activityImg1} width={300} height={200} />
+                <img alt="" src={act1ImgPrev} width={300} height={200} />
                 <ImgUploader htmlFor="activityImg1">파일 선택</ImgUploader>
               </ImageWrap>
               <TextareaWrap
@@ -421,7 +437,7 @@ const RegisterClubContents = (data) => {
                   onChange={handleFile}
                   // {...register("activityImg2")}
                 />
-                <img alt="" src={activityImg2} width={300} height={200} />
+                <img alt="" src={act2ImgPrev} width={300} height={200} />
                 <ImgUploader htmlFor="activityImg2">파일 선택</ImgUploader>
               </ImageWrap>
               <TextareaWrap
@@ -442,7 +458,7 @@ const RegisterClubContents = (data) => {
                   onChange={handleFile}
                   // {...register("activityImg3")}
                 />
-                <img alt="" src={activityImg3} width={300} height={200} />
+                <img alt="" src={act3ImgPrev} width={300} height={200} />
                 <ImgUploader htmlFor="activityImg3">파일 선택</ImgUploader>
               </ImageWrap>
               <TextareaWrap
@@ -463,7 +479,7 @@ const RegisterClubContents = (data) => {
                   onChange={handleFile}
                   // {...register("activityImg4")}
                 />
-                <img alt="" src={activityImg4} width={300} height={200} />
+                <img alt="" src={act4ImgPrev} width={300} height={200} />
                 <ImgUploader htmlFor="activityImg4">파일 선택</ImgUploader>
               </ImageWrap>
               <TextareaWrap

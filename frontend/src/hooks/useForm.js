@@ -1,3 +1,4 @@
+import imageCompression from "browser-image-compression";
 import { useState } from "react";
 import login from "../api/login";
 import signup from "../api/signup";
@@ -23,19 +24,11 @@ const useForm = ({ initialValues, onSubmit, validate }) => {
     }
   };
 
-  const handleFile = (e) => {
+  const handleFile = async (e) => {
     if (e.target.files && e.target.files.length) {
-      const fileBlob = e.target.files[0];
-      const reader = new FileReader();
+      const file = e.target.files[0];
 
-      reader.readAsDataURL(fileBlob);
-
-      return new Promise((resolve) => {
-        reader.onload = () => {
-          setValues({ ...values, [e.target.id]: reader.result });
-          resolve();
-        };
-      });
+      setValues({ ...values, [e.target.id]: file });
     }
   };
 
