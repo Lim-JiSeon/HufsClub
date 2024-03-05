@@ -115,7 +115,6 @@ clubRouter.post(
     for(let i = 0; i < executiveName.length; i++){
       executive.push({ name: executiveName[i], email: executiveEmail[i] || '', role: executiveRole[i] || ''});
     }
-    const activityText = req.body.activityText.split(',');
     const recruit = req.body.recruit.split(',');
 
     const user = await User.findById(req.user._id);
@@ -125,10 +124,10 @@ clubRouter.post(
       topic: (req.body.topic)? Club.formatHashtags(req.body.topic) : req.body.topic,
       executive: executive,
       activity: [
-        { imageUrl: req.files.activityImage1 ? req.files.activityImage1[0].location : '', text: activityText[0] },
-        { imageUrl: req.files.activityImage2 ? req.files.activityImage2[0].location : '', text: activityText[1] },
-        { imageUrl: req.files.activityImage3 ? req.files.activityImage3[0].location : '', text: activityText[2] },
-        { imageUrl: req.files.activityImage4 ? req.files.activityImage4[0].location : '', text: activityText[3] },
+        { imageUrl: req.files.activityImage1 ? req.files.activityImage1[0].location : '', text: req.body.activityText1 },
+        { imageUrl: req.files.activityImage2 ? req.files.activityImage2[0].location : '', text: req.body.activityText2 },
+        { imageUrl: req.files.activityImage3 ? req.files.activityImage3[0].location : '', text: req.body.activityText3 },
+        { imageUrl: req.files.activityImage4 ? req.files.activityImage4[0].location : '', text: req.body.activityText4 },
       ],
       recruit: { period: recruit[0], way: recruit[1], num: recruit[2], applyUrl: recruit[3] },
       room: req.body.room,
@@ -162,7 +161,6 @@ clubRouter.put(
         for(let i = 0; i < executiveName.length; i++){
           executive.push({ name: executiveName[i], email: executiveEmail[i], role: executiveRole[i] });
         }
-        const activityText = req.body.activityText.split(',');
         const recruit = req.body.recruit.split(',');
 
         // 기존 이미지들 삭제(이미지 객체가 오거나 이미지 객체와 url 모두 없는 경우) 
@@ -186,10 +184,10 @@ clubRouter.put(
         club.topic = (req.body.topic)? Club.formatHashtags(req.body.topic) : req.body.topic,
         club.executive = executive,
         club.activity = [
-          { imageUrl: req.files.activityImage1 ? req.files.activityImage1[0].location : (activityImageUrl[0] ? activityImageUrl[0].trim() : ''), text: activityText[0] },
-          { imageUrl: req.files.activityImage2 ? req.files.activityImage2[0].location : (activityImageUrl[1] ? activityImageUrl[1].trim() : ''), text: activityText[1] },
-          { imageUrl: req.files.activityImage3 ? req.files.activityImage3[0].location : (activityImageUrl[2] ? activityImageUrl[2].trim() : ''), text: activityText[2] },
-          { imageUrl: req.files.activityImage4 ? req.files.activityImage4[0].location : (activityImageUrl[3] ? activityImageUrl[3].trim() : ''), text: activityText[3] },
+          { imageUrl: req.files.activityImage1 ? req.files.activityImage1[0].location : (activityImageUrl[0] ? activityImageUrl[0].trim() : ''), text: req.body.activityText1 },
+          { imageUrl: req.files.activityImage2 ? req.files.activityImage2[0].location : (activityImageUrl[1] ? activityImageUrl[1].trim() : ''), text: req.body.activityText2 },
+          { imageUrl: req.files.activityImage3 ? req.files.activityImage3[0].location : (activityImageUrl[2] ? activityImageUrl[2].trim() : ''), text: req.body.activityText3 },
+          { imageUrl: req.files.activityImage4 ? req.files.activityImage4[0].location : (activityImageUrl[3] ? activityImageUrl[3].trim() : ''), text: req.body.activityText4 },
         ],
         club.recruit = { period: recruit[0], way: recruit[1], num: recruit[2], applyUrl: recruit[3] },
         club.room = req.body.room,
