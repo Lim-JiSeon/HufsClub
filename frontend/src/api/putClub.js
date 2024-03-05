@@ -64,8 +64,6 @@ const putClub = async (values, id) => {
       : null
   }`;
 
-  console.log(values.topic);
-
   const data = axios
     .putForm(
       `${API_END_POINT}clubs/${id}`,
@@ -91,10 +89,10 @@ const putClub = async (values, id) => {
           .map((element) => element.role)
           .filter((element) => element)
           .join(","),
-        activityText: newActivity
-          .map((element) => element.text)
-          .filter((element) => (element ? element : " "))
-          .join(","),
+        activityText1: values.activityText1 ?? "",
+        activityText2: values.activityText2 ?? "",
+        activityText3: values.activityText3 ?? "",
+        activityText4: values.activityText4 ?? "",
         name: values.name,
         field: values.field,
         topic:
