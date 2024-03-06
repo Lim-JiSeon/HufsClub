@@ -3,7 +3,8 @@ import ClubItem from "./func/ClubItem";
 
 const GridWrap = styled.div`
   width: 70vw;
-  height: 50vh;
+  height: auto;
+  min-height: 50vh;
   background-color: #ffffff;
   border-radius: 20px;
   border: solid 2px #27374d;
