@@ -169,6 +169,12 @@ const EditClubContents = (data) => {
       : activity[3]?.imageUrl
   );
 
+  const user = {
+    name: executive[0]?.name,
+    email: executive[0]?.email,
+    role: "운영진",
+  };
+
   const { handleChange, handleFile, values } = useForm({
     initialValues: {
       field,
@@ -295,27 +301,27 @@ const EditClubContents = (data) => {
                 label="이름"
                 name="executive1Name"
                 defaultValue={executive[0]?.name ?? ""}
+                onChange={handleChange}
                 // {...register("executive1Name")}
                 // value={watch().executive1Name}
-                readonly
               />
               <Input
                 type="text"
                 label="이메일"
                 name="executive1Email"
                 defaultValue={executive[0]?.email ?? ""}
+                onChange={handleChange}
                 // {...register("executive1Email")}
                 // value={watch().executive1Email}
-                readonly
               />
               <Input
                 type="text"
                 label="역할"
                 name="executive1Role"
                 defaultValue={executive[0]?.role ?? "운영진"}
+                onChange={handleChange}
                 // {...register("executive1Role")}
                 // value="운영진"
-                readonly
               />
             </MemberContainer>
             <MemberContainer>
@@ -527,7 +533,7 @@ const EditClubContents = (data) => {
         <SubmitButton
           type="button"
           onClick={() => {
-            putClub(values, id).then(() => {
+            putClub(values, user, id).then(() => {
               navigator("/");
             });
           }}>
