@@ -1,14 +1,15 @@
 import axios from "axios";
 import { API_END_POINT } from "../constants/api";
 
-const postClub = async (values) => {
+const postClub = async (values, user) => {
   const token = sessionStorage.getItem("hufs-club_isLogin");
 
   const newExecutive = [
     {
-      name: values.executive1Name,
-      email: values.executive1Email,
-      role: values.executive1Role,
+      name: values.executive1Name === "" ? user.name : values.executive1Name,
+      email:
+        values.executive1Email === "" ? user.email : values.executive1Email,
+      role: values.executive1Role === "" ? user.role : values.executive1Role,
     },
     values.executive2Name && {
       name: values.executive2Name,
@@ -26,6 +27,9 @@ const postClub = async (values) => {
       role: values.executive4Role === "" ? "운영진" : values.executive4Role,
     },
   ];
+
+  console.log(user);
+  console.log(values);
 
   const newActivity = [
     values.activityText1 && {

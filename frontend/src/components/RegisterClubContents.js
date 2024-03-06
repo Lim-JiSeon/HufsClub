@@ -197,6 +197,12 @@ const RegisterClubContents = (data) => {
     },
   });
 
+  const user = {
+    name: username,
+    email,
+    role: "운영진",
+  };
+
   const [logoUrl, setLogoUrl] = useState(null);
   const [activityImg1, setActivityImg1] = useState(null);
   const [activityImg2, setActivityImg2] = useState(null);
@@ -300,27 +306,27 @@ const RegisterClubContents = (data) => {
                 label="이름"
                 name="executive1Name"
                 defaultValue={username}
+                onChange={handleChange}
                 // {...register("executive1Name")}
                 // value={watch().executive1Name}
-                readonly
               />
               <Input
                 type="text"
                 label="이메일"
                 name="executive1Email"
                 defaultValue={email}
+                onChange={handleChange}
                 // {...register("executive1Email")}
                 // value={watch().executive1Email}
-                readonly
               />
               <Input
                 type="text"
                 label="역할"
                 name="executive1Role"
                 defaultValue="운영진"
+                onChange={handleChange}
                 // {...register("executive1Role")}
                 // value="운영진"
-                readonly
               />
             </MemberContainer>
             <MemberContainer>
@@ -532,7 +538,7 @@ const RegisterClubContents = (data) => {
         <SubmitButton
           type="button"
           onClick={() => {
-            postClub(values).then(() => {
+            postClub(values, user).then(() => {
               navigator("/");
             });
           }}>

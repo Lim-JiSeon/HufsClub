@@ -1,14 +1,15 @@
 import axios from "axios";
 import { API_END_POINT } from "../constants/api";
 
-const putClub = async (values, id) => {
+const putClub = async (values, user, id) => {
   const token = sessionStorage.getItem("hufs-club_isLogin");
 
   const newExecutive = [
     {
-      name: values.executive1Name,
-      email: values.executive1Email,
-      role: values.executive1Role,
+      name: values.executive1Name === "" ? user.name : values.executive1Name,
+      email:
+        values.executive1Email === "" ? user.email : values.executive1Email,
+      role: values.executive1Role === "" ? user.role : values.executive1Role,
     },
     values.executive2Name && {
       name: values.executive2Name,

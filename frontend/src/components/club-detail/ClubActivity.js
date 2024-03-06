@@ -32,6 +32,10 @@ const ActivityDiv = styled.div`
   word-break: break-all;
 `;
 
+const ActivityText = styled.div`
+  white-space: pre-wrap;
+`;
+
 const ClubActivity = (data) => {
   const { activity } = data.data;
 
@@ -48,7 +52,7 @@ const ClubActivity = (data) => {
                     <Image src={value.imageUrl} width="30vw" height="27vh" />
                   </div>
                 )}
-                <div>{value.text}</div>
+                <ActivityText>{value.text}</ActivityText>
               </ActivityDiv>
             )
         )}
