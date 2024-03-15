@@ -1,9 +1,9 @@
-import useForm from "../hooks/useForm";
-import Button from "../components/common/Button";
-import ErrorText from "./errors/ErrorText";
-import Input from "./func/Input";
-import Radio from "./func/Radio";
-import RadioGroup from "./func/RadioGroup";
+import useForm from "../../hooks/useForm";
+import Button from "../../components/common/Button";
+import ErrorText from "../../components/errors/ErrorText";
+import Input from "../../components/func/Input";
+import Radio from "../../components/func/Radio";
+import RadioGroup from "../../components/func/RadioGroup";
 import { useState } from "react";
 import styled from "@emotion/styled";
 

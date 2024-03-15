@@ -13,11 +13,7 @@ const HeaderContainer = styled.div`
   align-items: center;
 `;
 
-const LikeButton = styled.div`
-  padding: 10px;
-`;
-
-const ProfileButton = styled.div`
+const IconButton = styled.div`
   padding: 10px;
 `;
 
@@ -33,9 +29,9 @@ export const Header = () => {
   return (
     <HeaderContainer>
       <Link to={likePath}>
-        <LikeButton>
+        <IconButton>
           <FontAwesomeIcon icon={faHeart} color="#FED313" />
-        </LikeButton>
+        </IconButton>
       </Link>
       <Link to="/">
         <HomeButton>
@@ -43,9 +39,9 @@ export const Header = () => {
         </HomeButton>
       </Link>
       <Link to={profilePath}>
-        <ProfileButton>
+        <IconButton>
           <FontAwesomeIcon icon={faUser} color="#FED313" />
-        </ProfileButton>
+        </IconButton>
       </Link>
     </HeaderContainer>
   );
