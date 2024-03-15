@@ -1,5 +1,12 @@
+html {
+  display: flex;
+  justify-content: center;
+}
+
 body {
-  background-color: #f6fbfe;
-  padding: 0px;
-  margin: 0px;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  max-width: 480px;
+  background-color: white;
 }

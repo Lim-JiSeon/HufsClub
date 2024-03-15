@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import MainPage from "./pages/MainPage";
@@ -19,6 +18,7 @@ import EditClubPage from "./pages/EditClubPage";
 import ClubPage from "./pages/ClubPage";
 import RegisterClubPage from "./pages/RegisterClubPage";
 import LikePage from "./pages/LikePage";
+import { App } from "./App";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
