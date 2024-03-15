@@ -7,7 +7,7 @@ const MainContainer = styled.div`
   padding: 38px 20px 20px 20px;
 `;
 
-function LoginPage() {
+const LoginPage = () => {
   return (
     <>
       <Header text="로그인" />
@@ -16,6 +16,6 @@ function LoginPage() {
       </MainContainer>
     </>
   );
-}
+};
 
 export default LoginPage;

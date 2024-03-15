@@ -11,6 +11,7 @@ const HeaderContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background-color: white;
 `;
 
 const IconButton = styled.div`

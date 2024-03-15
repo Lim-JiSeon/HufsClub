@@ -7,7 +7,7 @@ const MainContainer = styled.div`
   padding: 38px 20px 20px 20px;
 `;
 
-function SignUpPage() {
+const SignUpPage = () => {
   return (
     <>
       <Header text="회원가입" />
@@ -16,6 +16,6 @@ function SignUpPage() {
       </MainContainer>
     </>
   );
-}
+};
 
 export default SignUpPage;

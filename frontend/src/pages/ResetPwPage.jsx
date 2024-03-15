@@ -1,30 +1,21 @@
 import React from "react";
 import styled from "@emotion/styled";
-import ResetPwForm from "../components/ResetPwForm";
-import Header from "../components/Header";
+import ResetPwForm from "../components/reset-pw/ResetPwForm";
+import { Header } from "../components/common/Header";
 
-const Wrapper = styled.div`
-  display: flex;
-  width: 100%;
-  height: 100%;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+const MainContainer = styled.div`
+  padding: 38px 20px 20px 20px;
 `;
 
-const FormWrapper = styled.div`
-  padding: 50px 0;
-`;
-
-function ResetPwPage() {
+const ResetPwPage = () => {
   return (
-    <Wrapper>
-      <Header></Header>
-      <FormWrapper>
+    <>
+      <Header text="비밀번호 재설정" />
+      <MainContainer>
         <ResetPwForm />
-      </FormWrapper>
-    </Wrapper>
+      </MainContainer>
+    </>
   );
-}
+};
 
 export default ResetPwPage;

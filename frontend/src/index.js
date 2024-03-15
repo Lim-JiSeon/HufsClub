@@ -7,8 +7,6 @@ import MainPage from "./pages/MainPage";
 import LoginPage from "./pages/LoginPage";
 import SignUpPage from "./pages/SignUpPage";
 import AreaPage from "./pages/AreaPage";
-import IntroPage from "./pages/IntroPage";
-import InputPage from "./pages/InputPage";
 import MyPage from "./pages/MyPage";
 import NotPage from "./pages/NotPage";
 import FindIdPage from "./pages/FindIdPage";
@@ -33,8 +31,6 @@ root.render(
         <Route path="/:field/register-club" element={<RegisterClubPage />} />
         <Route path="/area/:field" element={<AreaPage />} />
         <Route path="/area/:field/:id" element={<ClubPage />} />
-        <Route path="/intro" element={<IntroPage />} />
-        <Route path="/input" element={<InputPage />} />
         <Route path="/edit-club/:id" element={<EditClubPage />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/like/:id" element={<LikePage />} />

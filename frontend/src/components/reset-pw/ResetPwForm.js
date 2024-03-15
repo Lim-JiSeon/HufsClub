@@ -1,15 +1,15 @@
-import useForm from "../hooks/useForm";
-import Button from "./SubmitButton";
-import ErrorText from "./errors/ErrorText";
-import Input from "./func/Input";
+import React from "react";
+import useForm from "../../hooks/useForm";
+import Button from "../common/Button";
+import ErrorText from "../errors/ErrorText";
+import Input from "../func/Input";
 
-const ResetPwForm = ({ onSubmit }) => {
-  const { values, errors, isLoading, handleChange, handleChangePw } = useForm({
+const ResetPwForm = () => {
+  const { errors, isLoading, handleChange, handleChangePw } = useForm({
     initialValues: {
       password: "",
       passwordConfirm: "",
     },
-    onSubmit,
     validate: ({ password, passwordConfirm }) => {
       const newErrors = {};
       if (!password) newErrors.password = "필수 입력란입니다.";
