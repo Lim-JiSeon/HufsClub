@@ -1,11 +1,10 @@
 import styled from "@emotion/styled";
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Header } from "../components/common/Header";
 import SearchBar from "../components/area/SearchBar";
-import ClubGrid from "../components/ClubGrid";
+import ClubGrid from "../components/area/ClubGrid";
 import getField from "../api/getField";
-import Button from "../components/common/Button";
 
 const Main = styled.div`
   min-height: 100vh;

@@ -1,12 +1,8 @@
 import styled from "@emotion/styled";
-import ClubItem from "../components/area/ClubItem";
+import ClubItem from "../common/ClubItem";
 
 const GridWrap = styled.div`
   width: 100%;
-  /* display: grid;
-  grid-template-columns: repeat(1, 1fr);
-  place-items: center;
-  gap: 10px; */
   display: flex;
   flex-direction: column;
   align-items: center;
