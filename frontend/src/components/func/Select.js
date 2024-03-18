@@ -9,6 +9,7 @@ export const StyledSelect = styled.select`
   width: 120px;
   outline: none;
   margin: 0px 5px;
+  
   cursor: pointer;
 `;
 

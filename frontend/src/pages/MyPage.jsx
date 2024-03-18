@@ -7,7 +7,7 @@ const MainContainer = styled.div`
   padding: 38px 20px 20px 20px;
 `;
 
-function MyPage() {
+const MyPage = () => {
   return (
     <>
       <Header text="내 정보" />
@@ -16,6 +16,6 @@ function MyPage() {
       </MainContainer>
     </>
   );
-}
+};
 
 export default MyPage;

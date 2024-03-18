@@ -5,7 +5,8 @@ const Image = ({ src, width, height, borderRadius, alt, ...props }) => {
     height: height ? height : "auto",
     borderRadius: borderRadius ? borderRadius : undefined,
     margin: "auto",
-    objectFit: "contain",
+    objectFit: "fill",
+    objectPosition: "50% 50%",
   };
 
   return (

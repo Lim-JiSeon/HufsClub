@@ -14,7 +14,7 @@ const MainContainer = styled.div`
   padding: 38px 20px 20px 20px;
 `;
 
-export default function LikePage() {
+const LikePage = () => {
   const [club, setClub] = useState([]);
 
   const getClub = async () => {
@@ -35,4 +35,6 @@ export default function LikePage() {
       </Main>
     </>
   );
-}
+};
+
+export default LikePage;

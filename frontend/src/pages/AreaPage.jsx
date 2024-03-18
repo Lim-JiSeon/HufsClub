@@ -47,7 +47,7 @@ const RegisterButton = styled(Link)`
   }
 `;
 
-function AreaPage() {
+const AreaPage = () => {
   const area = useParams().field;
   const [club, setClub] = useState([]);
 
@@ -79,6 +79,6 @@ function AreaPage() {
       </Main>
     </>
   );
-}
+};
 
 export default AreaPage;

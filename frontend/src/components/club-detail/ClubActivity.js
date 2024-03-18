@@ -7,28 +7,39 @@ const ContentWrap = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
+  margin-top: 40px;
 `;
 
 const TitleWrap = styled.div`
-  color: #27374d;
-  font-size: 26px;
-  text-align: center;
+  width: 100%;
+  color: black;
+  font-size: 16px;
+  text-align: left;
   font-weight: bold;
-  padding: 40px 0;
+  padding: 0 0 12px 10px;
 `;
 
 const ActivityWrap = styled.div`
   width: 100%;
   display: grid;
   grid-template-columns: repeat(1, 1fr);
-  gap: 60px;
-  color: #27374d;
+  gap: 24px;
+  color: black;
+`;
+
+const ActivityImageWrap = styled.div`
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  overflow-x: scroll;
+  margin-bottom: 30px;
+  border: 1px solid #fed313;
 `;
 
 const ActivityDiv = styled.div`
   display: flex;
   align-items: center;
-  color: #27374d;
+  color: black;
   word-break: break-all;
 `;
 
@@ -42,16 +53,20 @@ const ClubActivity = (data) => {
   return (
     <ContentWrap>
       <TitleWrap>동아리 활동 소개</TitleWrap>
+      <ActivityImageWrap>
+        {activity.map(
+          (value) =>
+            value?.imageUrl &&
+            value.imageUrl !== "null" && (
+              <Image src={value.imageUrl} width={600} height={440} />
+            )
+        )}
+      </ActivityImageWrap>
       <ActivityWrap>
         {activity.map(
           (value, index) =>
             value && (
               <ActivityDiv key={index}>
-                {value.imageUrl && value.imageUrl !== "null" && (
-                  <div style={{ paddingRight: "40px" }}>
-                    <Image src={value.imageUrl} width="30vw" height="27vh" />
-                  </div>
-                )}
                 <ActivityText>{value.text}</ActivityText>
               </ActivityDiv>
             )
