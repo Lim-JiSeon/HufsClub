@@ -19,6 +19,10 @@ const AgreementText = styled.span`
   padding-left: 8px;
 `;
 
+const ButtonWrap = styled.div`
+  margin-top: 102px;
+`;
+
 const SignUpForm = () => {
   const [clubPresidentCheck, setClubPresidentCheck] = useState(false);
   const { errors, isLoading, handleChange, handleSignUp } = useForm({
@@ -124,10 +128,11 @@ const SignUpForm = () => {
           {errors.agreement}
         </ErrorText>
       )}
-
-      <Button type="submit" disabled={isLoading}>
-        회원가입
-      </Button>
+      <ButtonWrap>
+        <Button type="submit" disabled={isLoading}>
+          회원가입
+        </Button>
+      </ButtonWrap>
     </form>
   );
 };

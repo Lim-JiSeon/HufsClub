@@ -1,19 +1,15 @@
 import styled from "@emotion/styled";
-import ClubItem from "./func/ClubItem";
+import ClubItem from "../components/area/ClubItem";
 
 const GridWrap = styled.div`
-  width: 70vw;
-  height: auto;
-  min-height: 50vh;
-  background-color: #ffffff;
-  border-radius: 20px;
-  border: solid 2px #27374d;
-  margin-bottom: 20px;
-  padding: 30px;
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  width: 100%;
+  /* display: grid;
+  grid-template-columns: repeat(1, 1fr);
   place-items: center;
-  gap: 10px;
+  gap: 10px; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const ClubGrid = (data) => {
