@@ -4,8 +4,8 @@ const baseUrl = () =>
   process.env.BASE_URL
     ? process.env.BASE_URL
     : process.env.NODE_ENV !== 'production'
-    ? 'https://hufs-club.vercel.app'
-    : 'https://yourdomain.com';
+    ? 'http://localhost:3000'
+    : 'https://hufs-club.vercel.app';
 
 const generateToken = (user) => {
   return jwt.sign(
