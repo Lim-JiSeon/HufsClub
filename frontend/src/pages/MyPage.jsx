@@ -1,24 +1,21 @@
 import React from "react";
-import Header from "../components/Header";
-import MyContents from "../components/MyContents";
+import { Header } from "../components/common/Header";
+import MyContents from "../components/my-page/MyContents";
 import styled from "@emotion/styled";
 
-const MyContainer = styled.div`
-  display: flex;
-  width: 100%;
-  height: 100%;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+const MainContainer = styled.div`
+  padding: 38px 20px 20px 20px;
 `;
 
-function MyPage() {
+const MyPage = () => {
   return (
-    <MyContainer>
-      <Header />
-      <MyContents />
-    </MyContainer>
+    <>
+      <Header text="내 정보" />
+      <MainContainer>
+        <MyContents />
+      </MainContainer>
+    </>
   );
-}
+};
 
 export default MyPage;

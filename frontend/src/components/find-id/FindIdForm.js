@@ -1,11 +1,9 @@
-import useForm from "../hooks/useForm";
-import Button from "./SubmitButton";
-import ErrorText from "./errors/ErrorText";
-import Input from "./func/Input";
-import CardForm from "./CardForm";
-import Title from "./TopicTitle";
+import useForm from "../../hooks/useForm";
+import Button from "../../components/common/Button";
+import ErrorText from "../../components/errors/ErrorText";
+import Input from "../../components/func/Input";
 import styled from "@emotion/styled";
-import findId from "../api/findId";
+import findId from "../../api/findId";
 
 const EmailWrap = styled.div`
   width: 100%;
@@ -18,21 +16,28 @@ const SendEmail = styled.button`
   height: 48px;
   padding: 10px;
   margin-left: 10px;
-  color: #dde6ed;
-  background-color: #526d82;
+  color: black;
+  background-color: #fed313;
   border-radius: 4px;
   border: none;
   cursor: pointer;
+
+  &:hover {
+    background-color: #ffefa9;
+  }
+
+  &:active {
+    background-color: #ffefa9;
+  }
 `;
 
-const FindIdForm = ({ onSubmit }) => {
+const FindIdForm = () => {
   const { values, errors, isLoading, handleChange, handleFindId } = useForm({
     initialValues: {
       name: "",
       email: "",
       verificationCode: "",
     },
-    onSubmit,
     validate: ({ name, email, verificationCode }) => {
       const newErrors = {};
       if (!name) newErrors.name = "필수 입력란입니다.";
@@ -44,8 +49,7 @@ const FindIdForm = ({ onSubmit }) => {
   });
 
   return (
-    <CardForm onSubmit={handleFindId}>
-      <Title>아이디 찾기</Title>
+    <form onSubmit={handleFindId}>
       <Input type="text" name="name" onChange={handleChange} label="이름" />
       {errors.name && <ErrorText>{errors.name}</ErrorText>}
       <EmailWrap>
@@ -72,10 +76,10 @@ const FindIdForm = ({ onSubmit }) => {
       {errors.verificationCode && (
         <ErrorText>{errors.verificationCode}</ErrorText>
       )}
-      <Button type="submit" disabled={isLoading}>
+      <Button type="submit" disabled={isLoading} style={{ marginTop: "102px" }}>
         아이디 찾기
       </Button>
-    </CardForm>
+    </form>
   );
 };
 

@@ -1,30 +1,21 @@
 import React from "react";
 import styled from "@emotion/styled";
-import FindPwForm from "../components/FindPwForm";
-import Header from "../components/Header";
+import FindPwForm from "../components/find-pw/FindPwForm";
+import { Header } from "../components/common/Header";
 
-const Wrapper = styled.div`
-  display: flex;
-  width: 100%;
-  height: 100%;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+const MainContainer = styled.div`
+  padding: 38px 20px 20px 20px;
 `;
 
-const FormWrapper = styled.div`
-  padding: 50px 0;
-`;
-
-function FindPwPage() {
+const FindPwPage = () => {
   return (
-    <Wrapper>
-      <Header></Header>
-      <FormWrapper>
+    <>
+      <Header text="비밀번호 찾기" />
+      <MainContainer>
         <FindPwForm />
-      </FormWrapper>
-    </Wrapper>
+      </MainContainer>
+    </>
   );
-}
+};
 
 export default FindPwPage;

@@ -1,9 +1,9 @@
-import useForm from "../hooks/useForm";
-import Button from "../components/common/Button";
-import ErrorText from "./errors/ErrorText";
-import Input from "./func/Input";
-import Radio from "./func/Radio";
-import RadioGroup from "./func/RadioGroup";
+import useForm from "../../hooks/useForm";
+import Button from "../../components/common/Button";
+import ErrorText from "../../components/errors/ErrorText";
+import Input from "../../components/func/Input";
+import Radio from "../../components/func/Radio";
+import RadioGroup from "../../components/func/RadioGroup";
 import { useState } from "react";
 import styled from "@emotion/styled";
 
@@ -17,6 +17,10 @@ const AgreementText = styled.span`
   font-weight: bold;
   margin-bottom: 4px;
   padding-left: 8px;
+`;
+
+const ButtonWrap = styled.div`
+  margin-top: 102px;
 `;
 
 const SignUpForm = () => {
@@ -124,10 +128,11 @@ const SignUpForm = () => {
           {errors.agreement}
         </ErrorText>
       )}
-
-      <Button type="submit" disabled={isLoading}>
-        회원가입
-      </Button>
+      <ButtonWrap>
+        <Button type="submit" disabled={isLoading}>
+          회원가입
+        </Button>
+      </ButtonWrap>
     </form>
   );
 };

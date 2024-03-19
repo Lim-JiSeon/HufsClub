@@ -1,29 +1,20 @@
 import React from "react";
 import styled from "@emotion/styled";
-import FindIdForm from "../components/FindIdForm";
-import Header from "../components/Header";
+import FindIdForm from "../components/find-id/FindIdForm";
+import { Header } from "../components/common/Header";
 
-const Wrapper = styled.div`
-  display: flex;
-  width: 100%;
-  height: 100%;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+const MainContainer = styled.div`
+  padding: 38px 20px 20px 20px;
 `;
 
-const FormWrapper = styled.div`
-  padding: 50px 0;
-`
-
-function FindIdPage() {
+const FindIdPage = () => {
   return (
-    <Wrapper>
-      <Header></Header>
-      <FormWrapper>
+    <>
+      <Header text="아이디 찾기" />
+      <MainContainer>
         <FindIdForm />
-      </FormWrapper>
-    </Wrapper>
+      </MainContainer>
+    </>
   );
 }
 

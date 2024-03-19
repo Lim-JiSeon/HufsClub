@@ -2,8 +2,8 @@ import styled from "@emotion/styled";
 import React from "react";
 
 const PopupBackground = styled.div`
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   left: 0;
   top: 0;
   z-index: 10;
@@ -11,14 +11,14 @@ const PopupBackground = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgba(0,0,0,0.5);
+  background-color: rgba(0, 0, 0, 0.5);
 `;
 
 const PopupWrap = styled.div`
-  width: 400px;
-  height: 300px;
+  width: 300px;
+  height: 150px;
   background-color: #ffffff;
-  border: 2px solid #27374d;
+  border: 2px solid #fed313;
   border-radius: 10px;
   font-weight: bold;
   display: flex;
@@ -29,17 +29,17 @@ const PopupWrap = styled.div`
 
 const TitleText = styled.div`
   width: 100%;
-  font-size: 22px;
-  padding: 80px 0 80px 0;
-  color: #27374d;
+  font-size: 16px;
+  padding: 30px 0;
+  color: black;
   text-align: center;
 `;
 
 const ButtonWrap = styled.div`
   width: 100%;
-  height: 80px;
+  height: auto;
   display: flex;
-  border-top: 2px solid #27374d;
+  border-top: 2px solid #fed313;
 `;
 
 const ButtonContent = styled.button`
@@ -47,12 +47,14 @@ const ButtonContent = styled.button`
   height: auto;
   border: none;
   background-color: transparent;
-  color: #27374d;
+  color: black;
   font-weight: bold;
-  font-size: 18px;
+  font-size: 16px;
+  padding: 20px 0;
+
   cursor: pointer;
   &:hover {
-    background-color: #dde6ed;
+    background-color: #ffefa9;
   }
 `;
 
@@ -67,7 +69,7 @@ const Popup = (PopupProps) => {
         <ButtonWrap>
           <ButtonContent
             style={{
-              borderRight: "2px solid #27374d",
+              borderRight: "2px solid #fed313",
               borderEndStartRadius: "10px",
             }}
             onClick={leftBtn}>

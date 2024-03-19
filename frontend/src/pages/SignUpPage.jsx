@@ -1,24 +1,21 @@
 import React from "react";
-import SignUpForm from "../components/SignUpForm";
+import SignUpForm from "../components/signup/SignUpForm";
 import styled from "@emotion/styled";
-import Header from "../components/Header";
+import { Header } from "../components/common/Header";
 
-const Wrapper = styled.div`
-  display: flex;
-  width: 100%;
-  height: 100%;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+const MainContainer = styled.div`
+  padding: 38px 20px 20px 20px;
 `;
 
-function SignUpPage() {
+const SignUpPage = () => {
   return (
-    <Wrapper>
-      <Header></Header>
-      <div><SignUpForm onSubmit /></div>
-    </Wrapper>
+    <>
+      <Header text="회원가입" />
+      <MainContainer>
+        <SignUpForm />
+      </MainContainer>
+    </>
   );
-}
+};
 
 export default SignUpPage;

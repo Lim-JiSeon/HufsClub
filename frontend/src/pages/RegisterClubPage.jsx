@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from "react";
-import Header from "../components/Header";
+import { Header } from "../components/common/Header";
 import styled from "@emotion/styled";
 import RegisterClubContents from "../components/RegisterClubContents";
 import getUserInfo from "../api/getUserInfo";
 
-const RegisterClubContainer = styled.div`
-  display: flex;
-  width: 100%;
+const Main = styled.div`
+  min-height: 100vh;
   height: 100%;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  background-color: #efefef;
 `;
 
 const RegisterClubPage = () => {
@@ -25,10 +22,12 @@ const RegisterClubPage = () => {
   }, []);
 
   return (
-    <RegisterClubContainer>
-      <Header />
-      {data && <RegisterClubContents data={data} />}
-    </RegisterClubContainer>
+    <>
+      <Main>
+        <Header text="글 작성하기" />
+        {data && <RegisterClubContents data={data} />}
+      </Main>
+    </>
   );
 };
 

@@ -1,14 +1,15 @@
 import styled from "@emotion/styled";
 
 export const StyledSelect = styled.select`
-  color: #ffffff;
-  background-color: #27374d;
+  color: black;
+  background-color: #fed313;
   font-size: 14px;
   font-weight: bold;
   border: none;
   width: 120px;
   outline: none;
   margin: 0px 5px;
+  
   cursor: pointer;
 `;
 

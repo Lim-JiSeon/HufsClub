@@ -1,11 +1,12 @@
 const Image = ({ src, width, height, borderRadius, alt, ...props }) => {
   const imageStyle = {
     display: "block",
-    width: width ? width : "120px",
-    height: height ? height : "120px",
+    width: width ? width : "auto",
+    height: height ? height : "auto",
     borderRadius: borderRadius ? borderRadius : undefined,
     margin: "auto",
-    objectFit: "contain",
+    objectFit: "fill",
+    objectPosition: "50% 50%",
   };
 
   return (
