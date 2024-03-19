@@ -21,10 +21,14 @@ const StyledInput = styled.input`
   height: 48px;
   border-radius: 4px;
   font-size: 16px;
-  border: 1px solid #333;
+  border: 1px solid #c9c9c9;
   background-color: white;
   box-sizing: border-box;
   outline: none;
+
+  &:focus {
+    border: 1px solid #fed313;
+  }
 `;
 
 const Input = ({ label, ...props }) => {

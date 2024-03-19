@@ -1,17 +1,15 @@
-import useForm from "../hooks/useForm";
-import Button from "./SubmitButton";
-import ErrorText from "./errors/ErrorText";
-import Input from "./func/Input";
-import CardForm from "./CardForm";
-import Title from "./TopicTitle";
+import React from "react";
+import useForm from "../../hooks/useForm";
+import Button from "../common/Button";
+import ErrorText from "../errors/ErrorText";
+import Input from "../func/Input";
 
-const ResetPwForm = ({ onSubmit }) => {
-  const { values, errors, isLoading, handleChange, handleChangePw } = useForm({
+const ResetPwForm = () => {
+  const { errors, isLoading, handleChange, handleChangePw } = useForm({
     initialValues: {
       password: "",
       passwordConfirm: "",
     },
-    onSubmit,
     validate: ({ password, passwordConfirm }) => {
       const newErrors = {};
       if (!password) newErrors.password = "필수 입력란입니다.";
@@ -24,8 +22,7 @@ const ResetPwForm = ({ onSubmit }) => {
   });
 
   return (
-    <CardForm onSubmit={handleChangePw}>
-      <Title>비밀번호 재설정</Title>
+    <form onSubmit={handleChangePw}>
       <Input
         type="text"
         name="password"
@@ -42,10 +39,10 @@ const ResetPwForm = ({ onSubmit }) => {
       {errors.passwordConfirm && (
         <ErrorText>{errors.passwordConfirm}</ErrorText>
       )}
-      <Button type="submit" disabled={isLoading}>
+      <Button type="submit" disabled={isLoading} style={{ marginTop: "120px" }}>
         비밀번호 변경하기
       </Button>
-    </CardForm>
+    </form>
   );
 };
 

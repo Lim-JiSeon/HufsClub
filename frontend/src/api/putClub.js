@@ -28,25 +28,6 @@ const putClub = async (values, user, id) => {
     },
   ];
 
-  const newActivity = [
-    values.activityText1 && {
-      imageUrl: values.activityImg1,
-      text: values.activityText1,
-    },
-    values.activityText2 && {
-      imageUrl: values.activityImg2,
-      text: values.activityText2,
-    },
-    values.activityText3 && {
-      imageUrl: values.activityImg3,
-      text: values.activityText3,
-    },
-    values.activityText4 && {
-      imageUrl: values.activityImg4,
-      text: values.activityText4,
-    },
-  ];
-
   const newActImgUrl = `${
     typeof values.activityImg1 === "string" && values.activityImg1
       ? values.activityImg1
@@ -91,9 +72,9 @@ const putClub = async (values, user, id) => {
           .filter((element) => element)
           .join(","),
         activityText1: values.activityText1 ?? "",
-        activityText2: values.activityText2 ?? "",
-        activityText3: values.activityText3 ?? "",
-        activityText4: values.activityText4 ?? "",
+        activityText2: " ",
+        activityText3: " ",
+        activityText4: " ",
         name: values.name,
         field: values.field,
         topic:

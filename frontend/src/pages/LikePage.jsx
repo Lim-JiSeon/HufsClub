@@ -1,27 +1,20 @@
 import styled from "@emotion/styled";
 import React, { useEffect, useState } from "react";
-import Header from "../components/Header";
-import LikeGrid from "../components/LikeGrid";
+import { Header } from "../components/common/Header";
+import LikeGrid from "../components/like/LikeGrid";
 import getUserInfo from "../api/getUserInfo";
 
-const AreaContainer = styled.div`
-  display: flex;
-  width: 100%;
+const Main = styled.div`
+  min-height: 100vh;
   height: 100%;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  background-color: #efefef;
 `;
 
-const Title = styled.div`
-  padding: 20px 0 30px 0;
-  color: #27374d;
-  font-size: 24px;
-  text-align: center;
-  font-weight: bold;
+const MainContainer = styled.div`
+  padding: 38px 20px 20px 20px;
 `;
 
-export default function LikePage() {
+const LikePage = () => {
   const [club, setClub] = useState([]);
 
   const getClub = async () => {
@@ -33,10 +26,15 @@ export default function LikePage() {
   }, []);
 
   return (
-    <AreaContainer>
-      <Header></Header>
-      <Title>좋아요 관리</Title>
-      <LikeGrid data={club} />
-    </AreaContainer>
+    <>
+      <Main>
+        <Header text="좋아요 관리" />
+        <MainContainer>
+          <LikeGrid data={club} />
+        </MainContainer>
+      </Main>
+    </>
   );
-}
+};
+
+export default LikePage;

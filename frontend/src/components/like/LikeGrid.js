@@ -1,19 +1,11 @@
 import styled from "@emotion/styled";
-import ClubItem from "./func/ClubItem";
+import ClubItem from "../common/ClubItem";
 
 const GridWrap = styled.div`
-  width: 70vw;
-  height: auto;
-  min-height: 50vh;
-  background-color: #ffffff;
-  border-radius: 20px;
-  border: solid 2px #27374d;
-  margin-bottom: 20px;
-  padding: 30px;
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  place-items: center;
-  gap: 10px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const LikeGrid = (data) => {
