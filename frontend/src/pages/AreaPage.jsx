@@ -13,7 +13,7 @@ const Main = styled.div`
 `;
 
 const MainContainer = styled.div`
-  padding: 38px 20px 20px 20px;
+  padding: 38px 20px 90px 20px;
 `;
 
 const RegisterButton = styled(Link)`

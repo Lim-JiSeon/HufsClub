@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import React, { useState } from "react";
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import deleteClub from "../../api/deleteClub";
 import Popup from "../func/Popup";
 
@@ -54,6 +54,8 @@ const StyledLink = styled(Link)`
 const EditButton = ({ data, isPresident }) => {
   const [deletePopup, setDeletePopup] = useState(false);
 
+  const navigation = useNavigate();
+
   const admin = sessionStorage.getItem("hufs-isAdmin") ?? false;
 
   const manager = admin === "true" || isPresident === data?.name;
@@ -65,7 +67,7 @@ const EditButton = ({ data, isPresident }) => {
     leftBtn: () => setDeletePopup(false),
     rightBtn: () => {
       deleteClub(data._id);
-      Navigate("/");
+      navigation("/");
     },
   };
 

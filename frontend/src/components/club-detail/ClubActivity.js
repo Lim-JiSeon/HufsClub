@@ -33,7 +33,6 @@ const ActivityImageWrap = styled.div`
   grid-template-columns: repeat(4, 1fr);
   overflow-x: scroll;
   margin-bottom: 30px;
-  border: 1px solid #fed313;
 `;
 
 const ActivityDiv = styled.div`
@@ -55,10 +54,15 @@ const ClubActivity = (data) => {
       <TitleWrap>동아리 활동 소개</TitleWrap>
       <ActivityImageWrap>
         {activity.map(
-          (value) =>
+          (value, index) =>
             value?.imageUrl &&
             value.imageUrl !== "null" && (
-              <Image src={value.imageUrl} width={600} height={440} />
+              <Image
+                key={index}
+                src={value.imageUrl}
+                width={600}
+                height={440}
+              />
             )
         )}
       </ActivityImageWrap>

@@ -1,20 +1,17 @@
 import React, { useState, useEffect } from "react";
-import Header from "../components/Header";
+import { Header } from "../components/common/Header";
 import styled from "@emotion/styled";
 import EditClubContents from "../components/club-edit/EditClubContents";
 import getClub from "../api/getClub";
 import { useParams } from "react-router-dom";
 
-const EditClubContainer = styled.div`
-  display: flex;
-  width: 100%;
+const Main = styled.div`
+  min-height: 100vh;
   height: 100%;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  background-color: #efefef;
 `;
 
-function EditClubPage() {
+const EditClubPage = () => {
   const clubId = useParams().id;
   const [data, setData] = useState();
 
@@ -27,11 +24,13 @@ function EditClubPage() {
   }, []);
 
   return (
-    <EditClubContainer>
-      <Header />
-      {data && <EditClubContents data={data} />}
-    </EditClubContainer>
+    <>
+      <Main>
+        <Header text="글 수정하기" />
+        {data && <EditClubContents data={data} />}
+      </Main>
+    </>
   );
-}
+};
 
 export default EditClubPage;
