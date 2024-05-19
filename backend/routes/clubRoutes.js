@@ -21,7 +21,17 @@ clubRouter.get('/field/:field', async (req, res) => {
   } 
 });
 
-//동아리명 검색
+//단과대별 동아리 조회
+clubRouter.get('/college/:college', async (req, res) => {
+  const clubs = await Club.find({ college: req.params.college });
+  if (isEmptyObject(clubs)) {
+    res.status(404).send({ message: 'Clubs Not Found' });
+  } else {
+    res.send(clubs);
+  } 
+});
+
+//분야 - 동아리명 검색
 clubRouter.get('/search', async (req, res) => {
   const { field, keyword } = req.query;
   let clubs = [];
@@ -36,7 +46,7 @@ clubRouter.get('/search', async (req, res) => {
   res.send(clubs);
 });
 
-//동아리 주제 검색
+//분야 - 동아리 주제 검색
 clubRouter.get('/search/topic', async (req, res) => {
   const { field, keyword } = req.query;
   let clubs = [];
@@ -51,13 +61,57 @@ clubRouter.get('/search/topic', async (req, res) => {
   res.send(clubs);
 }); 
 
-//동아리 활동 검색
+//분야 - 동아리 활동 검색
 clubRouter.get('/search/activity', async (req, res) => {
   const { field, keyword } = req.query;
   let clubs = [];
   if (keyword) {
     clubs = await Club.find({
       field: field,
+      'activity.text': { $regex: new RegExp(keyword, "i"),
+      },
+    });
+  }
+  res.send(clubs);
+});
+
+//단과대 - 동아리명 검색
+clubRouter.get('/college/search', async (req, res) => {
+  const { college, keyword } = req.query;
+  let clubs = [];
+  if (keyword) {
+    clubs = await Club.find({
+      college: college,
+      name: {
+        $regex: new RegExp(keyword, "i"),
+      },
+    });
+  }
+  res.send(clubs);
+});
+
+//단과대 - 동아리 주제 검색
+clubRouter.get('/college/search/topic', async (req, res) => {
+  const { college, keyword } = req.query;
+  let clubs = [];
+  if (keyword) {
+    clubs = await Club.find({
+      college: college,
+      topic: {
+        $regex: new RegExp(keyword, "i"),
+      },
+    });
+  }
+  res.send(clubs);
+}); 
+
+//단과대 - 동아리 활동 검색
+clubRouter.get('/college/search/activity', async (req, res) => {
+  const { college, keyword } = req.query;
+  let clubs = [];
+  if (keyword) {
+    clubs = await Club.find({
+      college: college,
       'activity.text': { $regex: new RegExp(keyword, "i"),
       },
     });
@@ -120,7 +174,10 @@ clubRouter.post(
     const user = await User.findById(req.user._id);
     const newClub = new Club({
       name: (user.isAdmin)? req.body.name : user.isPresident, 
+      belong: req.body.belong,
+      type: req.body.type,
       field: req.body.field,
+      college: req.body.college,
       topic: (req.body.topic)? Club.formatHashtags(req.body.topic) : req.body.topic,
       executive: executive,
       activity: [
@@ -180,7 +237,10 @@ clubRouter.put(
         deleteImage(fileKeys);
 
         club.name = ((user.isAdmin)? req.body.name : user.isPresident) || club.name, 
-        club.field = req.body.field || club.field,
+        club.belong = req.body.belong || club.belong,
+        club.type = req.body.type || club.type,
+        club.field = (club.belong == "동아리 연합회")? req.body.field : null,
+        club.college = req.body.college,
         club.topic = (req.body.topic)? Club.formatHashtags(req.body.topic) : req.body.topic,
         club.executive = executive,
         club.activity = [
