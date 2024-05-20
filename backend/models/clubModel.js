@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 const executiveSchema = new mongoose.Schema({
   name: { type: String, required: true, trim: true, maxLength: 10 },
   email: { type: String, required: false, trim: true, maxLength: 30 },
-  role: { type: String, required: false, trim: true, },
+  role: { type: String, required: false, trim: true },
 });
 
 const recruitSchema = new mongoose.Schema({
@@ -21,7 +21,10 @@ const activitySchema = new mongoose.Schema({
 const clubSchema = new mongoose.Schema(
   {
     name: { type: String, required: true, unique: true, trim: true, maxLength: 30 },
-    field: { type: String, required: true, trim: true, maxLength: 10 }, //학술, 종교, 스포츠, 친목, 문화, 봉사
+    belong: { type: String, required: true, trim: true, maxLength: 10}, // 소속: 동아리 연합회 소속, 단과대 소속
+    type: { type: String, required: true, trim: true, maxLength: 10},   // 종류: 중앙 동아리, 학회, ...
+    field: { type: String, trim: true, maxLength: 10 },                 // 분야: 창작예술분과, 공연예술분과, ...
+    college: { type: String, trim: true, maxLength: 30 },               // 단과대: 공과대학, 인문대학, ...
     topic: [{ type: String, trim: true }],
     executive: [executiveSchema],
     activity: [activitySchema],
