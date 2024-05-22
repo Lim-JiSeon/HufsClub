@@ -1,4 +1,4 @@
-import Image from "./func/Image";
+import Image from "./Image";
 import profileImage from "../images/profile.png";
 import styled from "@emotion/styled";
 

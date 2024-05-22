@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Header } from "../components/common/Header";
 import styled from "@emotion/styled";
-import RegisterClubContents from "../components/RegisterClubContents";
+import RegisterClubContents from "../components/register/RegisterClubContents";
 import getUserInfo from "../api/getUserInfo";
 
 const Main = styled.div`

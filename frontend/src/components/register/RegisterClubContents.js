@@ -1,10 +1,10 @@
 import styled from "@emotion/styled";
 import React, { useEffect, useState } from "react";
-import Input from "../components/func/Input";
-import postClub from "../api/postClub";
-import ImageUploader from "../images/image-upload.png";
+import Input from "../func/Input";
+import postClub from "../../api/postClub";
+import ImageUploader from "../../images/image-upload.png";
 import { useNavigate, useParams } from "react-router-dom";
-import useForm from "../hooks/useForm";
+import useForm from "../../hooks/useForm";
 
 const ClubIntroContent = styled.div`
   display: flex;
@@ -402,7 +402,7 @@ const RegisterClubContents = (data) => {
               </MemberContainer>
             </MemberWrap>
           </div>
-          
+
           <div style={{ width: "100%" }}>
             <TitleWrap>동아리 활동 소개</TitleWrap>
             <ActivityWrap>
