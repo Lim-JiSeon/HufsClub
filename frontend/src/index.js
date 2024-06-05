@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import MainPage from "./pages/MainPage";
+import AssociationPage from "./pages/AssociationPage";
 import LoginPage from "./pages/LoginPage";
 import SignUpPage from "./pages/SignUpPage";
 import AreaPage from "./pages/AreaPage";
@@ -16,6 +16,8 @@ import EditClubPage from "./pages/EditClubPage";
 import ClubPage from "./pages/ClubPage";
 import RegisterClubPage from "./pages/RegisterClubPage";
 import LikePage from "./pages/LikePage";
+import HomePage from "./pages/HomePage";
+import DepartmentPage from "./pages/DepartmentPage";
 import { App } from "./App";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -23,8 +25,9 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<MainPage />} />
-        <Route path="/:select" element={<MainPage />} />
+        <Route path="/" element={<HomePage />} />
+        <Route path="/동아리연합회소속/:select" element={<AssociationPage />} />
+        <Route path="/학과소속/:select" element={<DepartmentPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/find/id" element={<FindIdPage />} />

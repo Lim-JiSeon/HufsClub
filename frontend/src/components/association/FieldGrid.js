@@ -29,39 +29,41 @@ const FieldButton = styled(Link)`
 
 const ButtonText = styled.div`
   padding: 5px 0;
+  font-size: 12px;
+  text-align: center;
 `;
 
 export const FieldGrid = () => {
   return (
     <ButtonGrid>
-      <FieldButton to="/area/학술">
+      <FieldButton to="/area/학술응용분과">
         <FontAwesomeIcon icon={faGraduationCap} color="#04B700" size="2x" />
-        <ButtonText>학술</ButtonText>
+        <ButtonText>학술응용분과</ButtonText>
       </FieldButton>
 
-      <FieldButton to="/area/종교">
+      <FieldButton to="/area/종교봉사분과">
         <FontAwesomeIcon icon={faHandsPraying} color="#FFAFAF" size="2x" />
-        <ButtonText>종교</ButtonText>
+        <ButtonText>종교봉사분과</ButtonText>
       </FieldButton>
 
-      <FieldButton to="/area/스포츠">
+      <FieldButton to="/area/개인스포츠레저분과">
         <FontAwesomeIcon icon={faFutbol} color="#FF5E5E" size="2x" />
-        <ButtonText>스포츠</ButtonText>
+        <ButtonText>개인스포츠레저분과</ButtonText>
       </FieldButton>
 
-      <FieldButton to="/area/친목">
+      <FieldButton to="/area/팀스포츠레저분과">
         <FontAwesomeIcon icon={faChild} color="#FFE927" size="2x" />
-        <ButtonText>친목</ButtonText>
+        <ButtonText>팀스포츠레저분과</ButtonText>
       </FieldButton>
 
-      <FieldButton to="/area/문화">
+      <FieldButton to="/area/공연예술분과">
         <FontAwesomeIcon icon={faBroom} color="#173FCE" size="2x" />
-        <ButtonText>문화</ButtonText>
+        <ButtonText>공연예술분과</ButtonText>
       </FieldButton>
 
-      <FieldButton to="/area/봉사">
+      <FieldButton to="/area/창작예술분과">
         <FontAwesomeIcon icon={faHandHoldingHeart} color="#FF5592" size="2x" />
-        <ButtonText>봉사</ButtonText>
+        <ButtonText>창작예술분과</ButtonText>
       </FieldButton>
     </ButtonGrid>
   );
