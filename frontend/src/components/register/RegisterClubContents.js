@@ -146,6 +146,7 @@ const RegisterClubContents = (data) => {
   const navigator = useNavigate();
 
   const area = useParams().field;
+
   const { isPresident, username, email } = data.data;
 
   const { handleChange, handleFile, values } = useForm({
@@ -242,7 +243,7 @@ const RegisterClubContents = (data) => {
                   onChange={handleChange}
                   defaultValue={isPresident}
                   label="동아리 이름"
-                  readonly
+                  readOnly
                 />
                 <Input
                   type="text"
@@ -250,7 +251,7 @@ const RegisterClubContents = (data) => {
                   onChange={handleChange}
                   defaultValue={area}
                   label="동아리 분야"
-                  readonly
+                  readOnly
                 />
               </ClubJoinContent>
               <Input

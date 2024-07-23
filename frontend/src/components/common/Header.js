@@ -6,11 +6,11 @@ import { faHeart, faUser } from "@fortawesome/free-regular-svg-icons";
 import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
 
 const HeaderContainer = styled.div`
-  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: white;
+  padding: 0 15px;
 `;
 
 const IconButton = styled.div`

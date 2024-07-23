@@ -271,7 +271,7 @@ const EditClubContents = (data) => {
                   onChange={handleChange}
                   defaultValue={name}
                   label="동아리 이름"
-                  readonly
+                  readOnly
                 />
                 <Input
                   type="text"
@@ -279,7 +279,7 @@ const EditClubContents = (data) => {
                   onChange={handleChange}
                   defaultValue={field}
                   label="동아리 분야"
-                  readonly
+                  readOnly
                 />
               </ClubJoinContent>
               <Input

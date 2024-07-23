@@ -33,7 +33,7 @@ root.render(
         <Route path="/find/id" element={<FindIdPage />} />
         <Route path="/find/password" element={<FindPwPage />} />
         <Route path="/:field/register-club" element={<RegisterClubPage />} />
-        <Route path="/area/:field" element={<AreaPage />} />
+        <Route path="/:belong/:type/:field" element={<AreaPage />} />
         <Route path="/area/:field/:id" element={<ClubPage />} />
         <Route path="/edit-club/:id" element={<EditClubPage />} />
         <Route path="/mypage" element={<MyPage />} />
